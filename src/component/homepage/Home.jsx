@@ -1,8 +1,5 @@
-function Home () {
-        return (
-            <h1>Footer</h1>
-        )
+function Home() {
+  return <h1>Home1</h1>;
 }
-    
-export default Home
 
+export default Home;
