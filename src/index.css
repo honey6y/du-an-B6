@@ -5,6 +5,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-weight: 500;
 }
+*{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+}
 
 code {
   font-family: "Source Sans Pro", Helvetica, Arial, sans-serif;
