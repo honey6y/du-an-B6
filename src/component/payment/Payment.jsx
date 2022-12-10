@@ -1,6 +1,6 @@
 function Payment () {
     return (
-        <h1>Payment</h1>
+        <h1>Payment Phuong Anh</h1>
     )
 }
 
