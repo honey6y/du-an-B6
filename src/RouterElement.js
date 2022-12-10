@@ -11,6 +11,7 @@ import Login from "./component/accout/login/Login";
 import Register from "./component/accout/register/Register";
 import Cart from "./component/cart/Cart";
 import Payment from "./component/payment/Payment";
+import Identify from "./component/accout/identify/Identify";
 
   
 
@@ -33,6 +34,10 @@ function RouterElement () {
             {
               path: 'register',
               element: <Register/>
+            },
+            {
+              path: 'identify',
+              element: <Identify/>
             },
             {
               path: 'collection',
