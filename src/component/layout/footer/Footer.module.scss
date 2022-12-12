@@ -1,0 +1,102 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 14px;
+  }
+  #footer .footer-content {
+    padding: 30px 0px;
+    background: #ffffff;
+  }
+  .wrapper {
+    max-width: 1260px;
+    margin: 0 auto;
+    padding: 0 15px;
+  }
+  .grid-uniform {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-left: -30px;
+  }
+  .grid__item {
+    box-sizing: border-box;
+    min-height: 1px;
+    padding-left: 30px;
+    vertical-align: top;
+    width: 25%;
+  }
+  .chinh-sach{
+    color:#000000;
+    margin: 0px 0px 10px 0px;
+  }
+  .chinh-sach-1{
+    margin: 0px 0px 10px 0px;
+  }
+  .ft-contact-email {
+    display: flex;
+    margin-bottom: 10px;
+  }
+  .ft-contact-address{
+    display: flex;
+    margin-bottom: 10px;
+  }
+  .ft-contact-tel{
+    display: flex;
+    margin-bottom: 10px;
+  }
+  .ft-contact-icon{
+    font-size:18px ;
+  }
+  .ft-contact-detail{
+    padding-left: 15px;
+  
+  }
+  .ft-contact-desc{
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 10px;
+  }
+  .grid-uniform{
+    display: flex;
+  }
+  .large--one-quarter{
+    width: 25%;
+  }
+  h3{
+    margin-bottom: 10px;
+  }
+  .ft-subscribe-desc{
+    padding-bottom: 12px;
+  }
+  #Email{
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    padding: 0px 40px 0px 15px;
+    outline: 0px;
+    border: 1px solid #f0f0f0;
+    border-radius: 5px;
+  }
+.ft-sub-wrapper{
+  position: relative;
+}
+.submit-tele{
+  position: absolute;
+    top: calc(50% - 17px);
+    right: 3px;
+    width: 34px;
+    height: 34px;
+    padding: 0px;
+    line-height: 34px;
+    outline: 0px;
+    border: 0px;
+    border-radius: 5px;
+    color: #fff;
+    background: #000000;
+    font-size: 16px;
+}
+.ft-social{
+  margin-top: 20px;
+}
+
