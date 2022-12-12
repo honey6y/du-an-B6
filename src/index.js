@@ -1,9 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import RouterElement from './RouterElement';
-import GlobalStyle from './component/GlobalStyles';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import RouterElement from "./RouterElement";
+import GlobalStyle from "./component/GlobalStyles";
+import store from "./store";
+import { Provider } from "react-redux";
 import {
   QueryClient,
   QueryClientProvider,
@@ -17,10 +19,12 @@ const queryClient = new QueryClient({
     }
   }
 })
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
       <RouterElement>
         <GlobalStyle>
           <PrivateRoute>
@@ -28,6 +32,7 @@ root.render(
           </PrivateRoute>
         </GlobalStyle>
       </RouterElement>
+    </Provider>
     </QueryClientProvider>
   </React.StrictMode>
 );
