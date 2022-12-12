@@ -1,15 +1,17 @@
-import { useMutation } from '@tanstack/react-query'
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from "react-router-dom"
 import { toast } from 'react-toastify'
 import { rules } from '../../Others/Rules'
 import style from "./Identify.module.css"
-import { SendAccount } from '../../Others/QueryApi'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Spinner from 'react-bootstrap/Spinner';
 
 export default function Identify() {
+    const [spamSubmit, setSpamSubmit] = useState(false)
     const { register, handleSubmit, formState: { errors }, reset} = useForm()
-    const onSubmit = handleSubmit ((data) => {
+    const onSubmit = handleSubmit (() => {
+        // setSpamSubmit(true)
         toast.success('Yêu cầu của bạn đã được chấp thuận')
         reset()
     })
@@ -37,7 +39,10 @@ export default function Identify() {
                                 <div className={style.infor_error}>{errors.email?.message}</div>
                             </div>
                             <div className={style.input_container}>
-                                <button className={style.button_login}>Gửi</button>
+                            <button type="submit" className={style.button_login} disabled={spamSubmit}>
+                                    <Spinner className={!spamSubmit ? style.spinner_block : style.spinner_none} animation="border" />
+                                    <span className={style.button_name}>Gửi</span>
+                                </button>
                             </div>
                             <div className={style.button_others_container}>
                                 <p>

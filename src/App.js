@@ -10,7 +10,7 @@ function App() {
     <>
       <Header></Header>
       <Outlet></Outlet>
-      <ToastContainer />
+      <ToastContainer autoClose={1400} />
       <Footer></Footer>
     </>
   );
