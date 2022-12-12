@@ -4,7 +4,9 @@
 :root {
     --red-primary: #cd1818;
     --black-primary: #000000;
-    --white-primary: #fff
+    --white-primary: #fff;
+    --background-color-body: #fafafa;
+    --price-color: #cd1818;
 }
 
 * {
@@ -19,7 +21,8 @@ html {
 
 body {
     font-family: 'Source Sans Pro', sans-serif;
-    font-size: 1.6rem;
-    line-height: 1.5;
+    font-size: 1.4rem;
+    line-height: 1.6;
     text-rendering: optimizeSpeed;
+    background: var(--background-color-body);
 }

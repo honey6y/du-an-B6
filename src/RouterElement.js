@@ -61,7 +61,7 @@ function RouterElement () {
               element: <Collection/>
             },
             {
-              path: 'detail',
+              path: 'detail/:idProduct',
               element: <DetailProduct/>
             },
             {
