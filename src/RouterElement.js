@@ -1,7 +1,8 @@
 import {
     createBrowserRouter,
-    RouterProvider,
-    Route,
+    Navigate,
+    Outlet,
+    RouterProvider
 } from "react-router-dom";
 import App from "./App";
 import Home from "./component/homepage/Home";
@@ -11,8 +12,19 @@ import Login from "./component/accout/login/Login";
 import Register from "./component/accout/register/Register";
 import Cart from "./component/cart/Cart";
 import Payment from "./component/payment/Payment";
+import Identify from "./component/accout/identify/Identify";
+import { useContext } from "react";
+import { AppContext } from "./privateRouter/PrivateRouter";
+import LayoutProduct from "./component/product-Category/LayoutProduct/LayoutProduct";
 
-  
+function ProtectRoute() {
+  const {checkPrivate} = useContext(AppContext)
+  return checkPrivate ? <Outlet /> : <Navigate to = "/login" />
+}  
+function RejectedRoute() {
+  const {checkPrivate} = useContext(AppContext)
+  return !checkPrivate ? <Outlet /> : <Navigate to = "/" />
+}  
 
 
 function RouterElement () {
@@ -27,19 +39,29 @@ function RouterElement () {
                 element: <Home></Home>,
             },
             {
-              path: 'login',
-              element: <Login/>
+              path: '',
+              element: <RejectedRoute />,
+              children: [
+                {
+                  path: 'login',
+                  element: <Login/>
+                },
+                {
+                  path: 'register',
+                  element: <Register/>
+                }
+              ]
             },
             {
-              path: 'register',
-              element: <Register/>
+              path: 'identify',
+              element: <Identify/>
             },
             {
               path: 'collection',
               element: <Collection/>
             },
             {
-              path: 'detail',
+              path: 'detail/:idProduct',
               element: <DetailProduct/>
             },
             {
@@ -49,8 +71,11 @@ function RouterElement () {
             {
               path: 'payment',
               element: <Payment/>
+            },
+            {
+              path: 'productCategory',
+              element: <LayoutProduct />
             }
-            
           ]
         },
       ]);
