@@ -8,6 +8,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
+import { PrivateRoute } from './privateRouter/PrivateRouter';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,7 +23,9 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <RouterElement>
         <GlobalStyle>
-          <App />
+          <PrivateRoute>
+            <App />
+          </PrivateRoute>
         </GlobalStyle>
       </RouterElement>
     </QueryClientProvider>
