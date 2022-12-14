@@ -1,5 +1,4 @@
 import styles from './Footer.module.scss'
-
 import classNames from 'classnames/bind'
 import {MdLocationOn} from 'react-icons/md'
 import {FaPhone} from 'react-icons/fa'

@@ -120,8 +120,8 @@ export default function Header() {
                                                 <div className={cx("hd-link-title")}>TÀI KHOẢN</div>
                                             </a>
                                             <ul className={cx("dropdown-menu")}>
-                                                <li><a href="/account/login">Đăng nhập</a></li>
-                                                <li><a href="/account/register">Đăng kí</a></li>
+                                                <li><a href="/login">Đăng nhập</a></li>
+                                                <li><a href="/register">Đăng kí</a></li>
                                             </ul>
                                         </li>
                                         <li className={cx("dropdown")} >
