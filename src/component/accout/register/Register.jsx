@@ -1,32 +1,44 @@
 import { useMutation } from "@tanstack/react-query"
+import { useContext, useState } from "react"
 import { useForm } from "react-hook-form"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
+import { AppContext } from "../../../privateRouter/PrivateRouter"
 import { registerAccount } from "../../Others/QueryApi"
 import { rules } from "../../Others/Rules"
 import { isAxiosUnprocessableEntityError } from "../../Others/StatusApi"
 import style from "./Register.module.css"
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Spinner from 'react-bootstrap/Spinner';
 
 
 function Register () {
-    const { register, handleSubmit, setError, watch, formState: { errors }} = useForm()
+    const [spamSubmit, setSpamSubmit] = useState(false)
+    const {setCheckPrivate} = useContext(AppContext)
+    const nav = useNavigate()
+    const { register, handleSubmit, setError, formState: { errors }} = useForm()
     const registerAccountMutation = useMutation({
         mutationFn: body =>  registerAccount(body)
     })
     const onSubmit = handleSubmit ((data) => {
+        setSpamSubmit(true)
         registerAccountMutation.mutate(data,{
-            onSuccess: (data) => {
-                console.log(data);
+            onSuccess: () => {
+                setCheckPrivate(true)
                 toast.success('Đăng kí thành công')
+                setTimeout(() => {
+                    nav('/login')
+                }, 1400)
             },
             onError: (error) => {
                 if(isAxiosUnprocessableEntityError(error)){
                     const formError = error.response?.data.message
                     if(formError) {
                       setError('email', {
-                        message: formError,
-                        type: 'Sever'
+                        message: 'Email đã được sử dụng',
+                        type: 'Sever',
                       })
+                      setSpamSubmit(false)
                     }  
                 }
             }
@@ -77,7 +89,10 @@ function Register () {
                                 <div className={style.infor_error}>{errors.password?.message}</div>
                             </div >
                             <div className={style.input_container_botton}>
-                                <button type ="submit" className={style.button_login}>Đăng Ký</button>
+                                <button type="submit" className={style.button_login} disabled={spamSubmit}>
+                                    <Spinner className={spamSubmit ? style.spinner_block : style.spinner_none} animation="border" />
+                                    <span className={style.button_name}>Đăng ký</span>
+                                </button>
                             </div>
                             <div className={style.button_others_container}>
                                 <p>
