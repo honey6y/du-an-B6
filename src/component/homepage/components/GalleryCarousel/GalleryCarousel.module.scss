@@ -2,16 +2,14 @@
   max-width: 1260px;
   margin: 0 auto;
   padding: 0 30px;
-  
 }
 .title{
   display: flex;
   justify-content: space-between;
 }
 .flash-sale-title{
-  margin: 0 0 0 15px;
+  margin: 15px 0 0 15px;
   font-weight: 600;
-
   text-transform: uppercase;
 }
 .more{
@@ -23,35 +21,37 @@
   border: 1px solid #f0f0f0;
   background-color: var(--white-primary);
   position: relative;
-
   &:hover .btn-buy{
     display: block;
   }
-  &::after{
-    content: "-30%";
-    position: absolute;
-    top: 4px;
-    right: 10px;
-    background: #cd1818;
-    color: #fff;
-    width: 50px;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    border-radius: 4px;
-  }
- 
+}
+.sale-box{
+  position: absolute;
+  top: 4px;
+  right: 10px;
+  background: #cd1818;
+  color: #fff;
+  width: 50px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 4px;
 }
 .card-box-name{
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  cursor: pointer;
+  &:hover{
+    color: var(--red-primary);
+  }
 }
 .img-box{
   height: 250px;
 }
 .card-box-price{
   color: var(--red-primary);
+  font-weight: 600;
 }
 .btn-buy{
   background: #cd1818;

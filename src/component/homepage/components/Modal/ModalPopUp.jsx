@@ -26,8 +26,8 @@ function ModalPopUp() {
     useEffect(()=>{
       let newData = modalState.productItem.productDetailId?.map(item => {
         let newDataItem = {};
-        newDataItem.color = item.option[0].value
-        newDataItem.size = item.option[1].value
+        newDataItem.color = item.option[0]?.value
+        newDataItem.size = item.option[1]?.value
         newDataItem.id = item._id
         newDataItem.price = item.price
         return newDataItem;

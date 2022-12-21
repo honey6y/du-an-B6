@@ -9,14 +9,15 @@
 }
 .banner {
   position: relative;
-
-  &:hover .left-btn-arrow {
-    visibility: visible;
-  }
-
-  &:hover .right-btn-arrow {
-    visibility: visible;
-  }
+}
+.btn-control-arrow{
+  display: flex;
+  border: none;
+  padding: 12px 2px;
+  font-size: 20px;
+  background-color: rgb(176, 170, 170);
+  opacity: 0.6;
+  color: white;
 }
 .banner-des {
   width: 100%;
@@ -41,40 +42,6 @@
 }
 .aside-banner {
   margin-bottom: 10px;
-}
-.left-btn-arrow {
-  display: flex;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 2;
-  border: none;
-  outline: none;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.18);
-  padding: 12px 10px;
-  font-size: 20px;
-  transition: 0.25s;
-  visibility: hidden;
-  align-self: center
-
- 
-}
-.right-btn-arrow {
-  display: flex;
-  position: absolute;
-  top: 50%;
-  right : 0;
-  transform: translateY(-50%);
-  z-index: 2;
-  border: none;
-  outline: none;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.18);
-  padding: 12px 10px;
-  font-size: 20px;
-  transition: 0.25s;
-  visibility: hidden;
 }
 .news-title-box {
   display: flex;

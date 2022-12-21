@@ -39,14 +39,14 @@ function ProductContent() {
   return (
     
     <>
-      <GalleryCarousel dataProps={dataSlider} />
+      <GalleryCarousel dataProps={dataSlider} title={'Flash Sale'} isSale={true} />
       <div className={cx("products-container")}>
         <div className={cx("wrapper")}>
             <Row gutter={[10, 10]}>
               {list.map((item, index) => {
                 return (
                   <Col span={4} key={item._id}>
-                    <div className={cx("product")}>
+                    <div className={cx("product")} >
                       <LazyLoadImage 
                       className={cx("product-img")}
                       src={item.thump}
@@ -54,9 +54,10 @@ function ProductContent() {
                       effect="blur"
                       placeholderSrc="https://dummyimage.com/640x360/fff/aaa
                       "
+                      onClick={()=>nav(`/detail/${item._id}`)}
                       />
                       <div>
-                        <p className={cx("product-name")}>{item.productName}</p>
+                        <p className={cx("product-name")} onClick={()=>nav(`/detail/${item._id}`)}>{item.productName}</p>
                         <h4 className={cx("product-price")}>
                           {item.price && item.price.toLocaleString()}&nbsp;đ
                         </h4>

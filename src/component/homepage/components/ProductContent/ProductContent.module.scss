@@ -42,6 +42,7 @@
   text-overflow: ellipsis;
   margin: 20px 0;
   text-transform: capitalize;
+  cursor: pointer;
   &:hover {
     color: var(--red-primary);
   }

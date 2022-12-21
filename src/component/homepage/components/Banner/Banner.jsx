@@ -43,7 +43,7 @@ function Banner() {
                 
                   renderCenterLeftControls={({ previousDisabled, previousSlide }) => (
                     <button className={cx('btn-control-arrow')} onClick={previousSlide} disabled={previousDisabled}>
-                        <LeftOutlined style={{fontSize : '30px'}}/>
+                        <LeftOutlined />
                     </button>
                   )}
                   renderCenterRightControls={({ nextDisabled, nextSlide }) => (
