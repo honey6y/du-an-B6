@@ -32,7 +32,7 @@ root.render(
             </PrivateRoute>
           </GlobalStyle>
         </RouterElement>
-    </Provider>
+      </Provider>
     </QueryClientProvider>
   </React.StrictMode>
 );
