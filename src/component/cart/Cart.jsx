@@ -5,7 +5,7 @@ import styles from "./Cart.module.scss";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getCart, getCartNumber } from "../../cartSlice";
+import { getCart, getCartNumber } from "../../features/counter/cartSlice";
 function Cart() {
   const cartData = useSelector((state) => state.cart.Carts);
   let [total, setTotal] = useState(0);
