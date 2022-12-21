@@ -7,8 +7,11 @@ import { ImSearch } from 'react-icons/im'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import debounce from 'lodash/debounce'
+import { useSelector, useDispatch } from 'react-redux'
 import { useRef } from 'react'
+import { Badge, Space } from 'antd';
 export default function Header() {
+    const totalCart = useSelector(state =>state.cart.cartNumber)
     const cx = classNames.bind(styles)
     const [searchValue,setSearchValue] = useState("")
     const [active,setActive] = useState(null)
@@ -182,10 +185,13 @@ export default function Header() {
                                         </li>
                                         <li className={cx("dropdown")} onClick={handleShow} >
                                             <div className={cx("text-center")}>
+                                            <Badge color='black' size='small' count={totalCart}>
                                                 <div className={cx("hd-link-icon")}>
                                                     <img src="https://theme.hstatic.net/1000205427/1000509844/14/hd_mainmenu_icon_cart.png?v=56" alt="giỏ hàng" />
                                                     {/* <span className={cx("hd-cart-count">0</span> */}
                                                 </div>
+                                            </Badge>
+
                                                 <div className={cx("hd-link-title")}>GIỎ HÀNG</div>
                                                 <div className={activePopUp ? cx('quickview-cart-product-active') :cx('quickview-cart-product')}>
                                                     <h3 className={cx('view-product-cart')}>GIỎ HÀNG CỦA TÔI {`(3 SẢN PHẨM)`}
