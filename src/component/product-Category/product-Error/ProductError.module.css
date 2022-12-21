@@ -1,0 +1,8 @@
+.productError{
+    padding: 15px;
+}
+.productErrorImg {
+    max-width: 100%;
+    height: 500px;
+    object-fit: cover;
+}

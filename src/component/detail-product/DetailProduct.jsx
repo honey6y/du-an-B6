@@ -1,3 +1,4 @@
+
 import DetailInfoProduct from "./DetailInfoProduct/DetailInfoProduct";
 import SelectProduct from "./SelectProduct/SelectProduct";
 import classNames from "classnames/bind";
@@ -8,6 +9,7 @@ const cx = classNames.bind(styles);
 function DetailProduct() {
     return (
         <div className={cx("detail-product-wrapper")}>
+            {/* <DetailProductHeader></DetailProductHeader> */}
             <SelectProduct />
             <DetailInfoProduct />
         </div>
