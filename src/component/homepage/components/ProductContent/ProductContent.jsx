@@ -4,8 +4,10 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Row, Col, Modal } from "antd";
+import { useNavigate } from "react-router-dom";
 
 function ProductContent() {
+  const nav = useNavigate()
   const cx = classNames.bind(styles);
   const [list, setList] = useState([]);
   const [detail, setDetail] = useState({});

@@ -1,4 +1,6 @@
+import DetailProductHeader from "../DetailProductHeader/DetailProductHeader";
 import { LikeOutlined } from "@ant-design/icons";
+import { Breadcrumb } from 'antd';
 import {
     DownOutlined,
     MinusOutlined,
@@ -8,15 +10,20 @@ import {
 import axios from "axios";
 import classNames from "classnames/bind";
 import { useEffect, useRef, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 import styles from "./SelectProduct.module.scss";
 
 const cx = classNames.bind(styles);
 
 function SelectProduct() {
-    let token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzkzZWJhNmZjYTM3MmRiMzhiNTFiYTEiLCJ1c2VybmFtZSI6ImNodWJlYnUxIiwiZW1haWwiOiJjaHViZWJ1MUBnbWFpbC5jb20iLCJhdmF0YXIiOiJodHRwczovL21lZGlhLmlzdG9ja3Bob3RvLmNvbS9waG90b3MvYnVzaW5lc3NtYW4tc2lsaG91ZXR0ZS1hcy1hdmF0YXItb3ItZGVmYXVsdC1wcm9maWxlLXBpY3R1cmUtcGljdHVyZS1pZDQ3NjA4NTE5OD9rPTIwJm09NDc2MDg1MTk4JnM9NjEyeDYxMiZ3PTAmaD04SjNWZ09aYWJfT2lZb0l1WmZpTUl2dWNGWUI4dldZbEtuU2pLdUtlWVFNPSIsInJvbGUiOiJ1c2VyIiwiY3JlYXRlZEF0IjoiMjAyMi0xMi0xMFQwMjoxNTowMi4zNDFaIiwidXBkYXRlZEF0IjoiMjAyMi0xMi0xMFQwMjoxNTowMi4zNDFaIiwiX192IjowLCJpYXQiOjE2NzA2NDQ5MDJ9.3db6SHeI8YCaQajK0-Z7_17MovvjUu_Th7iCLi-7E7E`;
+    // const notify = () => toast("Thêm vào giỏ hàng thành công");
+    const nav = useNavigate()
+    let idCart = '63a1d0366d8b52f0ce429cc2';
+    let token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyMGUwNWZlNjMyMDQ1ODQ3M2NmNiIsImF2YXRhciI6Imh0dHBzOi8vc3QzLmRlcG9zaXRwaG90b3MuY29tLzE3Njc2ODcvMTY2MDcvdi80NTAvZGVwb3NpdHBob3Rvc18xNjYwNzQ0MjItc3RvY2staWxsdXN0cmF0aW9uLWRlZmF1bHQtYXZhdGFyLXByb2ZpbGUtaWNvbi1ncmV5LmpwZyIsInVzZXJuYW1lIjoidGVzdDEyMzEyMyIsImVtYWlsIjoiZGVtby1hbkBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImNhcnQiOnsiX2lkIjoiNjM5YzIwZTE1ZmU2MzIwNDU4NDczY2Y4IiwidXNlcklkIjoiNjM5YzIwZTA1ZmU2MzIwNDU4NDczY2Y2IiwibGlzdFByb2R1Y3QiOlt7InByb2R1Y3REZXRhaWxJZCI6IjYyZWNjYTczMmQ2OGQxYTYwZDM0MTZlMSIsInF1YW50aXR5Ijo1LCJzZWxlY3RlZCI6ZmFsc2UsIl9pZCI6IjYzOWMyZmMxNDZjYTIyZWM4NGM2NDkzMCJ9LHsicHJvZHVjdERldGFpbElkIjoiNjMyYzA0MDkxMjYyYjhjZDlkMTc0OGQ1IiwicXVhbnRpdHkiOjYsInNlbGVjdGVkIjpmYWxzZSwiX2lkIjoiNjNhMDRiNjM2ZDhiNTJmMGNlNDI5MmVlIn1dLCJwcm9kdWN0IjpbXSwiY3JlYXRlZEF0IjoiMjAyMi0xMi0xNlQwNzo0MDoxNy4wNDBaIiwidXBkYXRlZEF0IjoiMjAyMi0xMi0yMFQwOTowMjo1Ni4zOTRaIiwiX192IjowfSwiZnVsbG5hbWUiOiJ0ZXN0MTIzIiwiZGF0ZU9mQmlydGgiOiIyMDAwLTEwLTIwVDAwOjAwOjAwLjAwMFoiLCJzZXgiOiJtYWxlIiwibmF0aW9uYWxpdHkiOiJWaWV0IE5hbSIsImlhdCI6MTY3MTUyNzEzOSwiZXhwIjoxNjcxNjEzNTM5fQ.fAt_2iI_0pMTWVTkAq08NFc6U1QR4E-mCUIYTkgA7KM`;
     let { idProduct } = useParams();
     const [productDetail, setProductDetail] = useState({});
+    const [currentItem, setCurrentItem] = useState({});
     const [imgCurrent, setImgCurrent] = useState(``);
     const imgThumbUl = useRef();
     const [marginListThumb, setMarginListThumb] = useState(0);
@@ -24,35 +31,77 @@ function SelectProduct() {
     const imgCurrentView = useRef();
     const imgCurrentViewLensZoom = useRef();
     const productThumbZoom = useRef();
+    const [buyQuantity, setBuyQuantity] = useState(1);
+    const [listColorSize, setListColorSize] = useState([])
+    const [productSimple, setProductSimple] = useState([])
+    const [listProductCurrentSize, setListProductCurrentSize] = useState([])
+    const [currentColor, setCurrentColor] = useState('')
     useEffect(() => {
+        window.scrollTo(0, 0)
+        console.log('useEffect')
         axios({
-            url: `https://shope-b3.thaihm.site/api/product/get-one-product/${idProduct}`,
+            url: `${process.env.REACT_APP_PORT_API}product/get-one-product/${idProduct}`,
             method: "GET",
             headers: {
                 authorization: token,
             },
         })
-            .then((res) => {
-                // console.log(res);
-                let totalProduct = res.data.product;
-                let totalImg = totalProduct.listDtail.reduce((total, item) => {
-                    return (total += item.listImg.length);
-                }, 0);
-                if (totalImg >= 5) {
-                    thumbControlBtn.current.className = cx(
-                        "list-img-thumb-control"
-                    );
-                } else {
-                    thumbControlBtn.current.className = cx(
-                        "list-img-thumb-control",
-                        "display-none"
-                    );
-                }
-                setProductDetail(totalProduct);
+        .then((res) => {
+            // console.log(res);
+            let totalProduct = res.data.product;
+            let totalSimple = []
+            totalProduct.productDetailId.forEach(element => {
+                let simpleItem = {}
+                simpleItem.id = element._id
+                simpleItem.price = element.price
+                simpleItem.color = element.option[0].value
+                simpleItem.size = element.option[1].value
+                totalSimple.push(simpleItem)
             })
-            .catch((err) => {
-                // console.log(err)
+            // console.log(totalSimple)
+            if (totalSimple.length) {
+                setCurrentItem(totalSimple[0])
+            } else {
+                setCurrentItem({
+                    id: res.data.product._id,
+                    price: res.data.product.price,
+                })
+            }
+            setProductSimple(totalSimple)
+            let listColorSizeStat = {};
+            totalProduct.productDetailId.forEach(element => {
+                if (!listColorSizeStat[element.option[0].value]) {
+                    listColorSizeStat[element.option[0].value] = {}
+                    listColorSizeStat[element.option[0].value].listImg = element.listImg
+                    listColorSizeStat[element.option[0].value].listSize = [element.option[1].value]
+                } else (
+                    listColorSizeStat[element.option[0].value].listSize.push(element.option[1].value)
+                )
             });
+            let listColorSize = Object.entries(listColorSizeStat)
+            setCurrentColor(listColorSize[0] ? listColorSize[0][0] : null)
+            setListProductCurrentSize(listColorSize[0] ? listColorSize[0][1].listSize : null)
+            console.log(listColorSize)
+            setListColorSize(listColorSize)
+            let totalImg = listColorSize.reduce((total, item) => {
+                return total += item[1].listImg.length
+            }, 0)
+            if (totalImg >= 5) {
+                thumbControlBtn.current.className = cx(
+                    "list-img-thumb-control"
+                );
+            } else {
+                thumbControlBtn.current.className = cx(
+                    "list-img-thumb-control",
+                    "display-none"
+                );
+            }
+            setProductDetail(totalProduct);
+            setImgCurrent(res.data.product.thump[0]);
+        })
+        .catch((err) => {
+            console.log(err)
+        });
         imgCurrentViewLensZoom.current.addEventListener(
             "wheel",
             function (event) {
@@ -62,17 +111,7 @@ function SelectProduct() {
                 scaleLens(event);
             }
         );
-    }, []);
-
-    function setImgCurrentSrc(e) {
-        document
-            .querySelectorAll(`.${cx("list-img-thumb-item")}`)
-            .forEach((item) => {
-                item.className = cx("list-img-thumb-item");
-            });
-        e.currentTarget.className = cx("list-img-thumb-item", "img-active");
-        setImgCurrent(e.target.src);
-    }
+    }, [idProduct]);
 
     function downListImgThumb() {
         let changeMarginListThumb = marginListThumb - 100;
@@ -82,11 +121,9 @@ function SelectProduct() {
             setMarginListThumb((old) => old - 100);
         }
         imgThumbUl.current.style.marginTop = `${changeMarginListThumb}px`;
-        // console.log(imgThumbUl.current.style.marginTop);
     }
     function upListImgThumb() {
         let changeMarginListThumb = marginListThumb + 100;
-        // console.log(imgThumbUl.current.style.marginTop);
         if (changeMarginListThumb > 0) {
             changeMarginListThumb = 0;
         } else {
@@ -100,7 +137,6 @@ function SelectProduct() {
             x = 0,
             y = 0;
         e = e || window.event;
-        // console.log(e);
         /* Get the x and y positions of the image: */
         a = imgCurrentView.current.getBoundingClientRect();
         /* Calculate the cursor's x and y coordinates, relative to the image: */
@@ -124,7 +160,6 @@ function SelectProduct() {
         productThumbZoom.current.style.backgroundImage =
             "url('" + imgCurrentView.current.src + "')";
         let deltaY = e.deltaY;
-        // console.log(deltaY);
         let lensWidth = imgCurrentViewLensZoom.current.offsetWidth;
         let lensHeight = imgCurrentViewLensZoom.current.offsetHeight;
         if (deltaY > 0) {
@@ -225,8 +260,113 @@ function SelectProduct() {
         );
     }
 
+    function filterCurrentItem (currentColor, currentSize) {
+        let filter = productSimple.filter(item => {
+            return (item.color === currentColor && item.size === currentSize)
+        })
+        setCurrentItem(filter[0])
+    }
+
+    function handleAddProductToCart() {
+        if(productSimple.length) {
+            axios({
+                url: `${process.env.REACT_APP_PORT_API}cart/add-to-cart/${idCart}`,
+                method: "PATCH",
+                headers: {
+                    authorization: token,
+                },
+                data: {
+                    "productDetailId": currentItem.id,
+                    "quantity": buyQuantity
+                }
+            })
+            .then(res => {
+                console.log(res)
+                toast.success("Thêm giỏ hàng thành công");
+            })
+            .catch(err => {
+                console.log(err)
+                toast.error("Thêm vào giỏ hàng thất bại")
+            })
+        } else {
+            axios({
+                url: `${process.env.REACT_APP_PORT_API}cart/add-to-cart/${idCart}`,
+                method: "PATCH",
+                headers: {
+                    authorization: token,
+                },
+                data: {
+                    "productId": currentItem.id,
+                    "quantity": buyQuantity
+                }
+            })
+            .then(res => {
+                console.log(res)
+                toast.success("Thêm giỏ hàng thành công");
+            })
+            .catch(err => {
+                console.log(err)
+                toast.error("Thêm vào giỏ hàng thất bại")
+            })
+        }
+        
+    }
+
+    function handleBuynowBtn() {
+        if(productSimple.length) {
+            axios({
+                url: `${process.env.REACT_APP_PORT_API}cart/add-to-cart/${idCart}`,
+                method: "PATCH",
+                headers: {
+                    authorization: token,
+                },
+                data: {
+                    "productDetailId": currentItem.id,
+                    "quantity": buyQuantity
+                }
+            })
+            .then(res => {
+                console.log(res)
+                toast.success("Thêm giỏ hàng thành công");
+            })
+            .catch(err => {
+                console.log(err)
+                toast.error("Thêm vào giỏ hàng thất bại")
+            })
+        } else {
+            axios({
+                url: `${process.env.REACT_APP_PORT_API}cart/add-to-cart/${idCart}`,
+                method: "PATCH",
+                headers: {
+                    authorization: token,
+                },
+                data: {
+                    "productId": currentItem.id,
+                    "quantity": buyQuantity
+                }
+            })
+            .then(res => {
+                console.log(res)
+                toast.success("Thêm giỏ hàng thành công");
+            })
+            .catch(err => {
+                console.log(err)
+                toast.error("Thêm vào giỏ hàng thất bại")
+            })
+        }
+
+        nav('/payment')
+    }
+
     return (
         <div className={cx("wrapper")}>
+            <DetailProductHeader
+                category={productDetail.categoryId ?
+                    productDetail.categoryId.categoryName :
+                    null
+                }
+                nameProduct={productDetail.productName}
+            ></DetailProductHeader>
             <div className={cx("product-detail-inner")}>
                 <div className={cx("product-preview")}>
                     <div className={cx("list-img-thumbnail")}>
@@ -235,63 +375,38 @@ function SelectProduct() {
                             className={cx("list-img-thumb-ul")}
                         >
                             <li
-                                className={cx(
-                                    "list-img-thumb-item",
-                                    "img-active"
-                                )}
-                                onClick={setImgCurrentSrc}
+                                className={imgCurrent ===`${productDetail.thump ? productDetail.thump[0] : null}`?
+                                     cx("list-img-thumb-item","img-active") : cx("list-img-thumb-item")}
+                                onClick={() => {
+                                    setImgCurrent(productDetail.thump[0])
+                                }}
                             >
                                 <img
-                                    src={`https://shope-b3.thaihm.site/${productDetail.thumbnail}`}
+                                    src={productDetail.thump ? productDetail.thump[0] : null}
                                     alt=""
                                     width="100%"
                                 />
                             </li>
 
-                            {productDetail.listDtail
-                                ? productDetail.listDtail.map((item) => {
-                                      return item.listImg.map(
-                                          (imgItem, indexImg) => (
-                                              <li
-                                                  key={`${item._id}${indexImg}`}
-                                                  className={cx(
-                                                      "list-img-thumb-item"
-                                                  )}
-                                                  onClick={setImgCurrentSrc}
-                                              >
-                                                  <img
-                                                      src={`https://shope-b3.thaihm.site/${imgItem}`}
-                                                      alt=""
-                                                      width="100%"
-                                                  />
-                                              </li>
-                                          )
-                                      );
-                                  })
+                            {listColorSize.length ? listColorSize.map(([key, value], index) => {
+                                    return value.listImg.map(
+                                        (imgItem, indexImg) => (
+                                            <li
+                                                key={`${index}-${indexImg}`}
+                                                className={imgCurrent ===imgItem ?
+                                                    cx("list-img-thumb-item","img-active") : cx("list-img-thumb-item")}
+                                                onClick={() => {setImgCurrent(imgItem)}}
+                                            >
+                                                <img
+                                                    src={imgItem}
+                                                    alt=""
+                                                    width="100%"
+                                                />
+                                            </li>
+                                        )
+                                    );
+                                })
                                 : null}
-                            {/* {productDetail.listDtail
-                                ? productDetail.listDtail.map(
-                                      (item, indexItem) => {
-                                          return item.listImg.map(
-                                              (imgItem, indexImg) => (
-                                                  <li
-                                                      key={`${item._id}${indexImg}`}
-                                                      className={cx(
-                                                          "list-img-thumb-item"
-                                                      )}
-                                                      onClick={setImgCurrentSrc}
-                                                  >
-                                                      <img
-                                                          src={`https://shope-b3.thaihm.site/${imgItem}`}
-                                                          alt=""
-                                                          width="100%"
-                                                      />
-                                                  </li>
-                                              )
-                                          );
-                                      }
-                                  )
-                                : null} */}
                         </ul>
                         <div
                             ref={thumbControlBtn}
@@ -300,18 +415,14 @@ function SelectProduct() {
                                 "display-none"
                             )}
                         >
-                            <button
+                            <UpOutlined
                                 className={cx("list-img-thumb-control-up")}
                                 onClick={upListImgThumb}
-                            >
-                                <UpOutlined />
-                            </button>
-                            <button
+                            />
+                            <DownOutlined
                                 className={cx("list-img-thumb-control-down")}
                                 onClick={downListImgThumb}
-                            >
-                                <DownOutlined />
-                            </button>
+                            />
                         </div>
                     </div>
                     <div className={cx("img-current-view-container")}>
@@ -326,13 +437,9 @@ function SelectProduct() {
                         ></div>
                         <img
                             onMouseMove={scaleLens}
-                            // onMouseLeave={hideThumbZoomAndLens}
                             ref={imgCurrentView}
                             className={cx("img-current-view")}
-                            src={
-                                imgCurrent ||
-                                `https://shope-b3.thaihm.site/${productDetail.thumbnail}`
-                            }
+                            src={imgCurrent}
                             alt=""
                         />
                     </div>
@@ -343,81 +450,96 @@ function SelectProduct() {
                 ></div>
                 <div className={cx("product-info")}>
                     <div className={cx("product-info-header")}>
-                        <h1>
-                            Ốp Lưng Anker Karapax Breeze cho iPhone 7 Plus/ 8
-                            Plus - A9015
+                        <h1 className={cx("product-name")}>
+                            {productDetail.productName}
                         </h1>
                         <div className={cx("product-brand")}>
-                            <span>Thương hiệu: </span>
+                            <span className={cx("product-brand-span")}>Thương hiệu: </span>
                             <Link className={cx("product-brand-link")}>
-                                khác
+                                {productDetail.brandId ? productDetail.brandId.brandName : null}
                             </Link>
                         </div>
-                        <span>|</span>
+                        <span className={cx("product-brand-span")}>|</span>
                     </div>
                     <div className={cx("product-info-price")}>
-                        <span>299,000&#8363;</span>
+                        <span>{currentItem.price ? currentItem.price.toLocaleString() : null}&#8363;</span>
                     </div>
-                    <div className={cx("product-info-sort-desc")}>
-                        <ul>
-                            <li>Dung lượng pin: 3000mAh (Lithium-ion)</li>
-                            <li>Thiết kế đẹp mắt, di chuyển tiện lợi</li>
-                            <li>Chất âm trầm sâu lắng, âm bass nhẹ nhàng</li>
-                            <li>Công nghệ Bluetooth: 4.2</li>
-                            <li>Hỗ trợ jack cắm 3.5mm với mọi thiết bị</li>
-                            <li>Âm tần mạnh mẽ từ 50Hz - 20000Hz</li>
-                            <li>
-                                Kết nối không dây hơn 100 loa qua chức năng HK
-                                Connect
-                            </li>
+                    {/* <div className={cx("product-info-sort-desc")}>
+                        <ul className={cx("product-info-sort-desc-ul")}>
+                            <li className={cx("product-info-sort-desc-li")}>Màu sắc: {currentItem.option ? currentItem.option[0].value : null}</li>
+                            <li className={cx("product-info-sort-desc-li")}>RAM: {currentItem.rom}</li>
+                            <li className={cx("product-info-sort-desc-li")}>ROM: {currentItem.option ? currentItem.option[1].value : null}</li>
+                            <li className={cx("product-info-sort-desc-li")}>Tồn kho: {currentItem.storage}</li>
                         </ul>
-                    </div>
+                    </div> */}
                     <strong>
                         <form action="">
                             <div
                                 className={cx("product-info-variants-wrapper")}
                             >
-                                <div className={cx("product-select-watch")}>
+                                {productSimple.length ? <div className={cx("product-select-color-watch")}>
                                     <div
                                         className={cx(
-                                            "product-select-watch-header"
+                                            "product-select-color-watch-header"
                                         )}
                                     >
                                         Màu sắc
                                     </div>
                                     <div
                                         className={cx(
-                                            "product-select-watch-wrapper"
+                                            "product-select-color-watch-wrapper"
                                         )}
                                     >
-                                        <div
-                                            className={cx(
-                                                "product-select-watch-item",
-                                                "xam"
-                                            )}
-                                        >
-                                            <img
-                                                src="https://shope-b3.thaihm.site/publics/uploads/productDetails/thumbs-1670491583294-686267847.jpeg"
-                                                alt=""
-                                                height="100%"
-                                            />
-                                            <span>Xám</span>
-                                        </div>
-                                        <div
-                                            className={cx(
-                                                "product-select-watch-item",
-                                                "vang"
-                                            )}
-                                        >
-                                            <img
-                                                src="https://shope-b3.thaihm.site/publics/uploads/productDetails/thumbs-1670491688007-781122669.jpeg"
-                                                alt=""
-                                                height="100%"
-                                            />
-                                            <span>Vàng</span>
-                                        </div>
+                                        {listColorSize.map((item, index) => {
+                                            return (
+                                            <div
+                                                key={index}
+                                                className={currentItem.color === item[0] ? cx("product-select-color-watch-item", "product-select-watch-item-active") : cx("product-select-color-watch-item")}
+                                                onClick={() => {
+                                                    setListProductCurrentSize(item[1].listSize)
+                                                    setCurrentColor(item[0])
+                                                    filterCurrentItem(item[0], item[1].listSize[0])
+                                                    setImgCurrent(item[1].listImg[0])
+                                                }}
+                                                >
+                                                <img src="https://theme.hstatic.net/1000205427/1000509844/14/select-pro.png?v=56" alt="" className={currentItem.color === item[0] ? cx('img-check', 'img-check-active') : cx('img-check')}/>
+                                                <img src={item[1].listImg[0]} alt="" height="100%"/>
+                                                <span>{item[0]}</span>
+                                            </div>
+                                            )
+                                        })}
                                     </div>
-                                </div>
+                                </div> : null}
+
+                                {productSimple.length ? <div className={cx("product-select-size-watch")}>
+                                    <div
+                                        className={cx(
+                                            "product-select-size-watch-header"
+                                        )}
+                                    >
+                                        Bộ nhớ
+                                    </div>
+                                    <div
+                                        className={cx(
+                                            "product-select-size-watch-wrapper"
+                                        )}
+                                    >
+                                        {listProductCurrentSize.map((item, index) => {
+                                            return (
+                                            <div
+                                                key={index}
+                                                className={currentItem.size === item ? cx("product-select-color-watch-item", "product-select-watch-item-active") : cx("product-select-color-watch-item")}
+                                                onClick={() => {
+                                                    filterCurrentItem(currentColor, item)
+                                                }}
+                                                >
+                                                <img src="https://theme.hstatic.net/1000205427/1000509844/14/select-pro.png?v=56" alt="" className={currentItem.size === item ? cx('img-check', 'img-check-active') : cx('img-check')}/>
+                                                <span>{item}</span>
+                                            </div>
+                                            )
+                                        })}
+                                    </div>
+                                </div> : null}
                                 <div className={cx("product-site-connect")}>
                                     <div className={cx("product-site-hotline")}>
                                         {"Hotline hỗ trợ bán hàng 24/7: "}
@@ -431,34 +553,14 @@ function SelectProduct() {
                                     </div>
                                     <span>|</span>
                                     <div
-                                        className={cx("social-network-actions")}
-                                    >
-                                        <div
-                                            className={cx(
-                                                "social-network-actions-item",
-                                                "like"
-                                            )}
-                                        >
-                                            <span>
-                                                <LikeOutlined
-                                                    style={{
-                                                        marginRight: "5px",
-                                                        color: "#fff",
-                                                    }}
-                                                />
-                                            </span>
-                                            <span>Thích </span>
-                                            <span>0</span>
-                                        </div>
-                                        <div
-                                            className={cx(
-                                                "social-network-actions-item",
-                                                "share"
-                                            )}
-                                        >
-                                            <span>Chia sẻ</span>
-                                        </div>
-                                    </div>
+                                        className="fb-like"
+                                        data-href="https://phukienhay.vn/products/op-lung-anker-karapax-breeze-cho-iphone-7-plus-8-plus-a9015"
+                                        data-width=""
+                                        data-layout="button_count"
+                                        data-action="like"
+                                        data-size="small"
+                                        data-share="true"
+                                    ></div>
                                 </div>
                             </div>
                             <div className={cx("product-buy-action")}>
@@ -474,15 +576,23 @@ function SelectProduct() {
                                             className={cx(
                                                 "product-quantity-minusbtn"
                                             )}
+                                            onClick={() => {
+                                                if (buyQuantity > 1) {
+                                                    setBuyQuantity(old => old - 1)
+                                                }
+                                            }}
                                         >
                                             <MinusOutlined />
                                         </button>
-                                        <input type="text" value={1} min={1} />
+                                        <input type="text" value={buyQuantity} min={1} />
                                         <button
                                             type="button"
                                             className={cx(
                                                 "product-quantity-plusbtn"
                                             )}
+                                            onClick={() => {
+                                                setBuyQuantity(old => old + 1)
+                                            }}
                                         >
                                             <PlusOutlined />
                                         </button>
@@ -496,12 +606,14 @@ function SelectProduct() {
                                             "product-button-add-to-cart"
                                         )}
                                         type={"button"}
+                                        onClick={handleAddProductToCart}
                                     >
                                         THÊM VÀO GIỎ
                                     </button>
                                     <button
                                         className={cx("product-button-buy-now")}
                                         type={"button"}
+                                        onClick={handleBuynowBtn}
                                     >
                                         MUA NGAY
                                     </button>
