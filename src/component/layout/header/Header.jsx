@@ -1,6 +1,7 @@
 import classNames from 'classnames/bind'
 import styles from './Header.module.scss'
 import { ImSearch } from 'react-icons/im'
+import { Link } from 'react-router-dom'
 export default function Header() {
     const cx = classNames.bind(styles)
     return (
@@ -12,9 +13,9 @@ export default function Header() {
                             <div className={cx("grid__item-1 large--two-twelfths pd-left15 ")}>
                                 <div className={cx("header-logo")}>
                                     <h1>
-                                        <a href="">
+                                        <Link to='/'>
                                             <img className={cx('img-logo')} src="https://theme.hstatic.net/1000205427/1000509844/14/logo.png?v=56" alt="Phụ kiện Hay: Phụ Kiện Điện Thoại, Ốp, Bao Da, Cáp Sạc, Tai nghe, Loa" />
-                                        </a>
+                                        </Link>
                                     </h1>
                                 </div>
                             </div>
@@ -37,7 +38,7 @@ export default function Header() {
                                                         <input id={cx("searchtext")} name="q" className={cx("form-control input-search")} type="text" size="20" placeholder="Tìm kiếm sản phẩm..." autoComplete="off" maxLength="40" />
                                                         <span className={cx("input-group-btn")} >
                                                             <button id={cx("searchsubmit")} type="submit">
-                                                                <svg style={{marginTop:"10px", marginLeft:"10px"}} className={cx('svg-inline--fa fa-search fa-w-16')}>
+                                                                <svg style={{marginTop:"10px", marginLeft:"10px", height: "15px"}} className={cx('svg-inline--fa fa-search fa-w-16')}>
                                                                     <ImSearch/>
                                                                 </svg>
                                                             </button>
@@ -120,8 +121,8 @@ export default function Header() {
                                                 <div className={cx("hd-link-title")}>TÀI KHOẢN</div>
                                             </a>
                                             <ul className={cx("dropdown-menu")}>
-                                                <li><a href="/account/login">Đăng nhập</a></li>
-                                                <li><a href="/account/register">Đăng kí</a></li>
+                                                <li><Link to="/login">Đăng nhập</Link></li>
+                                                <li><Link to="/register">Đăng kí</Link></li>
                                             </ul>
                                         </li>
                                         <li className={cx("dropdown")} >

@@ -1,0 +1,134 @@
+.products-container {
+  background-color: #fafafa;
+}
+
+.wrapper {
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 0 30px;
+  margin-top: 20px;
+}
+.product {
+  background-color: var(--white-primary);
+  padding: 10px;
+  width: 100%;
+  height: 100%;
+
+  border: 1px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  transition: all 0.2s;
+  position: relative;
+
+  &:hover .product-img {
+    transform: scale(1.05);
+  }
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+  &:hover .btn-buy {
+    display: inline-block;
+  }
+}
+.product-img {
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: 0.2s;
+}
+.product-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 20px 0;
+  text-transform: capitalize;
+  &:hover {
+    color: var(--red-primary);
+  }
+}
+.product-price {
+  color: var(--red-primary);
+}
+.btn-buy {
+  background: #cd1818;
+  color: #fff;
+  text-transform: uppercase;
+  padding: 5px 15px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: 90%;
+  right: 10px;
+
+  display: none;
+  transition: all 0.4s;
+}
+.product-info-popup{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.product-color-box-popup{
+  display: flex;
+  gap: 10px;
+}
+.product-color{
+  background-color: #fff;
+  border-style: groove;
+ 
+  font-size: 13px;
+  font-weight: 700;
+  margin: 8px 5px 0 0;
+  padding: 8px;
+  position: relative;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.control-box{
+  display: flex;
+}
+.btn-decrease{
+  border-color: #f0f8ff;
+  border-style: double;
+  cursor: pointer;
+  padding: 10px;
+  width: 50px;
+  text-align: center;
+}
+.display-control{
+  border-style: groove;
+  display: inline-block;
+  padding: 10px;
+  text-align: center;
+  width: 60px;
+}
+
+.btn-increase{
+  border-color: #f0f8ff;
+  border-style: double;
+  cursor: pointer;
+  padding: 10px;
+  width: 50px;
+  text-align: center;
+}
+.btn-add{
+  padding: 8px 10px;
+  width: 30%;
+  margin: 0;
+  line-height: 1.42;
+  font-weight: bold;
+  text-decoration: none;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  cursor: pointer;
+  border: 1px solid transparent;
+  background-color: var(--red-primary);
+  color: var(--white-primary);
+}
+.Skeletion{
+ background-color: #fff;
+}
+
