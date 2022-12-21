@@ -29,9 +29,11 @@
   .chinh-sach{
     color:#000000;
     margin: 0px 0px 10px 0px;
+    text-decoration: none;
   }
   .chinh-sach-1{
     margin: 0px 0px 10px 0px;
+    list-style: none;
   }
   .ft-contact-email {
     display: flex;
@@ -63,7 +65,7 @@
   .large--one-quarter{
     width: 25%;
   }
-  h3{
+  .ft-title{
     margin-bottom: 10px;
   }
   .ft-subscribe-desc{
@@ -97,6 +99,23 @@
     font-size: 16px;
 }
 .ft-social{
-  margin-top: 20px;
+  margin-top: 10px;
 }
-
+.item-footer-face{
+  color: #3B5998;
+  font-size: 22px;
+  padding: 3px;
+  margin-right: 8px;
+}
+.item-footer-youtube{
+  color: #FF0000;
+  font-size: 22px;
+  padding: 3px;
+  margin-right: 8px;
+}
+.item-footer-instagram{
+  color: #C32AA3;
+  font-size: 22px;
+  padding: 3px;
+  margin-right: 8px;
+}
