@@ -1,0 +1,81 @@
+.sideNav_container{
+    display: flex;
+    align-items: center;
+    border-bottom-width: 1px;
+    border-bottom-color: rgb(229 231 235 / 1);
+    padding-top: 1rem/* 16px */;
+    padding-bottom: 1rem/* 16px */;
+}
+.box_img_user{
+    height: 48px;
+    width: 48px;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 100%;
+    border-width: 1px;
+    border-color: black;
+}
+.img_user{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.infor_user{
+    flex-grow: 1;
+    padding-left: 16px;
+}
+.name_user{
+    margin-bottom: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 600;
+    color: rgb(75 85 99);
+}
+.setting_infor{
+    display: flex;
+    align-items: center;
+    text-transform: capitalize;
+    color: rgb(107 114 128);
+    text-decoration: none;
+}
+.account_user{
+    border-top: 1px solid rgb(170, 186, 209);
+    margin-top: 20px;
+    padding-top: 20px;
+}
+.active_change_infor{
+    display: flex;
+    align-items: center;
+    text-transform: capitalize;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    color: rgb(75 85 99);
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+.active_change_infor:hover,
+.unActive_change_infor:hover{
+    color:  #cd1818;
+}
+.unActive_change_infor{
+    display: flex;
+    align-items: center;
+    text-transform: capitalize;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    color:  #cd1818;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+.box_icon_user{
+    margin-right: 12px;
+    height: 22px;
+    width: 22px;
+}
+.icon_user{
+    height: 100%;
+    width: 100%;
+}

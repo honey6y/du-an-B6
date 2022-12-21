@@ -78,7 +78,7 @@ export default function Header() {
                                                         <input id={cx("searchtext")} onChange={debounceOnChange} name="q" className={cx("form-control input-search")} type="text" size="20" placeholder="Tìm kiếm sản phẩm..." autoComplete="off" maxLength="40" />
                                                         <span className={cx("input-group-btn")} >
                                                             <button id={cx("searchsubmit")} type="submit">
-                                                                <svg style={{marginTop:"10px", marginLeft:"10px"}} className={cx('svg-inline--fa fa-search fa-w-16')}>
+                                                                <svg style={{marginTop:"10px", marginLeft:"10px", height: "15px"}} className={cx('svg-inline--fa fa-search fa-w-16')}>
                                                                     <ImSearch/>
                                                                 </svg>
                                                             </button>

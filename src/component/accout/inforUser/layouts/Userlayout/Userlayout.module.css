@@ -1,0 +1,26 @@
+.container_userLayout{
+    background-color: #fafafa;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 14px;
+    line-height: 20px;
+    color: rgb(75 85 99 / 1);
+    width: 100%;
+}
+.box_userLayout {
+    width: 82%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+.userLayout_body{
+    display: flex;
+    justify-content: space-between;
+}
+.user_side_nav{
+    width: 16% ;
+}
+.infor_layout{
+    width: calc(82% - 5%);
+}
