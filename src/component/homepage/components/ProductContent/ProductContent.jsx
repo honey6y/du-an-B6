@@ -9,9 +9,10 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import { useDispatch , useSelector } from "react-redux";
 import { openModal } from "../../../../features/counter/ModalSlice"; 
 import GalleryCarousel from "../GalleryCarousel/GalleryCarousel";
-
+import { useNavigate } from "react-router-dom";
 
 function ProductContent() {
+  const nav = useNavigate()
   const cx = classNames.bind(styles);
   const dispatch = useDispatch()
   const [list, setList] = useState([]);
