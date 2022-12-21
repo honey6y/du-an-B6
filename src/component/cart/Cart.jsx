@@ -11,6 +11,7 @@ import { getCart, getCartNumber } from "../../cartSlice";
 function Cart() {
   const cartData = useSelector((state) => state.cart.Carts);
   let [total, setTotal] = useState(0);
+  let [cartId, setCartId] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const quantityInput = createRef();
@@ -22,7 +23,7 @@ function Cart() {
   async function init() {
     try {
       let res = await axios.get(
-        `https://shope-b3.thaihm.site/api/cart/get-loged-in-cart`,
+        `https://ecommerce.nodemy.vn/api/v1/cart/get-loged-in-cart`,
         {
           headers: {
             Authorization: `${localStorage.getItem("token")}`,
@@ -36,6 +37,7 @@ function Cart() {
       let cartNumber = data.reduce((total, product) => {
         return total + product.quantity;
       }, 0);
+      setCartId(res.data.cart._id)
       setTotal(total);
       dispatch(getCartNumber(cartNumber));
       dispatch(getCart(data));
@@ -46,14 +48,14 @@ function Cart() {
 
   const columns = [
     {
-      title: "Thong tin chi tiet san pham ",
+      title: "Thông tin chi tiết sản phẩm ",
       dataIndex: "image",
       key: "image",
       colSpan: 2,
       render: (_, { image }) => (
         <img
           style={{ width: "100px" }}
-          src={`https://shope-b3.thaihm.site/${image}`}
+          src={`${image}`}
           alt="#"
         ></img>
       ),
@@ -73,13 +75,13 @@ function Cart() {
       ),
     },
     {
-      title: "Don gia",
+      title: "Đơn giá",
       dataIndex: "address",
       key: "address",
-      render: (_, { price }) => <h4 className={styles.currency}>{price}đ</h4>,
+      render: (_, { price }) => <h4 className={styles.currency}>{price.toLocaleString()}đ</h4>,
     },
     {
-      title: "So luong",
+      title: "Số lượng",
       key: "quantity",
       dataIndex: "tags",
       render: (_, { quantity, key }) => (
@@ -100,17 +102,17 @@ function Cart() {
       ),
     },
     {
-      title: "Tong gia",
+      title: "Tổng giá",
       key: "total",
       render: (_, { total }) => <h4 size="middle" className={styles.currency}>{total.toLocaleString()}đ</h4>,
     },
   ];
 
   const data = cartData.map((data) => ({
-    key: data?.productDetailId._id,
+    key: data?.productDetailId?._id,
     name: data?.productDetailId.productId.productName,
-    color: data?.productDetailId.color,
-    image: data?.productDetailId.productId.thumbnail,
+    color: data?.productDetailId.option[0].value,
+    image: data?.productDetailId.productId.thump,
     price: data?.productDetailId.price,
     quantity: data?.quantity,
     total: data?.productDetailId.price * data?.quantity,
@@ -119,7 +121,7 @@ function Cart() {
   function updateCart(key, value) {
     axios
       .patch(
-        "https://shope-b3.thaihm.site/api/cart/update-cart-quantity",
+        `https://ecommerce.nodemy.vn/api/v1/cart/update-cart-quantity/${cartId}`,
         {
           productDetailId: key,
           quantity: value,
@@ -138,7 +140,7 @@ function Cart() {
   function deleteFromCart(key) {
     axios
       .patch(
-        "https://shope-b3.thaihm.site/api/cart/remove-from-cart",
+        "https://ecommerce.nodemy.vn/api/v1/cart/remove-from-cart",
         {
           productDetailId: key,
         },
@@ -165,7 +167,7 @@ function Cart() {
         </div>
         <div className={styles.container}>
           <h2>GIỎ HÀNG</h2>
-          {cartData === [] ? <Table pagination={false} columns={columns} dataSource={data} /> : <Empty
+          {cartData !== [] ? <Table pagination={false} columns={columns} dataSource={data} /> : <Empty
             image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
             imageStyle={{
               height: 60,
