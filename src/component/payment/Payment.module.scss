@@ -6,7 +6,6 @@
 }
 .payment{
     width: 55%;
-    // padding: ;
 }
 .product{
     width: 42%;
@@ -52,6 +51,7 @@
     border: 1.5px solid rgb(214, 211, 211, 0.7);
     border-radius: 4px;
     padding: 2%;
+    outline-color: #338dbc;
 }
 .inputHoTen{
     position: relative;
@@ -60,8 +60,7 @@
     font-size: 14px;
     position: absolute;
     bottom: 38px;
-    z-index: 1;
-    padding-left: 2%;
+    left: 2%;
     color: rgb(150, 148, 148);
 }
 .show{
@@ -72,20 +71,57 @@
 .hide {
     display: none;
 }
-.email{
+.inputChild{
+    display: flex;
+}
+.inputEmail{
+    position: relative;
     width: 61%;
-    height: 45px;
     margin-right: 2%;
+}
+.Email{
+    position: absolute;
+    font-size: 14px;
+    top:0;
+    left: 3%;
+    color: rgb(150, 148, 148);
+}
+.email{
+    width: 100%;
+    height: 45px;
     border: 1.5px solid rgb(214, 211, 211, 0.7);
     border-radius: 4px;
-    padding: 2%;
+    padding-left: 3%;
+    outline-color: #338dbc;
+}
+.inputNumber{
+    width: 31%;
+    position: relative;
+}
+.Number{
+    position: absolute;
+    top: 0;
+    left: 4%;
+    color: rgb(150, 148, 148);
+    font-size: 14px;
 }
 .number{
-    width: 31%;
+    width: 100%;
     height: 45px;
     border: 1.5px solid rgb(214, 211, 211, 0.7);
     border-radius: 4px;
-    padding: 2%;
+    padding-left: 6%;
+    outline-color: #338dbc;
+}
+.inputAddress{
+    position: relative;
+}
+.diaChi{
+    position: absolute;
+    bottom: 53%;
+    left: 2%;
+    color: rgb(150, 148, 148);
+    font-size: 14px;
 }
 select{
     width: 46%;
@@ -93,10 +129,26 @@ select{
     margin-right: 2%;
     border: 1.5px solid rgb(214, 211, 211, 0.7);
     border-radius: 4px;
-    color: gray;
-    padding: 2%;
+    padding-left: 1%;
 }
-img{
+.gray{
+    color: gray
+}
+.footer{
+    width: 93%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5%;
+}
+.phuongThuc{
+    padding: 8%;
+    width: 195px;
+    border-radius: 4px;
+    color: white;
+    background-color: #338dbc;
+    border: none;
+}
+.image-SP{
     height: 65px;
     border-radius: 7px;
     border: 1px solid rgb(222, 220, 220);
@@ -106,7 +158,7 @@ img{
     width: 80px;
     margin-top: 2%;
 }
-.image{
+.image-number{
     width: 22px;
     height: 22px;
     border-radius: 50%;
@@ -146,14 +198,15 @@ img{
 }
 .product-item2 input{
     width: 75%;
-    height: 40px;
+    height: 45px;
     border: 1.5px solid rgb(214, 211, 211, 0.7);
     border-radius: 4px;
     padding-left: 3%;
+    outline-color: #338dbc;
 }
 .product-item2 button{
     width: 23%;
-    height: 40px;
+    height: 45px;
     margin-left: 2%;
     color: white;
     background-color: rgb(197, 193, 193);
@@ -187,4 +240,46 @@ img{
 .product-item4 div:last-child{
     font-size: 26px;
     color: rgba(51, 50, 50, 0.9);
+}
+.input1{
+    border: 1.5px solid rgba(214, 211, 211, 0.7);
+    border-radius: 4px;
+    width: 95%;
+    height: 55px;
+    padding: 0 2%;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 5%;
+}
+.price{
+    margin-left: 65%;
+}
+.gray{
+    color:gray
+}
+.input2{
+    border: 1.5px solid rgba(214, 211, 211, 0.7);
+    border-radius: 4px;
+    width: 95%;
+    height: 70px;
+    padding: 0 2%;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 5%;
+}
+.footer2{
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+}
+.datHang{
+    border: none;
+    width: 100px;
+    padding: 10%;
+    background-color: #338dbc;
+    color: white;
+    font-size: 15px;
+    border-radius: 4px;
 }
