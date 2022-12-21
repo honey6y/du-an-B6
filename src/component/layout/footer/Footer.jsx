@@ -1,11 +1,10 @@
 import styles from './Footer.module.scss'
-
 import classNames from 'classnames/bind'
 import {MdLocationOn} from 'react-icons/md'
 import {FaPhone} from 'react-icons/fa'
 import {FaFacebookF} from 'react-icons/fa'
 import {FaYoutube} from 'react-icons/fa'
-import {AiFillInstagram} from 'react-icons/ai'
+import {AiOutlineInstagram} from 'react-icons/ai'
 import {MdEmail} from 'react-icons/md'
 import {FaTelegramPlane} from 'react-icons/fa'
 import {IoMdArrowDropright} from 'react-icons/io'
@@ -71,15 +70,15 @@ export default function Footer() {
                                     <div className={cx('ft-subscribe-desc')}>Mỗi tháng chúng tôi đều có những đợt giảm giá dịch vụ và sản phẩm nhằm chi ân khách hàng. Để có thể cập nhật kịp thời những đợt giảm giá này, vui lòng nhập địa chỉ email của bạn vào ô dưới đây.</div>
                                     <div className={cx('ft-sub-wrapper')}>
                                         <form action="/account/contact">
-                                            <input type="email" name="" id={cx("Email")} placeholder='Nhập địa chỉ email của bạn...' />
+                                            <input type="email" name="" id={cx("Email")} placeholder='Nhập địa chỉ email của bạn...' required/>
                                             <button type='submit' name='subscribe' className={cx("submit-tele")} value="Gửi"><FaTelegramPlane/></button>
                                         </form>
                                     </div>
                                 </div>
                                 <div className={cx("ft-social")}>
-                                    <span className={cx('item-footer')}><FaFacebookF/></span>
-                                    <span className={cx('item-footer')}><FaYoutube/></span>
-                                    <span className={cx('item-footer')}><AiFillInstagram/></span>
+                                    <span className={cx('item-footer-face')}><FaFacebookF/></span>
+                                    <span className={cx('item-footer-youtube')}><FaYoutube/></span>
+                                    <span className={cx('item-footer-instagram')}><AiOutlineInstagram/></span>
                                 </div>
                             </div>
                         </div>

@@ -89,19 +89,19 @@ function Banner() {
                 </div>
               </Carousel>
               <div className={cx("banner-des")}>
-                        <div className={cx("banner-des-content")} onClick={()=>goToSlide(0)}>
+                        <div className={cx("banner-des-content")} >
                           Mua tai nghe abcd tặng <br></br>loa anker 400
                         </div>
-                        <div className={cx("banner-des-content")} onClick={()=>goToSlide(1)}>
+                        <div className={cx("banner-des-content")} >
                           Tai nghe Partron bhb400 <br></br> giảm 65%
                         </div>
-                        <div className={cx("banner-des-content")} onClick={()=>goToSlide(2)}>
+                        <div className={cx("banner-des-content")} >
                           Kẹp sạc ko dây <br></br> giảm 50%
                         </div>
-                        <div className={cx("banner-des-content")} onClick={()=>goToSlide(3)}>
+                        <div className={cx("banner-des-content")} >
                           Nhiệt ké thông minh <br></br>giảm 60%
                         </div>
-                        <div className={cx("banner-des-content")} onClick={()=>goToSlide(4)}>
+                        <div className={cx("banner-des-content")} >
                           Tẩu sạc Anodit <br></br> giảm 60%
                         </div>
                     </div>
