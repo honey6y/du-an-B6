@@ -1,19 +1,26 @@
 import styles from "./Banner.module.scss";
 import classNames from "classnames/bind";
 import { Row, Col } from "antd";
-import { Carousel } from "antd";
+import Carousel from "nuka-carousel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCalendarDays,
-  faCoffee,
   faComment,
-  faDiagramNext,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+import { useRef } from "react";
 
 function Banner() {
   const cx = classNames.bind(styles);
+  let carouselRef = useRef(null);
+  const handlePrevSlider = () => {
+    carouselRef.prev();
+  };
+
+  const handleNextSlider = () => {
+    carouselRef.next();
+  };
 
   return (
     <div className={cx("main-slider")}>
@@ -21,10 +28,30 @@ function Banner() {
         <Row gutter={5}>
           <Col span={16}>
             <div className={cx("banner")}>
-              <div className={cx("left")}></div>
-              <div className={cx("right")}></div>
-
-              <Carousel autoplay >
+              <Carousel 
+                  defaultControlsConfig={{
+                    // pagingDotsStyle: {
+                    //   fill: 'red',
+                    //   width : 100
+                    // },
+                  //  pagingDotsClassName : cx('dot-box')
+                  }}
+                  wrapAround={true} 
+                  slidesToShow={1} 
+                  dragThreshold={0.1} 
+                  autoplay={true}
+                
+                  renderCenterLeftControls={({ previousDisabled, previousSlide }) => (
+                    <button className={cx('btn-control-arrow')} onClick={previousSlide} disabled={previousDisabled}>
+                        <LeftOutlined />
+                    </button>
+                  )}
+                  renderCenterRightControls={({ nextDisabled, nextSlide }) => (
+                    <button className={cx('btn-control-arrow')} onClick={nextSlide} disabled={nextDisabled}>
+                        <RightOutlined />
+                    </button>
+                  )}
+                >
                 <div>
                   <img
                     src="https://theme.hstatic.net/1000205427/1000509844/14/ms_banner_img7.jpg?v=56"
@@ -61,24 +88,25 @@ function Banner() {
                   />
                 </div>
               </Carousel>
+              <div className={cx("banner-des")}>
+                        <div className={cx("banner-des-content")} onClick={()=>goToSlide(0)}>
+                          Mua tai nghe abcd tặng <br></br>loa anker 400
+                        </div>
+                        <div className={cx("banner-des-content")} onClick={()=>goToSlide(1)}>
+                          Tai nghe Partron bhb400 <br></br> giảm 65%
+                        </div>
+                        <div className={cx("banner-des-content")} onClick={()=>goToSlide(2)}>
+                          Kẹp sạc ko dây <br></br> giảm 50%
+                        </div>
+                        <div className={cx("banner-des-content")} onClick={()=>goToSlide(3)}>
+                          Nhiệt ké thông minh <br></br>giảm 60%
+                        </div>
+                        <div className={cx("banner-des-content")} onClick={()=>goToSlide(4)}>
+                          Tẩu sạc Anodit <br></br> giảm 60%
+                        </div>
+                    </div>
             </div>
-            <div className={cx("banner-des")}>
-              <div className={cx("banner-des-content")}>
-                Mua tai nghe abcd tặng <br></br>loa anker 400
-              </div>
-              <div className={cx("banner-des-content")}>
-                Tai nghe Partron bhb400 <br></br> giảm 65%
-              </div>
-              <div className={cx("banner-des-content")}>
-                Kẹp sạc ko dây <br></br> giảm 50%
-              </div>
-              <div className={cx("banner-des-content")}>
-                Nhiệt ké thông minh <br></br>giảm 60%
-              </div>
-              <div className={cx("banner-des-content")}>
-                Tẩu sạc Anodit <br></br> giảm 60%
-              </div>
-            </div>
+          
           </Col>
           <Col span={8}>
             <div className={cx("aside-banner")}>
@@ -106,15 +134,15 @@ function Banner() {
                     Xs, Xs Max ở mức giá 1.5 triệu đồng
                   </div>
                   <div className={cx("shortnews-icons")}>
-                    <div className={cx("article-date")}>
+                    <div className={cx("article-icons")}>
                       <FontAwesomeIcon icon={faCalendarDays}></FontAwesomeIcon>
                       <span> 22/10/20</span>
                     </div>
-                    <div className={cx("article-author")}>
+                    <div className={cx("article-icons")}>
                       <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>
                       <span>Admin Tony</span>
                     </div>
-                    <div className={cx("article-comments")}>
+                    <div className={cx("article-icons")}>
                       <FontAwesomeIcon icon={faComment}></FontAwesomeIcon>
                       <span> 0</span>
                     </div>

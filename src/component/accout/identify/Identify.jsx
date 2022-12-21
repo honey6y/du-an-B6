@@ -4,11 +4,9 @@ import { Link } from "react-router-dom"
 import { toast } from 'react-toastify'
 import { rules } from '../../Others/Rules'
 import style from "./Identify.module.css"
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Spinner from 'react-bootstrap/Spinner';
+
 
 export default function Identify() {
-    const [spamSubmit, setSpamSubmit] = useState(false)
     const { register, handleSubmit, formState: { errors }, reset} = useForm()
     const onSubmit = handleSubmit (() => {
         // setSpamSubmit(true)
@@ -39,8 +37,7 @@ export default function Identify() {
                                 <div className={style.infor_error}>{errors.email?.message}</div>
                             </div>
                             <div className={style.input_container}>
-                            <button type="submit" className={style.button_login} disabled={spamSubmit}>
-                                    <Spinner className={!spamSubmit ? style.spinner_block : style.spinner_none} animation="border" />
+                            <button type="submit" className={style.button_login}>
                                     <span className={style.button_name}>Gửi</span>
                                 </button>
                             </div>

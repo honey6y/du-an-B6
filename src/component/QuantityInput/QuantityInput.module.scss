@@ -1,0 +1,27 @@
+.control-box{
+  display: flex;
+}
+.btn-decrease{
+  border-color: #f0f8ff;
+  border-style: double;
+  cursor: pointer;
+  padding: 10px;
+  width: 50px;
+  text-align: center;
+}
+.display-control{
+  border-style: groove;
+  display: inline-block;
+  padding: 10px;
+  text-align: center;
+  width: 60px;
+}
+
+.btn-increase{
+  border-color: #f0f8ff;
+  border-style: double;
+  cursor: pointer;
+  padding: 10px;
+  width: 50px;
+  text-align: center;
+}
