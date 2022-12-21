@@ -121,7 +121,7 @@ function Cart() {
   function updateCart(key, value) {
     axios
       .patch(
-        `https://ecommerce.nodemy.vn/api/v1/cart/update-cart-quantity/${cartId}`,
+        `https://ecommerce.nodemy.vn/api/v1/cart/update-cart-quantity/${m }`,
         {
           productDetailId: key,
           quantity: value,
