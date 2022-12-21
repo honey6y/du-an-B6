@@ -25,13 +25,13 @@ root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-      <RouterElement>
-        <GlobalStyle>
-          <PrivateRoute>
-            <App />
-          </PrivateRoute>
-        </GlobalStyle>
-      </RouterElement>
+        <RouterElement>
+          <GlobalStyle>
+            <PrivateRoute>
+              <App />
+            </PrivateRoute>
+          </GlobalStyle>
+        </RouterElement>
     </Provider>
     </QueryClientProvider>
   </React.StrictMode>
