@@ -101,7 +101,7 @@ function Banner() {
                         <div className={cx("banner-des-content")} >
                           Nhiệt ké thông minh <br></br>giảm 60%
                         </div>
-                        <div className={cx("banner-des-content")}>
+                        <div className={cx("banner-des-content")} >
                           Tẩu sạc Anodit <br></br> giảm 60%
                         </div>
                     </div>
