@@ -1,12 +1,12 @@
 import axios from "axios"
-import { getTokenFromLS, saveTokenToLS } from "../actionLocal/ActionLocal";
+import { getTokenFromLS, saveTokenToLS } from "../../actionLocal/ActionLocal";
 
 class Http {
     constructor() {
         this.token = getTokenFromLS()
         this.instance = axios.create({
-            baseURL: 'https://shope-b3.thaihm.site/api',
-            timeout: 4000,
+            baseURL: 'https://shope-b3.thaihm.site/api/',
+            timeout: 10000,
             headers: {
                 'Content-Type': 'application/json'
             }

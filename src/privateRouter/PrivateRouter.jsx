@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { getTokenFromLS } from "../component/actionLocal/ActionLocal";
+import { getTokenFromLS } from "../actionLocal/ActionLocal";
 
 const checkPrivateRouter = {
     checkPrivate: Boolean(getTokenFromLS()),

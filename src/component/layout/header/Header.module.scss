@@ -48,6 +48,8 @@ body {
     width: 65%;
 }
 #searchsubmit{
+    display: flex;
+    align-items: baseline;
     width: 40px;
     height: 40px;
     line-height: 40px;

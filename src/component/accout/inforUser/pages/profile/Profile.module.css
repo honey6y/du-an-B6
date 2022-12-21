@@ -1,0 +1,65 @@
+.container_profile{
+    background-color: #ffffff;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+    border-radius: 2px;
+    padding: 0 8px 40px 8px ;
+}
+.profile_header{
+    border-bottom-width: 1px;
+    border-bottom-color: rgb(229 231 235);
+    padding: 24px 24px 15px 24px;
+}
+.myprofile{
+    font-size: 18px;
+    text-transform: capitalize;
+    color: black;
+    margin-bottom: 1px;
+}
+.title_profile{
+    font-size: 14px;
+    color: rgb(55 65 81);
+    margin-left: 5px;
+}
+.box_form{
+    border-top: 1px solid rgb(188, 163, 163);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.form_infor{
+    margin-top: 24px;
+    flex-grow: 1; 
+}
+.form_input{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.form_email{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-top: 12px;
+    text-transform: capitalize;
+}
+.name_email{
+    padding-top: 12px;
+    color: rgb(55 65 81);
+}
+.box_form_email{
+    margin-left: 15px;
+}
+
+
+.box_profile_img{
+    margin: 20px 0 20px 0;
+    height: 120px;
+    width: 120px;
+}
+.profile_img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 100%;
+}

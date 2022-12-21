@@ -16,6 +16,11 @@ import Identify from "./component/accout/identify/Identify";
 import { useContext } from "react";
 import { AppContext } from "./privateRouter/PrivateRouter";
 import LayoutProduct from "./component/product-Category/LayoutProduct/LayoutProduct";
+import Profile from "./component/accout/inforUser/pages/profile/Profile";
+import Userlayout from "./component/accout/inforUser/layouts/Userlayout/Userlayout";
+import ChangePassword from "./component/accout/inforUser/pages/changePassword/ChangePassword";
+import OrderHistory from "./component/accout/inforUser/pages/orderHistory/OrderHistory";
+
 
 function ProtectRoute() {
   const {checkPrivate} = useContext(AppContext)
@@ -49,12 +54,42 @@ function RouterElement () {
                 {
                   path: 'register',
                   element: <Register/>
-                }
+                },
+                {
+                  path: 'identify',
+                  element: <Identify/>
+                },
               ]
             },
             {
-              path: 'identify',
-              element: <Identify/>
+              path: '',
+              element: <ProtectRoute />,
+              children: [
+                {
+                  path: '',
+                  element: <Userlayout />,
+                  children: [
+                    {
+                      path: 'user/profile/',
+                      element: (
+                        <Profile />
+                      )
+                    },
+                    {
+                      path: 'user/change-password/',
+                      element: (
+                        <ChangePassword />
+                      )
+                    },
+                    {
+                      path: 'user/historyOrder/',
+                      element: (
+                        <OrderHistory />
+                      )
+                    }
+                  ]
+                }
+              ]
             },
             {
               path: 'collection',
@@ -73,7 +108,7 @@ function RouterElement () {
               element: <Payment/>
             },
             {
-              path: 'productCategory',
+              path: 'category',
               element: <LayoutProduct />
             }
           ]

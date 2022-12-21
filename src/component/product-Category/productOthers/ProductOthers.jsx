@@ -1,34 +1,14 @@
-import styles from "./ProductContent.module.scss";
-import classNames from "classnames/bind";
-import axios from "axios";
-import { useEffect } from "react";
-import { useState } from "react";
+import classNames from 'classnames';
+import React, { useState } from 'react'
 import { Row, Col, Modal } from "antd";
+import styles from "./ContainerPdCategory.module.scss";
 
-function ProductContent() {
-  const cx = classNames.bind(styles);
-  const [list, setList] = useState([]);
-  const [detail, setDetail] = useState({});
-  const [isModalOpen, setIsModalOpen] = useState(false);
+export default function ProductOthers({listProduct}) {
+  // console.log(listProduct);
+    const cx = classNames.bind(styles);
+    const [detail, setDetail] = useState({});
+    const [isModalOpen, setIsModalOpen] = useState(false);
   const [control, setControl] = useState(0)
-
-  useEffect(() => {
-    axios({
-      method: "get",
-      url: "https://shope-b3.thaihm.site/api/product/get-all-products",
-      headers: {
-        Authorization:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzkyZTYxNmZjYTM3MmRiMzhiNTE5MzgiLCJ1c2VybmFtZSI6ImJhYnk0ZXZlcjEiLCJlbWFpbCI6ImJhYnk0ZXZlcjFAZ21haWwuY29tIiwiYXZhdGFyIjoiaHR0cHM6Ly9tZWRpYS5pc3RvY2twaG90by5jb20vcGhvdG9zL2J1c2luZXNzbWFuLXNpbGhvdWV0dGUtYXMtYXZhdGFyLW9yLWRlZmF1bHQtcHJvZmlsZS1waWN0dXJlLXBpY3R1cmUtaWQ0NzYwODUxOTg_az0yMCZtPTQ3NjA4NTE5OCZzPTYxMng2MTImdz0wJmg9OEozVmdPWmFiX09pWW9JdVpmaU1JdnVjRllCOHZXWWxLblNqS3VLZVlRTT0iLCJyb2xlIjoidXNlciIsImNyZWF0ZWRBdCI6IjIwMjItMTItMDlUMDc6Mzk6MDIuNjg1WiIsInVwZGF0ZWRBdCI6IjIwMjItMTItMDlUMDc6Mzk6MDIuNjg1WiIsIl9fdiI6MCwiaWF0IjoxNjcwNTcxNjc0fQ.yXvH8dEvfswAZeyICPmJhWr4IWg-d7kysTtwNoP-jnc",
-      },
-    })
-      .then((res) => {
-        setList(res.data.products)
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
   const showModal = (item) => {
     setDetail(item);
     setIsModalOpen(true);
@@ -45,18 +25,16 @@ function ProductContent() {
         return pre  
       })
   }
-
   const handleIncrease = () =>{
     setControl((pre)=>{
       return pre += 1
     })
   }
-
   return (
     <div className={cx("products-container")}>
       <div className={cx("wrapper")}>
         <Row gutter={[15, 15]}>
-          {list.map((item, index) => {
+          {listProduct && listProduct.map((item, index) => {
             return (
               <Col span={6} key={item._id}>
                 <div className={cx("product")}>
@@ -134,38 +112,12 @@ function ProductContent() {
                   </div>
                 </div>
                 <button className={cx('btn-add')}>Thêm vào giỏ</button>
-                <a className={cx('link-product')} href="#">Hoặc xem chi tiết</a>
+                {/* <a className={cx('link-product')} href="#">Hoặc xem chi tiết</a> */}
               </div>
             </Col>
           </Row>
         </div>
       </Modal>
     </div>
-  );
+  )
 }
-
-export default ProductContent;
-
-// (
-//   <div className={cx("wrapper")}>
-//     ProductContent
-//     {list.map((item, index) => (
-//       <div className={cx("brand")} key={index}>
-//         <div className={cx("brand-name")}>{item[0]}</div>
-//         <div className={cx("brand-items")}>
-//           {item[1].map((Element, index) => {
-//             return (
-//               <div className={cx("brand-item")} key={Element._id}>
-//                 <img
-//                   src={`https://shope-b3.thaihm.site/${Element.thumbnail}`}
-//                   alt=""
-//                   width="100%"
-//                 />
-//               </div>
-//             );
-//           })}
-//         </div>
-//       </div>
-//     ))}
-//   </div>
-// );
