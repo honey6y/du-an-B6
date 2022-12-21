@@ -1,20 +1,30 @@
 .main-slider {
-  margin-top: 10px 0;
+  margin-top: 10px ;
   background-color: #fafafa;
 }
 .wrapper {
   max-width: 1260px;
   margin: 0 auto;
-
   padding: 0 30px;
 }
 .banner {
   position: relative;
 }
+.btn-control-arrow{
+  display: flex;
+  border: none;
+  padding: 12px 2px;
+  font-size: 20px;
+  background-color: rgb(176, 170, 170);
+  opacity: 0.6;
+  color: white;
+}
 .banner-des {
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
+
 .banner-des-content {
   background: #fff;
   padding: 8px 0px;
@@ -95,6 +105,11 @@
   display: flex;
   margin-bottom: 15px;
 }
+.article-icons{
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
 .img-box-news {
   width: 33.33%;
 }
@@ -108,3 +123,7 @@
   gap: 10px;
   margin-top: 10px;
 }
+// .dot-box{
+//   position: relative;
+//   top: -100px;
+// }

@@ -1,0 +1,190 @@
+.page{
+    width: 100%;
+    display: flex;
+    padding: 0 80px;
+    justify-content: space-between
+}
+.payment{
+    width: 55%;
+    // padding: ;
+}
+.product{
+    width: 42%;
+    background: rgba(252, 249, 249, 0.8);
+    box-shadow: 1px 0 0 #e1e1e1 inset;
+    padding: 0 3%;
+}
+.title{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 30px;
+}
+.nav{
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    margin: 1% 0;
+}
+.nav div:nth-child(2),
+.nav div:nth-child(4){
+    margin: 0 1%;
+}
+.nav div:nth-child(1){
+    color: #338dbc;
+}
+.infor{
+    font-size: 18px;
+    margin-bottom: 2%;
+}
+.login{
+    color: #338dbc;
+}
+::placeholder{
+    color: gray;
+}
+.menu{
+    display: flex;
+    flex-direction: column;
+}
+.name{
+    width: 94%;
+    height: 45px;
+    margin: 2% 0;
+    border: 1.5px solid rgb(214, 211, 211, 0.7);
+    border-radius: 4px;
+    padding: 2%;
+}
+.inputHoTen{
+    position: relative;
+}
+.hoTen{
+    font-size: 14px;
+    position: absolute;
+    bottom: 38px;
+    z-index: 1;
+    padding-left: 2%;
+    color: rgb(150, 148, 148);
+}
+.show{
+    display:block;
+    bottom:20px;
+    transition: all 1s ease;
+}
+.hide {
+    display: none;
+}
+.email{
+    width: 61%;
+    height: 45px;
+    margin-right: 2%;
+    border: 1.5px solid rgb(214, 211, 211, 0.7);
+    border-radius: 4px;
+    padding: 2%;
+}
+.number{
+    width: 31%;
+    height: 45px;
+    border: 1.5px solid rgb(214, 211, 211, 0.7);
+    border-radius: 4px;
+    padding: 2%;
+}
+select{
+    width: 46%;
+    height: 45px;
+    margin-right: 2%;
+    border: 1.5px solid rgb(214, 211, 211, 0.7);
+    border-radius: 4px;
+    color: gray;
+    padding: 2%;
+}
+// img{
+//     height: 65px;
+//     border-radius: 7px;
+//     border: 1px solid rgb(222, 220, 220);
+// }
+.img-box{
+    position: relative;
+    width: 80px;
+    margin-top: 2%;
+}
+.image{
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(168, 168, 168);
+    color:white;
+    position: absolute;
+    top:-6px;
+    right: 0;
+}
+.product-item1{
+    display: flex;
+    align-items: center;
+    border-bottom: 0.5px solid rgb(202, 201, 201, 0.8);
+    padding-bottom: 2%;
+    width: 100%;
+}
+.product-text{
+    margin-left: 3%;
+    font-size: 15px;
+}
+.product-text span{
+    color:gray;
+    font-size: 14px;
+}
+.product-price{
+    margin-left: 13%;
+    font-size: 15px;
+}
+.product-item2{
+    width: 100%;
+    padding: 5% 0 3% 0;
+    border-bottom: 0.5px solid rgb(202, 201, 201, 0.8);
+}
+.product-item2 input{
+    width: 75%;
+    height: 40px;
+    border: 1.5px solid rgb(214, 211, 211, 0.7);
+    border-radius: 4px;
+    padding-left: 3%;
+}
+.product-item2 button{
+    width: 23%;
+    height: 40px;
+    margin-left: 2%;
+    color: white;
+    background-color: rgb(197, 193, 193);
+    border: 0px;
+    border-radius: 4px;
+}
+.product-item3{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 0.5px solid rgb(202, 201, 201, 0.8);
+    padding: 6% 0 5% 0;
+}
+.ship{
+    color: gray
+}
+.money{
+    color:rgba(51, 50, 50, 0.9)
+}
+.money div:nth-child(2){
+    text-align: right;
+}
+.product-item4{
+    display: flex;
+    justify-content: space-between;
+    padding: 5% 0;
+}
+.product-item4 div:first-child{
+    font-size: 18px;
+    color: rgba(51, 50, 50, 0.9);
+}
+.product-item4 div:last-child{
+    font-size: 26px;
+    color: rgba(51, 50, 50, 0.9);
+}
