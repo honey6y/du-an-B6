@@ -1,7 +1,26 @@
-import React from 'react'
+import { useQuery } from '@tanstack/react-query'
+import React, { useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+import { userApi } from '../../../../Others/QueryApi'
 import style from './Profile.module.css'
 
 export default function Profile() {
+
+
+  const {register, handleSubmit, formState: { errors}, setError, watch} = useForm({
+    defaultValues: {
+      username: '',
+      phone: '',
+      avatar: '',
+      dateOfBirth: '',
+      address: ''
+    }
+  })
+  const {data: dataProfile } = useQuery({
+    queryKey: ['/auth/me'],
+    queryFn: userApi.getProfile
+  })
+  console.log(dataProfile);
   return (
     <div className={style.container_profile}>
       <div className={style.profile_header}>

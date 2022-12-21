@@ -5,7 +5,7 @@ class Http {
     constructor() {
         this.token = getTokenFromLS()
         this.instance = axios.create({
-            baseURL: 'https://shope-b3.thaihm.site/api/',
+            baseURL: 'https://ecommerce.nodemy.vn/api/v1/',
             timeout: 10000,
             headers: {
                 'Content-Type': 'application/json'
@@ -23,7 +23,7 @@ class Http {
         this.instance.interceptors.response.use( 
             (response) => {
             const {url} = response.config
-            if( url === "/auth/sign-in") {
+            if( url === "/auth/login") {
                 this.token = response.data.token
                 saveTokenToLS(this.token)
             }
