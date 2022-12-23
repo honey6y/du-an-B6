@@ -27,7 +27,7 @@
 }
 .layout_nameLogin{
     margin-left: 10px;
-    text-transform: capitalize;
+    text-transform: uppercase;
 }
 .filter_price_name,
 .filter_product_others,
@@ -71,11 +71,13 @@
     text-decoration: none;
     color: #000000;
     margin-left: 10px;
+    text-transform: uppercase;
 }
 .price_change_range{
     color: #cd1818;
     font-size: 13px;
-    margin-left: 10px
+    margin-left: 10px;
+    text-transform: uppercase;
 }
 .price_range:hover,
 .range:hover{

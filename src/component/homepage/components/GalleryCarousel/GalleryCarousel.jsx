@@ -40,7 +40,7 @@ function GalleryCarousel({dataProps , title, isSale}) {
                         <div className={cx('img-box')}>
                           <img 
                             draggable={false} 
-                            src={item.thump}
+                            src={item.thump[0]}
                             alt="" 
                             width='100%' 
                             onClick={()=>nav(`/detail/${item._id}`)}

@@ -11,7 +11,6 @@ import Collection from "./component/collection/Collection";
 import Login from "./component/accout/login/Login";
 import Register from "./component/accout/register/Register";
 import Cart from "./component/cart/Cart";
-import Payment from "./component/payment/Payment";
 import Identify from "./component/accout/identify/Identify";
 import { useContext } from "react";
 import { AppContext } from "./privateRouter/PrivateRouter";
@@ -20,6 +19,7 @@ import Profile from "./component/accout/inforUser/pages/profile/Profile";
 import Userlayout from "./component/accout/inforUser/layouts/Userlayout/Userlayout";
 import ChangePassword from "./component/accout/inforUser/pages/changePassword/ChangePassword";
 import OrderHistory from "./component/accout/inforUser/pages/orderHistory/OrderHistory";
+import PaymentPage from "./component/payment/PaymentPage";
 
 
 function ProtectRoute() {
@@ -70,19 +70,19 @@ function RouterElement () {
                   element: <Userlayout />,
                   children: [
                     {
-                      path: 'user/profile/',
+                      path: 'user/profile',
                       element: (
                         <Profile />
                       )
                     },
                     {
-                      path: 'user/change-password/',
+                      path: 'user/change-password',
                       element: (
                         <ChangePassword />
                       )
                     },
                     {
-                      path: 'user/historyOrder/',
+                      path: 'user/historyOrder',
                       element: (
                         <OrderHistory />
                       )
@@ -105,7 +105,7 @@ function RouterElement () {
             },
             {
               path: 'payment',
-              element: <Payment/>
+              element: <PaymentPage/>
             },
             {
               path: 'category',

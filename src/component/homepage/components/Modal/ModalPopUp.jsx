@@ -22,7 +22,9 @@ function ModalPopUp() {
     const [newDataFormat , setNewDataFormat] = useState({})
     const [currentListSize , setCurrentListSize] = useState([])
     const [detailImg, setDetailImg]= useState([])
-    console.log('modalState.Productitem',modalState.productItem)
+    const [listKeyOption , setListKeyOption] = useState([])
+    const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMzYWU3NDZjYTIyZWM4NGM2NDk1MSIsImF2YXRhciI6Imh0dHBzOi8vc3QzLmRlcG9zaXRwaG90b3MuY29tLzE3Njc2ODcvMTY2MDcvdi80NTAvZGVwb3NpdHBob3Rvc18xNjYwNzQ0MjItc3RvY2staWxsdXN0cmF0aW9uLWRlZmF1bHQtYXZhdGFyLXByb2ZpbGUtaWNvbi1ncmV5LmpwZyIsImVtYWlsIjoiYmFieTRldmVyMTFAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJjYXJ0Ijp7Il9pZCI6IjYzOWMzYWU3NDZjYTIyZWM4NGM2NDk1MyIsInVzZXJJZCI6IjYzOWMzYWU3NDZjYTIyZWM4NGM2NDk1MSIsImxpc3RQcm9kdWN0IjpbXSwicHJvZHVjdCI6W3sicHJvZHVjdElkIjoiNjMwOGExYTFkZDNiMTZkM2UzNWE5YzRiIiwicXVhbnRpdHkiOjEsInNlbGVjdGVkIjpmYWxzZSwiX2lkIjoiNjNhNTFhY2YwM2NlNWEzZWU1ZmRmMzhiIn1dLCJjcmVhdGVkQXQiOiIyMDIyLTEyLTE2VDA5OjMxOjE5LjIxNloiLCJ1cGRhdGVkQXQiOiIyMDIyLTEyLTIzVDA0OjQ1OjM0Ljc3MloiLCJfX3YiOjB9LCJuYXRpb25hbGl0eSI6IlZpZXQgTmFtIiwiaWF0IjoxNjcxNzcyODg0LCJleHAiOjE2NzE4NTkyODR9.LRK9_EsT7ZumVKdDd_IXNfxzjQpDWCCy1LsPv_bhmMI`
+   
     useEffect(()=>{
       let newData = modalState.productItem.productDetailId?.map(item => {
         let newDataItem = {};
@@ -34,6 +36,14 @@ function ModalPopUp() {
       });
       console.log('newData',newData)
       setNewDataFormat(newData)
+      if(modalState.productItem.productDetailId){
+        let totayKeyOption = []
+        modalState.productItem.productDetailId[0]?.option.map(item => {
+          totayKeyOption.push(item.optionName)
+        })
+        console.log('totalkey', totayKeyOption)
+        setListKeyOption(totayKeyOption)
+      }
       setCurrentOption(newData ? newData[0] : {})
       let dataRenderBuffer = {};
       let productDetailId = modalState.productItem.productDetailId ? modalState.productItem.productDetailId : []
@@ -41,7 +51,7 @@ function ModalPopUp() {
         if (!dataRenderBuffer[item.option[0].value]) {
           dataRenderBuffer[item.option[0].value] = {}
           dataRenderBuffer[item.option[0].value].listImg = item.listImg
-          dataRenderBuffer[item.option[0].value].listSize = [item.option[1].value]
+          dataRenderBuffer[item.option[0].value].listSize = [item.option[1]?.value]
         } else {
           dataRenderBuffer[item.option[0].value].listSize.push(item.option[1].value)
         }
@@ -60,6 +70,7 @@ function ModalPopUp() {
       dispatch(closeModal())
       setViewPopupImgSrc(null)
       setControl(1)
+      setDetailImg([])
     };
   function findCurrentOption(currentColor , currentSize) {
       let currentOption = newDataFormat.filter((item,index)=>{
@@ -88,7 +99,7 @@ function ModalPopUp() {
         method: 'patch',
         url: 'https://ecommerce.nodemy.vn/api/v1/cart/add-to-cart/639c3ae746ca22ec84c64953',
         headers: { 
-          'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMzYWU3NDZjYTIyZWM4NGM2NDk1MSIsImF2YXRhciI6Imh0dHBzOi8vc3QzLmRlcG9zaXRwaG90b3MuY29tLzE3Njc2ODcvMTY2MDcvdi80NTAvZGVwb3NpdHBob3Rvc18xNjYwNzQ0MjItc3RvY2staWxsdXN0cmF0aW9uLWRlZmF1bHQtYXZhdGFyLXByb2ZpbGUtaWNvbi1ncmV5LmpwZyIsImVtYWlsIjoiYmFieTRldmVyMTFAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJjYXJ0Ijp7Il9pZCI6IjYzOWMzYWU3NDZjYTIyZWM4NGM2NDk1MyIsInVzZXJJZCI6IjYzOWMzYWU3NDZjYTIyZWM4NGM2NDk1MSIsImxpc3RQcm9kdWN0IjpbXSwicHJvZHVjdCI6W10sImNyZWF0ZWRBdCI6IjIwMjItMTItMTZUMDk6MzE6MTkuMjE2WiIsInVwZGF0ZWRBdCI6IjIwMjItMTItMTZUMDk6MzE6MTkuMjE2WiIsIl9fdiI6MH0sIm5hdGlvbmFsaXR5IjoiVmlldCBOYW0iLCJpYXQiOjE2NzE1MzIyNDgsImV4cCI6MTY3MTYxODY0OH0.t-rK-t-fLJkRKhvgauGUL0w1dojgD6Zskm_fHc5wlRw', 
+          'Authorization': token, 
           'Content-Type': 'application/json'
         },
         data : {
@@ -112,7 +123,7 @@ function ModalPopUp() {
         method: 'patch',
         url: 'https://ecommerce.nodemy.vn/api/v1/cart/add-to-cart/639c3ae746ca22ec84c64953',
         headers: { 
-          'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMzYWU3NDZjYTIyZWM4NGM2NDk1MSIsImF2YXRhciI6Imh0dHBzOi8vc3QzLmRlcG9zaXRwaG90b3MuY29tLzE3Njc2ODcvMTY2MDcvdi80NTAvZGVwb3NpdHBob3Rvc18xNjYwNzQ0MjItc3RvY2staWxsdXN0cmF0aW9uLWRlZmF1bHQtYXZhdGFyLXByb2ZpbGUtaWNvbi1ncmV5LmpwZyIsImVtYWlsIjoiYmFieTRldmVyMTFAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJjYXJ0Ijp7Il9pZCI6IjYzOWMzYWU3NDZjYTIyZWM4NGM2NDk1MyIsInVzZXJJZCI6IjYzOWMzYWU3NDZjYTIyZWM4NGM2NDk1MSIsImxpc3RQcm9kdWN0IjpbXSwicHJvZHVjdCI6W10sImNyZWF0ZWRBdCI6IjIwMjItMTItMTZUMDk6MzE6MTkuMjE2WiIsInVwZGF0ZWRBdCI6IjIwMjItMTItMTZUMDk6MzE6MTkuMjE2WiIsIl9fdiI6MH0sIm5hdGlvbmFsaXR5IjoiVmlldCBOYW0iLCJpYXQiOjE2NzE1MzIyNDgsImV4cCI6MTY3MTYxODY0OH0.t-rK-t-fLJkRKhvgauGUL0w1dojgD6Zskm_fHc5wlRw', 
+          'Authorization': token, 
           'Content-Type': 'application/json'
         },
         data : {
@@ -159,7 +170,7 @@ function ModalPopUp() {
             <Col span={12}>
               <div className={cx("product-bigimg-popup")}>
                 <img
-                  src={viewPopupImgSrc || modalState.productItem.thump}
+                  src={viewPopupImgSrc || (modalState.productItem.thump ? modalState.productItem.thump[0] : null)}
                   alt=""
                   width="100%"
                 />
@@ -177,21 +188,22 @@ function ModalPopUp() {
                 <p className={cx('product-brand-popup')}>Hãng : { modalState.productItem.brandId ? modalState.productItem.brandId.brandName : null} </p>
                 <p className={cx('product-price-popup')}>Giá :{currentOption ? currentOption.price?.toLocaleString() : null || modalState.productItem.price?.toLocaleString()}
                 </p>
-                {modalState.productItem.productDetailId?.length > 1 ?
-                 <> <div className={cx('product-color-box-popup')}>
-                  <p>Mau`</p>
+                {listKeyOption[0] ?
+                <div className={cx('product-color-box-popup')}>
+                  <p className={cx('product-color-name')}>{listKeyOption[0]}</p>
                     <div className={cx('products-color-box')}>
                         {dataRender.map((item,index)=>{
                         return <div key={index} className={item[0] === currentOption.color ?  cx('product-color-active') : cx('product-color')} onClick={()=>handleColorProduct(item)}>
-                        <img className={cx('img-product-color')} src={item[1].listImg[0]} alt="" width='50%' />
+                        <img className={cx('img-product-color')} src={item[1].listImg[0]} alt="" height='100%' width="50%"/>
                         <img className={item[0] === currentOption.color ? cx('img-active-color') :cx('img-not-active-color')} src="https://theme.hstatic.net/1000205427/1000509844/14/select-pro.png?v=56" alt="" />
                         <p className={cx('name-color-product')}>{item[0]}</p>
                      </div>
                   })}
                   </div>
-               </div>
+               </div> : null }
+               {listKeyOption[1] ? 
                <div className={cx('product-size-box-popup')}>
-                 Size
+                   <p className={cx('product-size-name')}>{listKeyOption[1]}</p>
                    <div className={cx('product-size-box')}>
                      {currentListSize ? currentListSize.map((item,index)=>{
                       return<div key={Math.random()} className={item === currentOption.size ? cx('product-size-active') : cx('product-size')} onClick={()=>handleSizeProduct(item)}>
@@ -200,8 +212,7 @@ function ModalPopUp() {
                    </div>
                  }) : null}
                    </div>
-               </div></> :
-                  null}
+               </div> : null }
                 <p className={cx('quantity-box')}>Số lượng</p>
                 <div className={cx('control-box')}>
                   <div className={cx('btn-decrease')} onClick={handleDecrease}>-
