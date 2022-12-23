@@ -3,11 +3,12 @@ import classNames from 'classnames/bind';
 import { RightOutlined } from '@ant-design/icons';
 import {useEffect, useState} from 'react'
 import axios from 'axios';
+import PreviewCart from '../PreviewCart/PreviewCart';
 
 function Payment () {
+    console.log('render-cha')
     const [listProvince, setListProvince] = useState([])
     const [province, setProvince] = useState(null)
-
     useEffect(() => {
         axios({
             method: 'get',
@@ -27,7 +28,6 @@ function Payment () {
             return item.name === e.target.value
         })
         setProvince(result)
-        console.log(result);
     }
     const [hoTenDisplay, setHoTenDisplay] = useState(false)
     const [emailDisplay, setEmailDisplay] = useState(false)
@@ -164,41 +164,7 @@ function Payment () {
                 </div>
             </div>}
             </div>
-            <div className={cx('product')}>
-                <div className={cx('product-item1')}>
-                    <div className={cx('img-box')}>
-                        <img src="https://product.hstatic.net/1000205427/product/10650848828_20612872_2994b2008d9943c095e6965da6f7a1b6_master_b0cd0171b732483b898da134cab5f4d5_small.jpg" alt="" className={cx('image-SP')}/>
-                        <div className={cx('image-number')}>3</div>
-                    </div>
-                    <div className={cx('product-text')}>
-                        <p>Máy Đuổi Muỗi Thông Minh DSG</p>
-                        <span>12 tháng</span>
-                    </div>
-                    <div className={cx('product-price')}>
-                        840,000đ
-                    </div>
-                </div>
-                <div className={cx('product-item2')}>
-                    <input type="text" placeholder='Mã giảm giá'/>
-                    <button>Sử dụng</button>
-                </div>
-                <div className={cx('product-item3')}>
-                    <div className={cx('ship')}>
-                        <p>Tạm tính</p>
-                        <span>Phí ship</span>
-                    </div>
-                    <div className={cx('money')}>
-                        <div>840,000</div>
-                        <div className={cx('phiShip')}>__</div>
-                    </div>
-                </div>
-                <div className={cx('product-item4')}>
-                    <div>
-                        Tổng tiền
-                    </div>
-                    <div>840,000</div>
-                </div>
-            </div>
+           <PreviewCart />
         </div>
             
             </>
