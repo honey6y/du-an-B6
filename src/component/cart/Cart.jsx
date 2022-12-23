@@ -30,7 +30,7 @@ function Cart() {
             Authorization: `${localStorage.getItem("token")}`,
           },
         }
-      );
+      );lop
       let listProduct = res.data.cart.listProduct;
       let product = res.data.cart.product;
       let totalListProduct = listProduct.reduce((total, data) => {
