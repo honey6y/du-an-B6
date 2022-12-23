@@ -35,7 +35,7 @@ function GalleryCarousel({dataProps , title, isSale}) {
             )}
            >
               {dataProps.map((item,index)=>{
-                return<div className={cx('card-box')} key={item._id} onClick={()=>nav(`detail/${item._id}`)}>
+                return<div className={cx('card-box')} key={item._id} >
                         {isSale ? <div className={cx('sale-box')}>-30%</div> : null}
                         <div className={cx('img-box')}>
                           <img 
@@ -43,9 +43,10 @@ function GalleryCarousel({dataProps , title, isSale}) {
                             src={item.thump}
                             alt="" 
                             width='100%' 
+                            onClick={()=>nav(`/detail/${item._id}`)}
                           />
                         </div>
-                        <p className={cx('card-box-name')}>{item.productName}</p>
+                        <p className={cx('card-box-name')} onClick={()=>nav(`/detail/${item._id}`)}>{item.productName}</p>
                         <h3 className={cx('card-box-price')}>{item.price?.toLocaleString()}</h3>
                         <button className={cx('btn-buy')} onClick={()=>{
                           dispatch(openModal(item));
