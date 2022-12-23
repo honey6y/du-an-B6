@@ -17,14 +17,14 @@ import styles from "./SelectProduct.module.scss";
 const cx = classNames.bind(styles);
 
 function SelectProduct() {
-    // const notify = () => toast("Thêm vào giỏ hàng thành công");
     const nav = useNavigate()
     let idCart = '63a1d0366d8b52f0ce429cc2';
-    let token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMyMGUwNWZlNjMyMDQ1ODQ3M2NmNiIsImF2YXRhciI6Imh0dHBzOi8vc3QzLmRlcG9zaXRwaG90b3MuY29tLzE3Njc2ODcvMTY2MDcvdi80NTAvZGVwb3NpdHBob3Rvc18xNjYwNzQ0MjItc3RvY2staWxsdXN0cmF0aW9uLWRlZmF1bHQtYXZhdGFyLXByb2ZpbGUtaWNvbi1ncmV5LmpwZyIsInVzZXJuYW1lIjoidGVzdDEyMzEyMyIsImVtYWlsIjoiZGVtby1hbkBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImNhcnQiOnsiX2lkIjoiNjM5YzIwZTE1ZmU2MzIwNDU4NDczY2Y4IiwidXNlcklkIjoiNjM5YzIwZTA1ZmU2MzIwNDU4NDczY2Y2IiwibGlzdFByb2R1Y3QiOlt7InByb2R1Y3REZXRhaWxJZCI6IjYyZWNjYTczMmQ2OGQxYTYwZDM0MTZlMSIsInF1YW50aXR5Ijo1LCJzZWxlY3RlZCI6ZmFsc2UsIl9pZCI6IjYzOWMyZmMxNDZjYTIyZWM4NGM2NDkzMCJ9LHsicHJvZHVjdERldGFpbElkIjoiNjMyYzA0MDkxMjYyYjhjZDlkMTc0OGQ1IiwicXVhbnRpdHkiOjYsInNlbGVjdGVkIjpmYWxzZSwiX2lkIjoiNjNhMDRiNjM2ZDhiNTJmMGNlNDI5MmVlIn1dLCJwcm9kdWN0IjpbXSwiY3JlYXRlZEF0IjoiMjAyMi0xMi0xNlQwNzo0MDoxNy4wNDBaIiwidXBkYXRlZEF0IjoiMjAyMi0xMi0yMFQwOTowMjo1Ni4zOTRaIiwiX192IjowfSwiZnVsbG5hbWUiOiJ0ZXN0MTIzIiwiZGF0ZU9mQmlydGgiOiIyMDAwLTEwLTIwVDAwOjAwOjAwLjAwMFoiLCJzZXgiOiJtYWxlIiwibmF0aW9uYWxpdHkiOiJWaWV0IE5hbSIsImlhdCI6MTY3MTUyNzEzOSwiZXhwIjoxNjcxNjEzNTM5fQ.fAt_2iI_0pMTWVTkAq08NFc6U1QR4E-mCUIYTkgA7KM`;
+    let token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTFkMDM1NmQ4YjUyZjBjZTQyOWNjMCIsImF2YXRhciI6Imh0dHBzOi8vc3QzLmRlcG9zaXRwaG90b3MuY29tLzE3Njc2ODcvMTY2MDcvdi80NTAvZGVwb3NpdHBob3Rvc18xNjYwNzQ0MjItc3RvY2staWxsdXN0cmF0aW9uLWRlZmF1bHQtYXZhdGFyLXByb2ZpbGUtaWNvbi1ncmV5LmpwZyIsImVtYWlsIjoiZGVtby10aGFpQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiY2FydCI6eyJfaWQiOiI2M2ExZDAzNjZkOGI1MmYwY2U0MjljYzIiLCJ1c2VySWQiOiI2M2ExZDAzNTZkOGI1MmYwY2U0MjljYzAiLCJsaXN0UHJvZHVjdCI6W10sInByb2R1Y3QiOlt7InByb2R1Y3RJZCI6IjYyZmRlZjk5OTU0OWI4YjcwODc3M2IzYyIsInF1YW50aXR5IjozLCJzZWxlY3RlZCI6ZmFsc2UsIl9pZCI6IjYzYTMzZGRmMDNjZTVhM2VlNWZkZDNiYiJ9XSwiY3JlYXRlZEF0IjoiMjAyMi0xMi0yMFQxNTowOTo0Mi4wMDVaIiwidXBkYXRlZEF0IjoiMjAyMi0xMi0yMVQxNzowOTo1MS41NThaIiwiX192IjowfSwibmF0aW9uYWxpdHkiOiJWaWV0IE5hbSIsImlhdCI6MTY3MTY0MjkyNCwiZXhwIjoxNjcxNzI5MzI0fQ.aWBmCFRdO01zXWWy54oZGVqbWqhK3G7bsN4Ji35RYiQ`;
     let { idProduct } = useParams();
     const [productDetail, setProductDetail] = useState({});
     const [currentItem, setCurrentItem] = useState({});
     const [imgCurrent, setImgCurrent] = useState(``);
+    const [imgThump, setImgThump] = useState(``);
     const imgThumbUl = useRef();
     const [marginListThumb, setMarginListThumb] = useState(0);
     const thumbControlBtn = useRef();
@@ -36,6 +36,7 @@ function SelectProduct() {
     const [productSimple, setProductSimple] = useState([])
     const [listProductCurrentSize, setListProductCurrentSize] = useState([])
     const [currentColor, setCurrentColor] = useState('')
+    const [listOption, setListOption] = useState([])
     useEffect(() => {
         window.scrollTo(0, 0)
         console.log('useEffect')
@@ -55,7 +56,7 @@ function SelectProduct() {
                 simpleItem.id = element._id
                 simpleItem.price = element.price
                 simpleItem.color = element.option[0].value
-                simpleItem.size = element.option[1].value
+                simpleItem.size = element.option[1]?.value
                 totalSimple.push(simpleItem)
             })
             // console.log(totalSimple)
@@ -73,7 +74,7 @@ function SelectProduct() {
                 if (!listColorSizeStat[element.option[0].value]) {
                     listColorSizeStat[element.option[0].value] = {}
                     listColorSizeStat[element.option[0].value].listImg = element.listImg
-                    listColorSizeStat[element.option[0].value].listSize = [element.option[1].value]
+                    listColorSizeStat[element.option[0].value].listSize = element.option[1] ? [element.option[1].value] : null
                 } else (
                     listColorSizeStat[element.option[0].value].listSize.push(element.option[1].value)
                 )
@@ -83,6 +84,19 @@ function SelectProduct() {
             setListProductCurrentSize(listColorSize[0] ? listColorSize[0][1].listSize : null)
             console.log(listColorSize)
             setListColorSize(listColorSize)
+
+            if(totalProduct.productDetailId[0]) {
+                let optionKey = []
+                totalProduct.productDetailId[0].option.forEach(item => {
+                    optionKey.push(item.optionName)
+                })
+                console.log(optionKey)
+                setListOption(optionKey)
+            } else {
+                setListOption([])
+            }
+
+
             let totalImg = listColorSize.reduce((total, item) => {
                 return total += item[1].listImg.length
             }, 0)
@@ -96,8 +110,15 @@ function SelectProduct() {
                     "display-none"
                 );
             }
+            let thump = res.data.product.thump[0]
             setProductDetail(totalProduct);
-            setImgCurrent(res.data.product.thump[0]);
+            if(thump.includes('https')) {
+                setImgCurrent(res.data.product.thump[0]);
+                setImgThump(res.data.product.thump[0]);
+            } else {
+                setImgCurrent(`${process.env.REACT_APP_SRC_IMG}${thump}`)
+                setImgThump(`${process.env.REACT_APP_SRC_IMG}${thump}`)
+            }
         })
         .catch((err) => {
             console.log(err)
@@ -268,7 +289,9 @@ function SelectProduct() {
     }
 
     function handleAddProductToCart() {
+        console.log(currentItem.id)
         if(productSimple.length) {
+            console.log('run if')
             axios({
                 url: `${process.env.REACT_APP_PORT_API}cart/add-to-cart/${idCart}`,
                 method: "PATCH",
@@ -289,6 +312,7 @@ function SelectProduct() {
                 toast.error("Thêm vào giỏ hàng thất bại")
             })
         } else {
+            console.log('run else')
             axios({
                 url: `${process.env.REACT_APP_PORT_API}cart/add-to-cart/${idCart}`,
                 method: "PATCH",
@@ -375,14 +399,14 @@ function SelectProduct() {
                             className={cx("list-img-thumb-ul")}
                         >
                             <li
-                                className={imgCurrent ===`${productDetail.thump ? productDetail.thump[0] : null}`?
+                                className={imgCurrent === imgThump?
                                      cx("list-img-thumb-item","img-active") : cx("list-img-thumb-item")}
                                 onClick={() => {
                                     setImgCurrent(productDetail.thump[0])
                                 }}
                             >
                                 <img
-                                    src={productDetail.thump ? productDetail.thump[0] : null}
+                                    src={imgThump}
                                     alt=""
                                     width="100%"
                                 />
@@ -477,13 +501,13 @@ function SelectProduct() {
                             <div
                                 className={cx("product-info-variants-wrapper")}
                             >
-                                {productSimple.length ? <div className={cx("product-select-color-watch")}>
+                                {listOption[0] ? <div className={cx("product-select-color-watch")}>
                                     <div
                                         className={cx(
                                             "product-select-color-watch-header"
                                         )}
                                     >
-                                        Màu sắc
+                                        {listOption[0]}
                                     </div>
                                     <div
                                         className={cx(
@@ -499,7 +523,7 @@ function SelectProduct() {
                                                     setListProductCurrentSize(item[1].listSize)
                                                     setCurrentColor(item[0])
                                                     filterCurrentItem(item[0], item[1].listSize[0])
-                                                    setImgCurrent(item[1].listImg[0])
+                                                    setImgCurrent(item[1].listImg[0] || imgThump)
                                                 }}
                                                 >
                                                 <img src="https://theme.hstatic.net/1000205427/1000509844/14/select-pro.png?v=56" alt="" className={currentItem.color === item[0] ? cx('img-check', 'img-check-active') : cx('img-check')}/>
@@ -511,20 +535,20 @@ function SelectProduct() {
                                     </div>
                                 </div> : null}
 
-                                {productSimple.length ? <div className={cx("product-select-size-watch")}>
+                                {listOption[1] ? <div className={cx("product-select-size-watch")}>
                                     <div
                                         className={cx(
                                             "product-select-size-watch-header"
                                         )}
                                     >
-                                        Bộ nhớ
+                                        {listOption[1]}
                                     </div>
                                     <div
                                         className={cx(
                                             "product-select-size-watch-wrapper"
                                         )}
                                     >
-                                        {listProductCurrentSize.map((item, index) => {
+                                        {listProductCurrentSize?.map((item, index) => {
                                             return (
                                             <div
                                                 key={index}
