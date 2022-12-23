@@ -6,7 +6,6 @@ import axios from 'axios';
 import PreviewCart from '../PreviewCart/PreviewCart';
 
 function Payment () {
-    console.log('render-cha')
     const [listProvince, setListProvince] = useState([])
     const [province, setProvince] = useState(null)
     useEffect(() => {

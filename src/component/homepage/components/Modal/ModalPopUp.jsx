@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closeModal } from '../../../../features/counter/ModalSlice';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
-
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 
@@ -34,14 +33,12 @@ function ModalPopUp() {
         newDataItem.price = item.price
         return newDataItem;
       });
-      console.log('newData',newData)
       setNewDataFormat(newData)
       if(modalState.productItem.productDetailId){
         let totayKeyOption = []
         modalState.productItem.productDetailId[0]?.option.map(item => {
           totayKeyOption.push(item.optionName)
         })
-        console.log('totalkey', totayKeyOption)
         setListKeyOption(totayKeyOption)
       }
       setCurrentOption(newData ? newData[0] : {})
@@ -56,15 +53,11 @@ function ModalPopUp() {
           dataRenderBuffer[item.option[0].value].listSize.push(item.option[1].value)
         }
       })
-      console.log('dataBuffer',dataRenderBuffer)
       let resultRender = Object.entries(dataRenderBuffer)
-      console.log( 'dataRender',resultRender)
       setDataRender(resultRender)
-      console.log( 49, resultRender[0] ? resultRender[0][1].listSize : null)
       setCurrentListSize(resultRender[0] ? resultRender[0][1].listSize : null)
       setCurrentColor(resultRender[0] ?  resultRender[0][0] : null)
       // setCurrentSize(resultRender[0] ? resultRender[0][1].listSize : null)
-      console.log(modalState.productItem.productDetailId, 55)
     },[modalState.value])
     const handleCancel = () => {
       dispatch(closeModal())
@@ -79,20 +72,15 @@ function ModalPopUp() {
         setCurrentOption(currentOption[0])
     }
    const handleColorProduct = (item) => {
-    console.log(item,71)
     setCurrentColor(item[0])
     setCurrentListSize(item[1].listSize)
     setDetailImg(item[1].listImg)
     setViewPopupImgSrc(item[1].listImg[0])
     findCurrentOption(item[0],item[1].listSize[0])
-    console.log(76 ,currentOption)
-    console.log(77, item[0], currentOption.name)
    };
-   console.log(currentOption)
    const handleSizeProduct = (item) => {
     findCurrentOption(currentColor, item)
    };
-
    const handleAddToCart = () => {
     if(currentOption){
       axios({
@@ -177,7 +165,6 @@ function ModalPopUp() {
               </div>
               <div className={cx('product-smallimg-popup')}>
                 {detailImg.map((item,index)=>{
-                  console.log(item,168)
                  return <img src={item} alt="" width='30%' key={index} onClick={()=>setViewPopupImgSrc(item)} />
                 })}
               </div>
@@ -227,7 +214,6 @@ function ModalPopUp() {
             </Col>
           </Row>
         </div>
-       
       </Modal>
       </>
    )
