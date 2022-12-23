@@ -156,19 +156,19 @@ export default function Header() {
                                             </ul>
                                         </li>
                                         <li className={cx("dropdown")}>
-                                            <Link to={"/collections/loa-di-dong"} className={cx("text-center")}>
+                                            <Link to={`/category?productName=dolce`} className={cx("text-center")}>
                                                 <div className={cx("hd-link-icon")}>
                                                     <img src="https://theme.hstatic.net/1000205427/1000509844/14/hd_mainmenu_icon4.png?v=56" alt="LOA" />
                                                 </div>
-                                                <div className={cx("hd-link-title")}>LOA</div>
+                                                <div className={cx("hd-link-title")}>D&G</div>
                                             </Link>
                                         </li>
                                         <li className={cx("dropdown")}>
-                                            <Link to={"/collections/khuyen-mai"} className={cx("text-center")}>
+                                            <Link to={`/category?productName=gubag`} className={cx("text-center")}>
                                                 <div className={cx("hd-link-icon")}>
                                                     <img src="https://theme.hstatic.net/1000205427/1000509844/14/hd_mainmenu_icon5.png?v=56" alt="KHUYẾN MẠI" />
                                                 </div>
-                                                <div className={cx("hd-link-title")}>KHUYẾN MẠI</div>
+                                                <div className={cx("hd-link-title")}>GU BAG</div>
                                             </Link>
                                         </li>
                                         <li className={cx("dropdown")}>
