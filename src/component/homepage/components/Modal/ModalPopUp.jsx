@@ -1,14 +1,14 @@
-import style from "./Modal.module.scss";
-import classNames from "classnames/bind";
-import { Modal, Row, Col } from "antd";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { closeModal } from "../../../../features/counter/ModalSlice";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import style from './Modal.module.scss'
+import classNames from 'classnames/bind';
+import {Modal,Row, Col,} from 'antd'
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeModal } from '../../../../features/counter/ModalSlice';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 
-import "react-toastify/dist/ReactToastify.css";
-import { Link } from "react-router-dom";
+import 'react-toastify/dist/ReactToastify.css';
+import { Link } from 'react-router-dom';
 
 function ModalPopUp() {
     const dispatch = useDispatch()
@@ -93,8 +93,8 @@ function ModalPopUp() {
     findCurrentOption(currentColor, item)
    };
 
-  const handleAddToCart = () => {
-    if (currentOption) {
+   const handleAddToCart = () => {
+    if(currentOption){
       axios({
         method: 'patch',
         url: 'https://ecommerce.nodemy.vn/api/v1/cart/add-to-cart/639c3ae746ca22ec84c64953',
@@ -102,18 +102,23 @@ function ModalPopUp() {
           'Authorization': token, 
           'Content-Type': 'application/json'
         },
-      })
-        .then((res) => {
-          handleCancel();
-          toast.success("Thêm vào giỏ hàng thành công !!!", {
-            icon: "🚀",
-            autoClose: 5000,
-          });
-        })
-        .catch((error) => {
-          console.log(error);
+        data : {
+          "productDetailId":currentOption.id,
+          "quantity": control
+        }
+      }).then((res)=>{
+        console.log(res)
+        handleCancel()
+        toast.success("Thêm vào giỏ hàng thành công !!!", {
+          icon: "🚀",
+          autoClose: 5000,
         });
-    } else {
+        console.log('dat hang thanh cong ')
+       
+      }).catch((error)=>{
+        console.log(error)
+      })
+    }else{
       axios({
         method: 'patch',
         url: 'https://ecommerce.nodemy.vn/api/v1/cart/add-to-cart/639c3ae746ca22ec84c64953',
@@ -121,39 +126,45 @@ function ModalPopUp() {
           'Authorization': token, 
           'Content-Type': 'application/json'
         },
-      })
-        .then((res) => {
-          handleCancel();
-          toast.success("Thêm vào giỏ hàng thành công ", {
-            icon: "🚀",
-            autoClose: 5000,
-          });
-        })
-        .catch((error) => {
-          console.log(error);
+        data : {
+          "productId": modalState.productItem._id,
+          "quantity": control
+        }
+      }).then((res)=>{
+        console.log(res)
+        handleCancel()
+        toast.success("Thêm vào giỏ hàng thành công ", {
+          icon: "🚀",
+          autoClose: 5000,
         });
+        console.log('dat hang thanh cong')
+       
+      }).catch((error)=>{
+        console.log(error)
+      })
     }
-  };
-  const handleDecrease = () => {
-    setControl((pre) => {
-      pre = pre < 2 ? (pre = 1) : (pre -= 1);
-      return pre;
-    });
+    
+   };
+   const handleDecrease = () => {
+    setControl((pre)=>{
+      pre = pre < 2 ? pre = 1 : pre -= 1
+      return pre  
+    })
   };
   const handleIncrease = () => {
-    setControl((pre) => {
-      return (pre += 1);
-    });
+    setControl((pre)=>{
+      return pre += 1
+    })
   };
-  return (
-    <>
+  return ( <>
       <ToastContainer />
-      <Modal
+      <Modal 
         open={modalState.value}
         onCancel={handleCancel}
         width={800}
-        bodyStyle={{ height: "600px" }}
-        footer={null}>
+        bodyStyle={{height : '600px'}}
+        footer={null}
+        >
         <div>
           <Row gutter={[10, 10]}>
             <Col span={12}>
@@ -164,30 +175,18 @@ function ModalPopUp() {
                   width="100%"
                 />
               </div>
-              <div className={cx("product-smallimg-popup")}>
-                {detailImg.map((item, index) => {
-                  return (
-                    <img
-                      src={item}
-                      alt=""
-                      width="30%"
-                      key={index}
-                      onClick={() => setViewPopupImgSrc(item)}
-                    />
-                  );
+              <div className={cx('product-smallimg-popup')}>
+                {detailImg.map((item,index)=>{
+                  console.log(item,168)
+                 return <img src={item} alt="" width='30%' key={index} onClick={()=>setViewPopupImgSrc(item)} />
                 })}
               </div>
             </Col>
             <Col span={12}>
-              <div className={cx("product-info-popup")}>
-                <h2 className={cx("product-name-popup")}>
-                  Tên sản phẩm :{modalState.productItem.productName}
-                </h2>
-                <p className={cx("product-brand-popup")}>
-                  Hãng :{" "}
-                  {modalState.productItem.brandId
-                    ? modalState.productItem.brandId.brandName
-                    : null}{" "}
+              <div className={cx('product-info-popup')}>
+                <h2 className={cx('product-name-popup')}>Tên sản phẩm :{modalState.productItem.productName}</h2>
+                <p className={cx('product-brand-popup')}>Hãng : { modalState.productItem.brandId ? modalState.productItem.brandId.brandName : null} </p>
+                <p className={cx('product-price-popup')}>Giá :{currentOption ? currentOption.price?.toLocaleString() : null || modalState.productItem.price?.toLocaleString()}
                 </p>
                 {listKeyOption[0] ?
                 <div className={cx('product-color-box-popup')}>
@@ -218,23 +217,19 @@ function ModalPopUp() {
                 <div className={cx('control-box')}>
                   <div className={cx('btn-decrease')} onClick={handleDecrease}>-
                   </div>
-                </div>
-                <button
-                  className={cx("btn-add")}
-                  onClick={() => handleAddToCart()}>
-                  Thêm vào giỏ
-                </button>
-                <Link
-                  className={cx("link-product")}
-                  to={`/detail/${modalState.productItem._id}`}>
-                  Hoặc xem chi tiết
-                </Link>
+                  <input className={cx('display-control')} value={ control} />
+                  <div className={cx('btn-increase')} onClick={handleIncrease}>+
+                  </div>
+               </div>
+                <button className={cx('btn-add')} onClick={()=>handleAddToCart()}>Thêm vào giỏ</button>
+                <Link className={cx('link-product')} to={`/detail/${modalState.productItem._id}`}>Hoặc xem chi tiết</Link>
               </div>
             </Col>
           </Row>
         </div>
+       
       </Modal>
-    </>
-  );
+      </>
+   )
 }
 export default ModalPopUp;
