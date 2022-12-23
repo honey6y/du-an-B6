@@ -9,7 +9,6 @@ function PreviewCart() {
     const [totalPrice , setTotalPrice] = useState(0)
     const token = localStorage.getItem('token')
     useEffect(()=>{
-        console.log('callAPI')
         axios({
             method: 'get',
             url: 'https://ecommerce.nodemy.vn/api/v1/cart/get-loged-in-cart',
