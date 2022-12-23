@@ -7,12 +7,13 @@ import styles from "./OrderHistory.module.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getCart, getCartNumber } from '../../../../../features/counter/cartSlice';
+import {getCartId, getCartNumber, getListProduct, getProduct } from '../../../../../features/counter/cartSlice';
 
 export default function OrderHistory() {
-  const cartData = useSelector((state) => state.cart.Carts);
+  const listProduct = useSelector((state) => state.cart.listProduct);
+  const product = useSelector((state) => state.cart.product);
+  const cartId = useSelector((state) => state.cart.cartId);
   let [total, setTotal] = useState(0);
-  let [cartId, setCartId] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const quantityInput = createRef();
@@ -20,6 +21,7 @@ export default function OrderHistory() {
     init();
     return () => { };
   }, []);
+
 
   async function init() {
     try {
@@ -31,17 +33,19 @@ export default function OrderHistory() {
           },
         }
       );
-      let data = res.data.cart.listProduct;
-      let total = data.reduce((total, data) => {
+      let listProduct = res.data.cart.listProduct;
+      let product = res.data.cart.product;
+      let totalListProduct = listProduct.reduce((total, data) => {
         return total + data?.productDetailId.price * data?.quantity;
       }, 0);
-      let cartNumber = data.reduce((total, product) => {
+      let cartNumber = listProduct.reduce((total, product) => {
         return total + product.quantity;
       }, 0);
-      setCartId(res.data.cart._id)
-      setTotal(total);
-      dispatch(getCartNumber(cartNumber))
-      dispatch(getCart(data))
+      dispatch(getCartId(res.data.cart._id));
+      setTotal(totalListProduct);
+      dispatch(getCartNumber(cartNumber));
+      dispatch(getListProduct(listProduct));
+      dispatch(getProduct(product));
     } catch (err) {
       console.log(err);
     }
@@ -68,9 +72,11 @@ export default function OrderHistory() {
       render: (_, { name, color, key }) => (
         <>
           <h3>{name}</h3>
-          <p>Phiên bản: {color}</p>
+          {color && <p>Phiên bản: {color}</p>}
           <Button style={{ color: "red" }} onClick={e => {
-            deleteFromCart(key)
+            color ?
+              deleteFromListProduct(key)
+              : deleteFromProduct(key)
           }}>Xóa</Button>
         </>
       ),
@@ -85,7 +91,7 @@ export default function OrderHistory() {
       title: "Số lượng",
       key: "quantity",
       dataIndex: "tags",
-      render: (_, { quantity, key }) => (
+      render: (_, { quantity, key, color }) => (
         <>
           <Input
             ref={quantityInput}
@@ -96,7 +102,9 @@ export default function OrderHistory() {
             }
             min={1}
             onChange={(e) => {
-              updateCart(key, e.target.value)
+              color ?
+                updateCartListProduct(key, e.target.value)
+                : updateCartProduct(key, e.target.value)
             }}
           ></Input>
         </>
@@ -109,7 +117,7 @@ export default function OrderHistory() {
     },
   ];
 
-  const data = cartData.map((data) => ({
+  const listProductData = listProduct.map((data) => ({
     key: data?.productDetailId?._id,
     name: data?.productDetailId.productId.productName,
     color: data?.productDetailId.option[0].value,
@@ -119,7 +127,18 @@ export default function OrderHistory() {
     total: data?.productDetailId.price * data?.quantity,
   }));
 
-  function updateCart(key, value) {
+  let productData = product.map((data) => ({
+    key: data?.productId?._id,
+    name: data?.productId.productName,
+    color: null,
+    image: data?.productId.thump,
+    price: data?.productId.price,
+    quantity: data?.quantity,
+    total: data?.productId.price * data?.quantity,
+  }));
+
+  const tableData = listProductData.concat(productData)
+  function updateCartListProduct(key, value) {
     axios
       .patch(
         `https://ecommerce.nodemy.vn/api/v1/cart/update-cart-quantity/${cartId}`,
@@ -138,12 +157,49 @@ export default function OrderHistory() {
       });
   }
 
-  function deleteFromCart(key) {
+  function updateCartProduct(key, value) {
     axios
       .patch(
-        "https://ecommerce.nodemy.vn/api/v1/cart/remove-from-cart",
+        `https://ecommerce.nodemy.vn/api/v1/cart/update-cart-quantity/${cartId}`,
+        {
+          productId: key,
+          quantity: value,
+        },
+        {
+          headers: {
+            Authorization: `${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((res) => {
+        init();
+      });
+  }
+
+  function deleteFromListProduct(key) {
+    axios
+      .patch(
+        `https://ecommerce.nodemy.vn/api/v1/cart/remove-from-cart/${cartId}`,
         {
           productDetailId: key,
+        },
+        {
+          headers: {
+            Authorization: `${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((res) => {
+        init();
+      });
+  }
+
+  function deleteFromProduct(key) {
+    axios
+      .patch(
+        `https://ecommerce.nodemy.vn/api/v1/cart/remove-from-cart/${cartId}`,
+        {
+          productId: key,
         },
         {
           headers: {
@@ -158,9 +214,17 @@ export default function OrderHistory() {
   return (
     <div style={{ backgroundColor: "#fafafa" }}>
       <div style={{ maxWidth: "1260px", margin: "auto", backgroundColor: "white" }}>
+        <div style={{ backgroundColor: "#fafafa" }}>
+          <Breadcrumb>
+            <Breadcrumb.Item style={{ color: "red" }}>Home</Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <a href="/cart">Cart</a>
+            </Breadcrumb.Item>
+          </Breadcrumb>
+        </div>
         <div className={styles.container}>
           <h2>GIỎ HÀNG</h2>
-          {cartData !== [] ? <Table pagination={false} columns={columns} dataSource={data} /> : <Empty
+          {listProduct !== [] ? <Table pagination={false} columns={columns} dataSource={tableData} /> : <Empty
             image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
             imageStyle={{
               height: 60,
