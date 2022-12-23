@@ -70,19 +70,19 @@ function RouterElement () {
                   element: <Userlayout />,
                   children: [
                     {
-                      path: 'user/profile/',
+                      path: 'user/profile',
                       element: (
                         <Profile />
                       )
                     },
                     {
-                      path: 'user/change-password/',
+                      path: 'user/change-password',
                       element: (
                         <ChangePassword />
                       )
                     },
                     {
-                      path: 'user/historyOrder/',
+                      path: 'user/historyOrder',
                       element: (
                         <OrderHistory />
                       )
