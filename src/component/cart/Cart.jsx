@@ -31,7 +31,9 @@ function Cart() {
         }
       );
       let data = res.data.cart.listProduct;
+      console.log(data)
       let total = data.reduce((total, data) => {
+        console.log(data.productDetailId.price)
         return total + data?.productDetailId.price * data?.quantity;
       }, 0);
       let cartNumber = data.reduce((total, product) => {
@@ -108,7 +110,7 @@ function Cart() {
     },
   ];
 
-  const data = cartData.map((data) => ({
+  const data = cartData.map((data,index) => ({
     key: data?.productDetailId?._id,
     name: data?.productDetailId.productId.productName,
     color: data?.productDetailId.option[0].value,
@@ -117,11 +119,10 @@ function Cart() {
     quantity: data?.quantity,
     total: data?.productDetailId.price * data?.quantity,
   }));
-
   function updateCart(key, value) {
     axios
       .patch(
-        `https://ecommerce.nodemy.vn/api/v1/cart/update-cart-quantity/${m }`,
+        `https://ecommerce.nodemy.vn/api/v1/cart/update-cart-quantity/${cartId}`,
         {
           productDetailId: key,
           quantity: value,
