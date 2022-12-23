@@ -143,11 +143,11 @@ export default function Header() {
                                             </ul>
                                         </li>
                                         <li className={cx("dropdown")}>
-                                            <Link to={"/collections/tai-nghe"} className={cx("text-center")}>
+                                            <Link to={`/category?productName=samsung`} className={cx("text-center")}>
                                                 <div className={cx("hd-link-icon")}>
                                                     <img src="https://theme.hstatic.net/1000205427/1000509844/14/hd_mainmenu_icon3.png?v=56" alt="TAI NGHE" />
                                                 </div>
-                                                <div className={cx("hd-link-title")}>TAI NGHE</div>
+                                                <div className={cx("hd-link-title")}>SAM SUNG</div>
                                             </Link>
                                             <ul className={cx("dropdown-menu")}>
                                                 <li><Link to={"/collections/tai-nghe"}>TAI NGHE CÓ DÂY</Link></li>
