@@ -31,7 +31,7 @@
   font-size: 13px;
   height: 60px;
   outline: 0;
-  padding: 2px;
+  padding: 5px 15px;
   width: 144px;
   position: relative;
 }
@@ -46,7 +46,7 @@
   font-size: 13px;
   height: 60px;
   outline: 0;
-  padding: 2px;
+  padding: 5px 15px;
   width: 144px;
   border: 2px solid red;
 }
@@ -77,6 +77,12 @@
   position: relative;
   text-transform: uppercase;
   cursor: pointer;
+}
+.product-color-name{
+  text-transform: capitalize;
+}
+.product-size-name{
+  text-transform: capitalize;
 }
 .product-size-active{
   background-color: #fff;
@@ -114,18 +120,6 @@
 
 }
 
-// .product-color-active{
-//   background-color: #fff;
-//   border: 2px solid var(--red-primary);
-//   width: 80px;
-//   text-align: center;
-//   font-size: 13px;
-//   font-weight: 700;
-//   padding: 8px;
-//   position: relative;
-//   text-transform: uppercase;
-//   cursor: pointer;
-// }
 
 .control-box{
   display: flex;
