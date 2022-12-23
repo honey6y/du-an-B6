@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { Link, useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
@@ -23,7 +23,6 @@ function Login () {
         setSpamSubmit(true)
         loginAccountMutation.mutate(data,{
             onSuccess: (data) => {
-                console.log(data);
                 setCheckPrivate(true)
                 toast.success('Đăng nhập thành công')
                 setTimeout(() => {
