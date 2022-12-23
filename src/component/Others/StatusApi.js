@@ -8,3 +8,6 @@ export function isAxiosError(error) {
 export function isAxiosUnprocessableEntityError(error) {
     return isAxiosError(error) && error.response?.status === ErrorStatusCode.BadRequest
 }
+export function isAxiosUnprocessableEntityERR(error){
+    return isAxiosError(error) && error.response?.status === ErrorStatusCode.UnprocessableEntity
+  }

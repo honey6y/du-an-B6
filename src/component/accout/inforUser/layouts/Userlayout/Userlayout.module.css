@@ -24,3 +24,16 @@
 .infor_layout{
     width: calc(82% - 5%);
 }
+.login_header_title{
+    width: 100%;
+    padding: 10px 0;
+    font-size: 14px;
+}
+.change_home{
+    text-decoration: none;
+    color: #cd1818;
+    margin-right: 10px;
+}
+.nameLogin{
+    margin-left: 10px;
+}
