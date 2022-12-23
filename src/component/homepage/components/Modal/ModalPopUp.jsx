@@ -23,7 +23,7 @@ function ModalPopUp() {
     const [currentListSize , setCurrentListSize] = useState([])
     const [detailImg, setDetailImg]= useState([])
     const [listKeyOption , setListKeyOption] = useState([])
-    const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMzYWU3NDZjYTIyZWM4NGM2NDk1MSIsImF2YXRhciI6Imh0dHBzOi8vc3QzLmRlcG9zaXRwaG90b3MuY29tLzE3Njc2ODcvMTY2MDcvdi80NTAvZGVwb3NpdHBob3Rvc18xNjYwNzQ0MjItc3RvY2staWxsdXN0cmF0aW9uLWRlZmF1bHQtYXZhdGFyLXByb2ZpbGUtaWNvbi1ncmV5LmpwZyIsImVtYWlsIjoiYmFieTRldmVyMTFAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJjYXJ0Ijp7Il9pZCI6IjYzOWMzYWU3NDZjYTIyZWM4NGM2NDk1MyIsInVzZXJJZCI6IjYzOWMzYWU3NDZjYTIyZWM4NGM2NDk1MSIsImxpc3RQcm9kdWN0IjpbXSwicHJvZHVjdCI6W3sicHJvZHVjdElkIjoiNjMwOGExYTFkZDNiMTZkM2UzNWE5YzRiIiwicXVhbnRpdHkiOjEsInNlbGVjdGVkIjpmYWxzZSwiX2lkIjoiNjNhNTFhY2YwM2NlNWEzZWU1ZmRmMzhiIn1dLCJjcmVhdGVkQXQiOiIyMDIyLTEyLTE2VDA5OjMxOjE5LjIxNloiLCJ1cGRhdGVkQXQiOiIyMDIyLTEyLTIzVDA0OjQ1OjM0Ljc3MloiLCJfX3YiOjB9LCJuYXRpb25hbGl0eSI6IlZpZXQgTmFtIiwiaWF0IjoxNjcxNzcyODg0LCJleHAiOjE2NzE4NTkyODR9.LRK9_EsT7ZumVKdDd_IXNfxzjQpDWCCy1LsPv_bhmMI`
+    const token = localStorage.getItem('token')
    
     useEffect(()=>{
       let newData = modalState.productItem.productDetailId?.map(item => {
