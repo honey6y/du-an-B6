@@ -27,7 +27,6 @@ function ProductContent() {
         },
       })
         .then((res) => {
-          console.log(res)
           setList(res.data.listProduct);
           setDataSlider(res.data.listProduct)
         })

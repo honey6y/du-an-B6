@@ -5,7 +5,7 @@ class Http {
     constructor() {
         this.token = getTokenFromLS()
         this.instance = axios.create({
-            baseURL: 'https://ecommerce.nodemy.vn/api/v1/',
+            baseURL: 'https://ecommerce.nodemy.vn/api/v1',
             timeout: 10000,
             headers: {
                 'Content-Type': 'application/json'

@@ -1,18 +1,23 @@
-
-import classNames from 'classnames'
+import { useQuery } from '@tanstack/react-query'
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import { getAvatarUrl, userApi } from '../../../../Others/QueryApi'
 import style from './UserSideNav.module.css'
 
 export default function UserSideNav() {
+  const {data: dataProfile } = useQuery({
+    queryKey: ['/auth/me'],
+    queryFn: userApi.getProfile
+  })
+  const profile = dataProfile?.data
   return (
     <div>
       <div className={style.sideNav_container}>
         <Link to='user/profile/' className={style.box_img_user}>
-          <img src='https://cdn.sforum.vn/sforum/wp-content/uploads/2018/11/2-10.png' alt='' className={style.img_user} />
+          <img src={getAvatarUrl(profile?.avatar)} alt='' className={style.img_user} />
         </Link>
         <div className={style.infor_user}>
-          <div className={style.name_user}>Trịnh Quang</div>
+          <div className={style.name_user}>{profile?.username}</div>
           <Link to='user/profile/' className={style.setting_infor}>
             <svg
               width={12}

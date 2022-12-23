@@ -3,7 +3,7 @@ import http from "./ApiAxios";
 export const registerAccount = (body) => http.post('/auth/register', body)
 export const login = (body) => http.post('/auth/login', body)
 
-const URL = `/product/find-products-by-name`
+const URL = `/product/find-product-by-name`
 const URLcategory = `/category/get-all-categories`
 export const productApi = {
     getProductName(params) {
@@ -16,17 +16,23 @@ export const productApi = {
     }
 }
 export const userApi = {
+    
     getProfile() {
         return http.get('/auth/me')
     },
-    updateProfile(_id){
-        return http.patch('/user', _id)
+    updateProfile(body){
+        return http.patch(`/user/update-user-info/${body.id}`,body)
     },
-    upLoadAvatar (body) {
+    upLoadAvatar(body) {
         return http.patch('/user/change-avatar', body, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         })
+    },
+    changePassword(body){
+        return http.patch(`/user/change-password/${body.id}`, body)
     }
 }
+
+export const getAvatarUrl = (avatarName) => (avatarName ? `https://ecommerce.nodemy.vn/${avatarName}` : `https://phongreviews.com/wp-content/uploads/2022/11/avatar-facebook-mac-dinh-1-1.jpg`)
