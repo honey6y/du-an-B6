@@ -4,15 +4,20 @@ const initialState = {
   //id cart
   cartNumber: 0,
   cartId:'',
-  Carts: [],
+  listProduct: [],
+  product:[]
 };
 
 const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    getCart: (state, actions) => {
-      state.Carts = actions.payload;
+    getListProduct: (state, actions) => {
+      state.listProduct = actions.payload;
+      // console.log(state.Carts);
+    },
+    getProduct: (state, actions) => {
+      state.product = actions.payload;
       // console.log(state.Carts);
     },
     getCartNumber: (state, actions) => {
@@ -21,11 +26,13 @@ const cartSlice = createSlice({
     },
     addToCart: (state, actions)=>{
       state.cartNumber += actions.payload;
+    },
+    getCartId: (state, actions)=>{
+      state.cartId = actions.payload;
     }
-    // getIdCart: (){}
   },
 });
 
-export const { getCart, getCartNumber } = cartSlice.actions;
+export const { getListProduct, getProduct, getCartNumber, getCartId } = cartSlice.actions;
 
 export default cartSlice.reducer;
