@@ -1,10 +1,10 @@
-import { useMutation } from "@tanstack/react-query"
-import { useContext, useEffect, useState } from "react"
+import { useMutation} from "@tanstack/react-query"
+import { useContext, useState } from "react"
 import { useForm } from "react-hook-form"
 import { Link, useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import { AppContext} from "../../../privateRouter/PrivateRouter"
-import { login } from "../../Others/QueryApi"
+import { login, userApi } from "../../Others/QueryApi"
 import { rules } from "../../Others/Rules"
 import { isAxiosUnprocessableEntityError } from "../../Others/StatusApi"
 import style from "./Login.module.css"
@@ -19,10 +19,11 @@ function Login () {
     const loginAccountMutation = useMutation({
         mutationFn: body =>  login(body)
     })
-    const onSubmit = handleSubmit ((data) => {
+    const getIdCartMutation = useMutation(userApi.getIdCard)
+    const onSubmit = handleSubmit ( async (data) => {
         setSpamSubmit(true)
-        loginAccountMutation.mutate(data,{
-            onSuccess: (data) => {
+        await loginAccountMutation.mutateAsync(data, {
+            onSuccess: () => {
                 setCheckPrivate(true)
                 toast.success('Đăng nhập thành công')
                 setTimeout(() => {
@@ -30,24 +31,50 @@ function Login () {
                 }, 1400)
             },
             onError: (error) => {
-                if(isAxiosUnprocessableEntityError(error)){
+                if (isAxiosUnprocessableEntityError(error)) {
                     const formError = error.response?.data.message
                     // không tìm thấy email,  tức là email ko đúng
-                    if(formError.toString().indexOf('wrong email')) {
-                      setError('password', {
-                        message: 'Password không đúng',
-                        type: 'Sever'
-                      })
-                      setSpamSubmit(false)
-                    } else (
-                        setError('email', {
-                            message: 'Email chưa được đăng ký',
+                    if (formError.toString().indexOf('wrong email')) {
+                        setError('password', {
+                            message: 'Password không đúng',
                             type: 'Sever'
                         })
-                    )
+                        setSpamSubmit(false)
+                    } else
+                        (
+                            setError('email', {
+                                message: 'Email chưa được đăng ký',
+                                type: 'Sever'
+                            })
+                        )
                 }
             }
         })
+        const idCart = await getIdCartMutation.mutateAsync()
+        console.log('idCard',idCart.data.cart._id)
+        const dataCart = idCart.data.cart
+        console.log( 57,dataCart);
+        const listProductQuantity = []
+        const productQuantity = []
+        for(let i=0; i < dataCart.listProduct.length; i++){
+            listProductQuantity.push(dataCart.listProduct[i].quantity)
+        }
+        for(let i=0; i < dataCart.product.length; i++){
+            productQuantity.push(dataCart.product[i].quantity)
+        }
+        // tính tổng listProduct
+        const tongListProduct = listProductQuantity.reduce((total, value) => {
+            return total += value
+        },0)
+        console.log(70,tongListProduct);
+        // tính toontg product
+
+        const tongProduct = productQuantity.reduce((total, value) => {
+            return total += value
+        },0)
+        console.log(76,tongProduct);
+        const  tongAll = tongListProduct + tongProduct
+        console.log(78, tongAll);
     })
     return (
         <div className={style.login_bg}>
@@ -78,7 +105,7 @@ function Login () {
                                 <div className={style.infor_error}>{errors.password?.message}</div>
                             </div >
                             <div className={style.input_container}>
-                                <button type="submit" className={style.button_login} disabled={spamSubmit}>
+                                <button type="submit" className={style.button_login} disabled={spamSubmit} >
                                     <Spinner className={spamSubmit ? style.spinner_block : style.spinner_none} animation="border" />
                                     <span className={style.button_name}>Đăng nhập</span>
                                 </button>
