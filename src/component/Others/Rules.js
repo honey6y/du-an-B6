@@ -103,19 +103,19 @@ export const rules = {
         },
     },
     phone: {
-        require: {
+        required: {
             value: true,
-            message: 'Hãy nhập dữ liệu'
+            message: 'Vui lòng nhập số điện thoại'
         },
         maxLength: {
             value: 15,
             message: 'Độ dài không quá 15 ký tự'
         }
     },
-    address: {
-        require: {
+    nationality: {
+        required: {
             value: true,
-            message: 'Hãy nhập dữ liệu'
+            message: 'Vui lòng nhập địa chỉ của bạn'
         },
         maxLength: {
             value: 160,
@@ -123,7 +123,7 @@ export const rules = {
         }
     },
     dateOfBirth: {
-        require: {
+        required: {
             value: true,
             message: 'Hãy nhập dữ liệu'
         },
@@ -133,7 +133,7 @@ export const rules = {
         }
     },
     avatar: {
-        require: {
+        required: {
             value: true,
             message: 'Hãy nhập dữ liệu'
         },
