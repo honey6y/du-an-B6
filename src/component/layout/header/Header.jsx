@@ -5,12 +5,13 @@ import { useState,useEffect} from 'react'
 import styles from './Header.module.scss'
 import { ImSearch } from 'react-icons/im'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import debounce from 'lodash/debounce'
 import { useSelector, useDispatch } from 'react-redux'
 import { useRef } from 'react'
 import { Badge, Space } from 'antd';
 export default function Header() {
+    const nav = useNavigate()
     const inputSearch = useRef()
     const totalCart = useSelector(state =>state.cart.cartNumber)
     const cx = classNames.bind(styles)
@@ -42,6 +43,18 @@ export default function Header() {
                 console.log(error)
             })
     }
+    function handleSubmit(e) {
+        nav(`/category?productName=${inputSearch.current.value}`)
+        inputSearch.current.value = ''
+        setActive(false)
+    }
+    function handleEnter(e) {
+        if (e.key === 'Enter') {
+            nav(`/category?productName=${inputSearch.current.value}`)
+            inputSearch.current.value = ''
+            setActive(false)
+        }
+    }
     return (
         <>
             <div className={cx("header-desktop")}>
@@ -60,7 +73,7 @@ export default function Header() {
                             <div className={cx("grid__item-1 large--three-twelfths pd-left15")}>
                                 <div className={cx("header-search")}>
                                     <div className={cx("search-form-wrapper")}>
-                                        <form action="/seach" id={cx("seachauto")}>
+                                        <div id={cx("seachauto")} >
                                             <div className={cx("wpo-search")}>
                                                 <div className={cx("wpo-search-inner")}>
                                                     <select name="" id="" className={cx("select-collection")}>
@@ -73,9 +86,13 @@ export default function Header() {
                                                     </select>
                                                     <div className={cx("input-group")}>
                                                         <input type="hidden" name="type" value="product" id="" />
-                                                        <input ref={inputSearch} id={cx("searchtext")} onChange={debounceOnChange} name="q" className={cx("form-control input-search")} type="text" size="20" placeholder="Tìm kiếm sản phẩm..." autoComplete="off" maxLength="40" />
+                                                        <input ref={inputSearch} id={cx("searchtext")}
+                                                            onChange={debounceOnChange} name="q" className={cx("form-control input-search")}
+                                                            type="text" size="20" placeholder="Tìm kiếm sản phẩm..." autoComplete="off" maxLength="40"
+                                                            onKeyDown={handleEnter}
+                                                        />
                                                         <span className={cx("input-group-btn")} >
-                                                            <button id={cx("searchsubmit")} type="submit">
+                                                            <button id={cx("searchsubmit")} type="submit" onClick={handleSubmit}>
                                                                 <svg style={{marginTop:"10px", marginLeft:"10px", height: "15px"}} className={cx('svg-inline--fa fa-search fa-w-16')}>
                                                                     <ImSearch/>
                                                                 </svg>
@@ -107,7 +124,7 @@ export default function Header() {
                                                 {/* <input type="hidden" value="all" className={cx("collection_handle")} /> */}
                                                 {/* <input type="hidden" value="all" className={cx("collection_name")} /> */}
                                             </div>
-                                        </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -143,11 +160,11 @@ export default function Header() {
                                             </ul>
                                         </li>
                                         <li className={cx("dropdown")}>
-                                            <Link to={"/collections/tai-nghe"} className={cx("text-center")}>
+                                            <Link to={`/category?productName=samsung`} className={cx("text-center")}>
                                                 <div className={cx("hd-link-icon")}>
                                                     <img src="https://theme.hstatic.net/1000205427/1000509844/14/hd_mainmenu_icon3.png?v=56" alt="TAI NGHE" />
                                                 </div>
-                                                <div className={cx("hd-link-title")}>TAI NGHE</div>
+                                                <div className={cx("hd-link-title")}>SAM SUNG</div>
                                             </Link>
                                             <ul className={cx("dropdown-menu")}>
                                                 <li><Link to={"/collections/tai-nghe"}>TAI NGHE CÓ DÂY</Link></li>

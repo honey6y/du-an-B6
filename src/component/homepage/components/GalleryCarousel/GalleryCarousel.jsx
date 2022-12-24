@@ -10,6 +10,11 @@ function GalleryCarousel({dataProps , title, isSale}) {
   const nav = useNavigate()
   const dispatch = useDispatch()
   const cx = classNames.bind(styles)
+  dataProps.forEach(item => {
+    if (!item.thump[0].includes('http')) {
+      item.thump[0] = `${process.env.REACT_APP_SRC_IMG}${item.thump[0]}`
+    }
+  })
   return ( 
       <>
         <div className={cx('wrapper')}>
