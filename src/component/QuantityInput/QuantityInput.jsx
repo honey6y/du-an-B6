@@ -1,4 +1,4 @@
-import React,  from 'react'
+import React  from 'react'
 import styles from './QuantityInput.module.scss'
 import classNames from 'classnames/bind'
 import { useState } from 'react'

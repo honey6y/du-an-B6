@@ -16,7 +16,6 @@ export const productApi = {
     }
 }
 export const userApi = {
-    
     getProfile() {
         return http.get('/auth/me')
     },
@@ -32,6 +31,9 @@ export const userApi = {
     },
     changePassword(body){
         return http.patch(`/user/change-password/${body.id}`, body)
+    },
+    getIdCard(){
+        return http.get(`/cart/get-loged-in-cart`)
     }
 }
 
