@@ -214,14 +214,6 @@ export default function OrderHistory() {
   return (
     <div style={{ backgroundColor: "#fafafa" }}>
       <div style={{ maxWidth: "1260px", margin: "auto", backgroundColor: "white" }}>
-        <div style={{ backgroundColor: "#fafafa" }}>
-          <Breadcrumb>
-            <Breadcrumb.Item style={{ color: "red" }}>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <a href="/cart">Cart</a>
-            </Breadcrumb.Item>
-          </Breadcrumb>
-        </div>
         <div className={styles.container}>
           <h2>GIỎ HÀNG</h2>
           {listProduct !== [] ? <Table pagination={false} columns={columns} dataSource={tableData} /> : <Empty
