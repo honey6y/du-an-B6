@@ -12,6 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Spinner from 'react-bootstrap/Spinner';
 import { useDispatch } from "react-redux"
 import { getCartId, getCartNumber } from "../../../features/counter/cartSlice"
+import { saveIdCart } from "../../../actionLocal/ActionLocal"
 
 function Login () {
     const dispatch = useDispatch()
@@ -54,6 +55,7 @@ function Login () {
             }
         })
         const dataLogedCart = await getIdCartMutation.mutateAsync()
+        saveIdCart(dataLogedCart.data.cart._id)
         dispatch(getCartId(dataLogedCart.data.cart._id))
         const dataCart = dataLogedCart.data.cart
         console.log( 57,dataCart);
