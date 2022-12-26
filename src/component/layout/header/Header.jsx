@@ -13,6 +13,7 @@ import { Badge, Space } from 'antd';
 import { AppContext } from '../../../privateRouter/PrivateRouter'
 import { useQuery } from '@tanstack/react-query'
 import { getAvatarUrl, userApi } from '../../Others/QueryApi'
+import QuickViewCart from '../PreviewCart/QuickViewCart'
 export default function Header() {
     const {checkPrivate} = useContext(AppContext)
     const nav = useNavigate()
@@ -27,11 +28,8 @@ export default function Header() {
     })
     const profile = dataUser?.data
     const [activePopUp , setActivePopUp] = useState(false)
-    const handleShow = () => setActivePopUp(!activePopUp);
-    const handleClose = () => {
-        console.log('click')
-        setActivePopUp(false)
-    }
+    const handleShow = () => setActivePopUp(true);
+    
     const [listData,setListData] = useState([])
     const debounceOnChange = debounce(SearchByName,2000)
     function SearchByName(e){
@@ -229,8 +227,8 @@ export default function Header() {
                                                 </li>
                                             </ul>
                                         </li>
-                                        <li className={cx("dropdown")} onClick={handleShow} >
-                                            <div className={cx("text-center")}>
+                                        <li className={cx("dropdown")} >
+                                            <div className={cx("text-center")} onClick={handleShow}>
                                             <Badge color='black' size='small' count={totalCart}>
                                                 <div className={cx("hd-link-icon")}>
                                                     <img src="https://theme.hstatic.net/1000205427/1000509844/14/hd_mainmenu_icon_cart.png?v=56" alt="giỏ hàng" />
@@ -239,14 +237,7 @@ export default function Header() {
                                             </Badge>
                                                 <div className={cx("hd-link-title")}>GIỎ HÀNG</div>
                                             </div>
-                                            <div className={cx("quickview-cart")}>
-                                                <h3>
-                                                    <span className={cx("btnCloseQVCart")}></span>
-                                                </h3>
-                                                {/* <ul className={cx("no-bullets">
-                                                    <li>Bạn chưa có sản phẩm nào trong giỏ hàng!</li>
-                                                </ul> */}
-                                            </div>
+                                            <QuickViewCart activePopUp={activePopUp} setActivePopUp={setActivePopUp}/>
                                         </li>
                                     </ul>
                                 </div>
