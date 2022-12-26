@@ -1,10 +1,11 @@
+import { Link } from "react-router-dom"
+
 function DetailProductHeader({category, nameProduct}) {
     return (
         <div>
             <div>
-                Trang chủ
-                <span>/</span>
-                {category}
+                <Link to={'/'}>Trang chủ</Link>
+                {category ? <span>/<Link>{category}</Link></span> : null}
                 <span>/</span>
                 {nameProduct}
             </div>

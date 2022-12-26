@@ -21,7 +21,6 @@ function Banner() {
   const handleNextSlider = () => {
     carouselRef.next();
   };
-
   return (
     <div className={cx("main-slider")}>
       <div className={cx("wrapper")}>
@@ -30,17 +29,11 @@ function Banner() {
             <div className={cx("banner")}>
               <Carousel 
                   defaultControlsConfig={{
-                    // pagingDotsStyle: {
-                    //   fill: 'red',
-                    //   width : 100
-                    // },
-                  //  pagingDotsClassName : cx('dot-box')
                   }}
                   wrapAround={true} 
                   slidesToShow={1} 
                   dragThreshold={0.1} 
                   autoplay={true}
-                
                   renderCenterLeftControls={({ previousDisabled, previousSlide }) => (
                     <button className={cx('btn-control-arrow')} onClick={previousSlide} disabled={previousDisabled}>
                         <LeftOutlined />
@@ -106,7 +99,6 @@ function Banner() {
                         </div>
                     </div>
             </div>
-          
           </Col>
           <Col span={8}>
             <div className={cx("aside-banner")}>

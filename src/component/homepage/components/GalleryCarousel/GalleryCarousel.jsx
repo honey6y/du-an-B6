@@ -10,6 +10,11 @@ function GalleryCarousel({dataProps , title, isSale}) {
   const nav = useNavigate()
   const dispatch = useDispatch()
   const cx = classNames.bind(styles)
+  dataProps.forEach(item => {
+    if (!item.thump[0].includes('http')) {
+      item.thump[0] = `${process.env.REACT_APP_SRC_IMG}${item.thump[0]}`
+    }
+  })
   return ( 
       <>
         <div className={cx('wrapper')}>
@@ -43,10 +48,10 @@ function GalleryCarousel({dataProps , title, isSale}) {
                             src={item.thump[0]}
                             alt="" 
                             width='100%' 
-                            onClick={()=>nav(`detail/${item._id}`)}
+                            onClick={()=>nav(`/detail/${item._id}`)}
                           />
                         </div>
-                        <p className={cx('card-box-name')} onClick={()=>nav(`detail/${item._id}`)}>{item.productName}</p>
+                        <p className={cx('card-box-name')} onClick={()=>nav(`/detail/${item._id}`)}>{item.productName}</p>
                         <h3 className={cx('card-box-price')}>{item.price?.toLocaleString()}</h3>
                         <button className={cx('btn-buy')} onClick={()=>{
                           dispatch(openModal(item));

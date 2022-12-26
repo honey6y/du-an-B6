@@ -22,10 +22,7 @@ function ProductContent() {
       axios({
         method: "get",
         url: `https://ecommerce.nodemy.vn/api/v1/product/get-page-products?page=1&size=${loadMoreData}`,
-        headers: {
-          Authorization:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWMzYWU3NDZjYTIyZWM4NGM2NDk1MSIsImF2YXRhciI6Imh0dHBzOi8vc3QzLmRlcG9zaXRwaG90b3MuY29tLzE3Njc2ODcvMTY2MDcvdi80NTAvZGVwb3NpdHBob3Rvc18xNjYwNzQ0MjItc3RvY2staWxsdXN0cmF0aW9uLWRlZmF1bHQtYXZhdGFyLXByb2ZpbGUtaWNvbi1ncmV5LmpwZyIsImVtYWlsIjoiYmFieTRldmVyMTFAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJjYXJ0Ijp7Il9pZCI6IjYzOWMzYWU3NDZjYTIyZWM4NGM2NDk1MyIsInVzZXJJZCI6IjYzOWMzYWU3NDZjYTIyZWM4NGM2NDk1MSIsImxpc3RQcm9kdWN0IjpbXSwicHJvZHVjdCI6W10sImNyZWF0ZWRBdCI6IjIwMjItMTItMTZUMDk6MzE6MTkuMjE2WiIsInVwZGF0ZWRBdCI6IjIwMjItMTItMjBUMTU6MDQ6NTMuNjA2WiIsIl9fdiI6MH0sIm5hdGlvbmFsaXR5IjoiVmlldCBOYW0iLCJpYXQiOjE2NzE1NDg3MDMsImV4cCI6MTY3MTYzNTEwM30.aJ4KmaOtT2DSTNeN8gVf_M3YHzA35bCblukceAsAcBI',
-        },
+        
       })
         .then((res) => {
           console.log(res)

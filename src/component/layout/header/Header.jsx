@@ -1,48 +1,56 @@
 import classNames from 'classnames/bind'
 import React from 'react'
-import {RiCloseLine} from 'react-icons/ri'
 import { useState,useEffect} from 'react'
 import styles from './Header.module.scss'
 import { ImSearch } from 'react-icons/im'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import debounce from 'lodash/debounce'
+import { useSelector, useDispatch } from 'react-redux'
 import { useRef } from 'react'
+import { Badge, Space } from 'antd';
+import QuickViewCart from '../PreviewCart/QuickViewCart'
 export default function Header() {
+    const nav = useNavigate()
+    const inputSearch = useRef()
+    const totalCart = useSelector(state =>state.cart.cartNumber)
     const cx = classNames.bind(styles)
-    const [searchValue,setSearchValue] = useState("")
-    const [active,setActive] = useState(null)
+    const [searchValue,setSearchValue] = useState([])
+    const [active,setActive] = useState([])
 
     const [activePopUp , setActivePopUp] = useState(false)
-    const handleShow = () => setActivePopUp(!activePopUp);
-    const handleClose = () => {
-        console.log('click')
-        setActivePopUp(false)
-    }
-   
+    const handleShow = () => setActivePopUp(true);
+    
     const [listData,setListData] = useState([])
-    const updateActive = e=>{
-        setActive(e?.target?.value)
-        searchByName(e);
-    }
-    const debounceOnChange = debounce(updateActive,800)
-
-    function searchByName(e){
-        setSearchValue(e.target.value)
+    const debounceOnChange = debounce(SearchByName,2000)
+    function SearchByName(e){
         axios({
             method:'get',
-            url: `https://shope-b3.thaihm.site/api/product/find-products-by-name?productName=${searchValue}`,
+            url: `https://ecommerce.nodemy.vn/api/v1/product/find-product-by-name?productName=${e.target.value}`,
             headers: { 
-            'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzkyZTU5YWZjYTM3MmRiMzhiNTE5MjEiLCJ1c2VybmFtZSI6ImFuIiwiZW1haWwiOiJhbkBnbWFpbC5jb20iLCJhdmF0YXIiOiJodHRwczovL21lZGlhLmlzdG9ja3Bob3RvLmNvbS9waG90b3MvYnVzaW5lc3NtYW4tc2lsaG91ZXR0ZS1hcy1hdmF0YXItb3ItZGVmYXVsdC1wcm9maWxlLXBpY3R1cmUtcGljdHVyZS1pZDQ3NjA4NTE5OD9rPTIwJm09NDc2MDg1MTk4JnM9NjEyeDYxMiZ3PTAmaD04SjNWZ09aYWJfT2lZb0l1WmZpTUl2dWNGWUI4dldZbEtuU2pLdUtlWVFNPSIsInJvbGUiOiJ1c2VyIiwiY3JlYXRlZEF0IjoiMjAyMi0xMi0wOVQwNzozNjo1OC4wNzlaIiwidXBkYXRlZEF0IjoiMjAyMi0xMi0xMlQxMToxODowOS42OTFaIiwiX192IjowLCJpYXQiOjE2NzA4NDM5NTN9.WdAX0MEQzwjBMD5Tye6M6xk7e2rAt7jxHceiIp9smMo'
-  }
+                'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTMxZThhMDNjZTVhM2VlNWZkYzUzZiIsImF2YXRhciI6Imh0dHBzOi8vc3QzLmRlcG9zaXRwaG90b3MuY29tLzE3Njc2ODcvMTY2MDcvdi80NTAvZGVwb3NpdHBob3Rvc18xNjYwNzQ0MjItc3RvY2staWxsdXN0cmF0aW9uLWRlZmF1bHQtYXZhdGFyLXByb2ZpbGUtaWNvbi1ncmV5LmpwZyIsImVtYWlsIjoiZGF0MTk5OUBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImNhcnQiOnsiX2lkIjoiNjNhMzFlOGEwM2NlNWEzZWU1ZmRjNTQxIiwidXNlcklkIjoiNjNhMzFlOGEwM2NlNWEzZWU1ZmRjNTNmIiwibGlzdFByb2R1Y3QiOltdLCJwcm9kdWN0IjpbXSwiY3JlYXRlZEF0IjoiMjAyMi0xMi0yMVQxNDo1NjoxMC45NDNaIiwidXBkYXRlZEF0IjoiMjAyMi0xMi0yMVQxNDo1NjoxMC45NDNaIiwiX192IjowfSwibmF0aW9uYWxpdHkiOiJWaWV0IE5hbSIsImlhdCI6MTY3MTYzNDYxOCwiZXhwIjoxNjcxNzIxMDE4fQ.fmVWjkiuadt4faGyDW2XuDWyNo8fiTzmMglc0ryhh30'
+            }
         })
         .then((res)=>{
             console.log(res)
-            setListData(res.data.products)
-        })
-        .catch((error)=>{
-            console.log(error)
-        })
+            setListData(res.data.product)
+            setActive(e.target.value)
+            })
+            .catch((error)=>{
+                console.log(error)
+            })
+    }
+    function handleSubmit(e) {
+        nav(`/category?productName=${inputSearch.current.value}`)
+        inputSearch.current.value = ''
+        setActive(false)
+    }
+    function handleEnter(e) {
+        if (e.key === 'Enter') {
+            nav(`/category?productName=${inputSearch.current.value}`)
+            inputSearch.current.value = ''
+            setActive(false)
+        }
     }
     return (
         <>
@@ -62,7 +70,7 @@ export default function Header() {
                             <div className={cx("grid__item-1 large--three-twelfths pd-left15")}>
                                 <div className={cx("header-search")}>
                                     <div className={cx("search-form-wrapper")}>
-                                        <form action="/seach" id={cx("seachauto")}>
+                                        <div id={cx("seachauto")} >
                                             <div className={cx("wpo-search")}>
                                                 <div className={cx("wpo-search-inner")}>
                                                     <select name="" id="" className={cx("select-collection")}>
@@ -75,9 +83,13 @@ export default function Header() {
                                                     </select>
                                                     <div className={cx("input-group")}>
                                                         <input type="hidden" name="type" value="product" id="" />
-                                                        <input id={cx("searchtext")} onChange={debounceOnChange} name="q" className={cx("form-control input-search")} type="text" size="20" placeholder="Tìm kiếm sản phẩm..." autoComplete="off" maxLength="40" />
+                                                        <input ref={inputSearch} id={cx("searchtext")}
+                                                            onChange={debounceOnChange} name="q" className={cx("form-control input-search")}
+                                                            type="text" size="20" placeholder="Tìm kiếm sản phẩm..." autoComplete="off" maxLength="40"
+                                                            onKeyDown={handleEnter}
+                                                        />
                                                         <span className={cx("input-group-btn")} >
-                                                            <button id={cx("searchsubmit")} type="submit">
+                                                            <button id={cx("searchsubmit")} type="submit" onClick={handleSubmit}>
                                                                 <svg style={{marginTop:"10px", marginLeft:"10px", height: "15px"}} className={cx('svg-inline--fa fa-search fa-w-16')}>
                                                                     <ImSearch/>
                                                                 </svg>
@@ -88,14 +100,19 @@ export default function Header() {
                                                 <div className={active ? cx('search-by-name-active'):cx('search-by-name')}>
                                                     {listData && listData.slice(0,5).map((item,index) => {
                                                       return(
-                                                        <Link to={`/productsDetail`} className={cx("list-search")} >
+                                                        <Link to={`/detail/${item._id}`} className={cx("list-search")} onClick={()=>{
+                                                                    inputSearch.current.value = ""
+                                                                    setActive(false)
+                                                                }
+                                                            }
+                                                        >
                                                             <p key={item._id} className={cx('flex-productName')}>
-                                                            <div className={cx('flex-produc-img')}>
-                                                                <img className={cx('img-product')} src={`https://shope-b3.thaihm.site/${item.thumbnail}`} alt="" />
-                                                                <p className={cx('products-Name')}>{item.productName}</p>
-                                                            </div>
-                                                            <h5 className={cx('products-Price')}>{item.price.toLocaleString()}đ</h5>
-                                                        </p>
+                                                                <div className={cx('flex-produc-img')}>
+                                                                    <img className={cx('img-product')} src={`${item.thump[0]}`} alt="" />
+                                                                    <p className={cx('products-Name')}>{item.productName}</p>
+                                                                </div>
+                                                                <h5 className={cx('products-Price')}>{item.price.toLocaleString()}đ</h5>
+                                                          </p>
                                                         </Link>
                                                       )
                                                     })}
@@ -104,7 +121,7 @@ export default function Header() {
                                                 {/* <input type="hidden" value="all" className={cx("collection_handle")} /> */}
                                                 {/* <input type="hidden" value="all" className={cx("collection_name")} /> */}
                                             </div>
-                                        </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -112,11 +129,11 @@ export default function Header() {
                                 <div className={cx("header-navbar")}>
                                     <ul className={cx("no-bullets")}>
                                         <li className={cx("dropdown")}>
-                                            <Link to={`/collections/cap-sac`} className={cx("text-center")}>
+                                            <Link to={`/category?productName=iphone`} className={cx("text-center")}>
                                                 <div className={cx("hd-link-icon")}>
                                                     <img src="https://theme.hstatic.net/1000205427/1000509844/14/hd_mainmenu_icon1.png?v=56" alt="cáp" />
                                                 </div>
-                                                <div className={cx("hd-link-title")}>CÁP</div>
+                                                <div className={cx("hd-link-title")}>IPHONE</div>
                                             </Link>
                                             <ul className={cx("dropdown-menu")}>
                                                 <li><Link to={"/collections/cap-lightning"}>CÁP LIGHTNING</Link></li>
@@ -127,11 +144,11 @@ export default function Header() {
                                             </ul>
                                         </li>
                                         <li className={cx("dropdown")}>
-                                            <Link to={"/collections/pin-du-phong"} className={cx("text-center")}>
+                                            <Link to={`/category?productName=xiaomi`} className={cx("text-center")}>
                                                 <div className={cx("hd-link-icon")}>
                                                     <img src="https://theme.hstatic.net/1000205427/1000509844/14/hd_mainmenu_icon2.png?v=56" alt="PIN SẠC" />
                                                 </div>
-                                                <div className={cx("hd-link-title")}>PIN SẠC</div>
+                                                <div className={cx("hd-link-title")}>XIAOMI</div>
                                             </Link>
                                             <ul className={cx("dropdown-menu")}>
                                                 <li><Link to={"/collections/cu-sac"}>CỦ SẠC</Link></li>
@@ -140,11 +157,11 @@ export default function Header() {
                                             </ul>
                                         </li>
                                         <li className={cx("dropdown")}>
-                                            <Link to={"/collections/tai-nghe"} className={cx("text-center")}>
+                                            <Link to={`/category?productName=samsung`} className={cx("text-center")}>
                                                 <div className={cx("hd-link-icon")}>
                                                     <img src="https://theme.hstatic.net/1000205427/1000509844/14/hd_mainmenu_icon3.png?v=56" alt="TAI NGHE" />
                                                 </div>
-                                                <div className={cx("hd-link-title")}>TAI NGHE</div>
+                                                <div className={cx("hd-link-title")}>SAM SUNG</div>
                                             </Link>
                                             <ul className={cx("dropdown-menu")}>
                                                 <li><Link to={"/collections/tai-nghe"}>TAI NGHE CÓ DÂY</Link></li>
@@ -180,38 +197,17 @@ export default function Header() {
                                                 <li><Link to={"/register"}>Đăng kí</Link></li>
                                             </ul>
                                         </li>
-                                        <li className={cx("dropdown")} onClick={handleShow} >
-                                            <div className={cx("text-center")}>
+                                        <li className={cx("dropdown")} >
+                                            <div className={cx("text-center")} onClick={handleShow}>
+                                            <Badge color='black' size='small' count={totalCart}>
                                                 <div className={cx("hd-link-icon")}>
                                                     <img src="https://theme.hstatic.net/1000205427/1000509844/14/hd_mainmenu_icon_cart.png?v=56" alt="giỏ hàng" />
                                                     {/* <span className={cx("hd-cart-count">0</span> */}
                                                 </div>
+                                            </Badge>
                                                 <div className={cx("hd-link-title")}>GIỎ HÀNG</div>
-                                                <div className={activePopUp ? cx('quickview-cart-product-active') :cx('quickview-cart-product')}>
-                                                    <h3 className={cx('view-product-cart')}>GIỎ HÀNG CỦA TÔI {`(3 SẢN PHẨM)`}
-                                                        <span  className={cx('btnCloseQVCart')} >
-                                                            <RiCloseLine onClick={handleClose} className={cx('btn-close-viewProduct')}/>
-                                                        </span>
-                                                    </h3>
-                                                    <ul className={cx('cart-item')}>
-                                                        <li className={cx('cart-item-detail')}>
-                                                            <a href=""></a>
-                                                            <div className={cx('cart-container')}>
-                                                                <div></div>
-                                                                <div></div>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
                                             </div>
-                                            <div className={cx("quickview-cart")}>
-                                                <h3>
-                                                    <span className={cx("btnCloseQVCart")}></span>
-                                                </h3>
-                                                {/* <ul className={cx("no-bullets">
-                                                    <li>Bạn chưa có sản phẩm nào trong giỏ hàng!</li>
-                                                </ul> */}
-                                            </div>
+                                            <QuickViewCart activePopUp={activePopUp} setActivePopUp={setActivePopUp}/>
                                         </li>
                                     </ul>
                                 </div>
