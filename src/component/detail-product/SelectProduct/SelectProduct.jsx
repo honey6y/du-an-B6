@@ -21,6 +21,7 @@ function SelectProduct() {
     const dispatch = useDispatch()
     const nav = useNavigate()
     let idCart = useSelector(state => state.cart.cartId)
+    console.log('selected 24',idCart)
     let token = localStorage.getItem("token")
     let { idProduct } = useParams();
     const [productDetail, setProductDetail] = useState({});
