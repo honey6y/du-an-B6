@@ -502,14 +502,6 @@ function SelectProduct() {
                     <div className={cx("product-info-price")}>
                         <span>{currentItem.price ? currentItem.price.toLocaleString() : null}&#8363;</span>
                     </div>
-                    {/* <div className={cx("product-info-sort-desc")}>
-                        <ul className={cx("product-info-sort-desc-ul")}>
-                            <li className={cx("product-info-sort-desc-li")}>Màu sắc: {currentItem.option ? currentItem.option[0].value : null}</li>
-                            <li className={cx("product-info-sort-desc-li")}>RAM: {currentItem.rom}</li>
-                            <li className={cx("product-info-sort-desc-li")}>ROM: {currentItem.option ? currentItem.option[1].value : null}</li>
-                            <li className={cx("product-info-sort-desc-li")}>Tồn kho: {currentItem.storage}</li>
-                        </ul>
-                    </div> */}
                     <strong>
                         <form action="">
                             <div
