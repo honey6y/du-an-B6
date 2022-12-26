@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind'
-import React from 'react'
+import React, { useContext } from 'react'
 import {RiCloseLine} from 'react-icons/ri'
 import { useState,useEffect} from 'react'
 import styles from './Header.module.scss'
@@ -10,14 +10,22 @@ import debounce from 'lodash/debounce'
 import { useSelector, useDispatch } from 'react-redux'
 import { useRef } from 'react'
 import { Badge, Space } from 'antd';
+import { AppContext } from '../../../privateRouter/PrivateRouter'
+import { useQuery } from '@tanstack/react-query'
+import { getAvatarUrl, userApi } from '../../Others/QueryApi'
 export default function Header() {
+    const {checkPrivate} = useContext(AppContext)
     const nav = useNavigate()
     const inputSearch = useRef()
     const totalCart = useSelector(state =>state.cart.cartNumber)
     const cx = classNames.bind(styles)
     const [searchValue,setSearchValue] = useState([])
     const [active,setActive] = useState([])
-
+    const {data: dataUser} = useQuery({
+        queryKey: ['/auth/me'],
+        queryFn: userApi.getProfile
+    })
+    const profile = dataUser?.data
     const [activePopUp , setActivePopUp] = useState(false)
     const handleShow = () => setActivePopUp(!activePopUp);
     const handleClose = () => {
@@ -188,16 +196,37 @@ export default function Header() {
                                                 <div className={cx("hd-link-title")}>GU BAG</div>
                                             </Link>
                                         </li>
+                                        
                                         <li className={cx("dropdown")}>
-                                            <Link to={"#"} className={cx("text-center")}>
-                                                <div className={cx("hd-link-icon")}>
-                                                    <img src="https://theme.hstatic.net/1000205427/1000509844/14/hd_mainmenu_icon_user.png?v=56" alt="TÀI KHOẢN" />
-                                                </div>
-                                                <div className={cx("hd-link-title")}>TÀI KHOẢN</div>
-                                            </Link>
+                                            { checkPrivate ? (
+                                                <Link to={"user/profile"} className={cx("text-center")}>
+                                                    <div className={cx("box-img")}>
+                                                        <img src={getAvatarUrl(profile?.avatar)} alt="TÀI KHOẢN" className={cx('img-user')}/>
+                                                    </div>
+                                                </Link>
+                                            ) : (
+                                                <Link to={"/login"} className={cx("text-center")}>
+                                                    <div className={cx("hd-link-icon")}>
+                                                        <img src="https://theme.hstatic.net/1000205427/1000509844/14/hd_mainmenu_icon_user.png?v=56" alt="TÀI KHOẢN" />
+                                                    </div>
+                                                    <div className={cx("hd-link-title")}>TÀI KHOẢN</div>
+                                                </Link>
+                                            )}
                                             <ul className={cx("dropdown-menu")}>
-                                                <li><Link to={"/login"}>Đăng nhập</Link></li>
-                                                <li><Link to={"/register"}>Đăng kí</Link></li>
+                                                <li>
+                                                    {checkPrivate ? (
+                                                        <li><Link to={"/user/profile"}>Xin chào, {profile?.username}</Link></li>
+                                                    ) : (
+                                                        <li><Link to={"/login"}>Đăng nhập</Link></li>
+                                                    )}
+                                                </li>
+                                                <li>
+                                                    {!checkPrivate ? (
+                                                        <li><Link to={"/register"}>Đăng ký</Link></li>
+                                                    ) : (
+                                                        <Link to={"/register"}>Đăng xuất</Link>
+                                                    )}
+                                                </li>
                                             </ul>
                                         </li>
                                         <li className={cx("dropdown")} onClick={handleShow} >
