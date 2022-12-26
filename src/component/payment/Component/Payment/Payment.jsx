@@ -6,7 +6,8 @@ import axios from 'axios';
 import PreviewCart from '../PreviewCart/PreviewCart';
 import {useForm} from 'react-hook-form'
 import { rules } from '../../../Others/Rules';
-import {useSearchParams} from 'react-router-dom'
+import {useSearchParams ,Link} from 'react-router-dom'
+
 
 function Payment () {
     const [listProvince, setListProvince] = useState([])
@@ -61,7 +62,7 @@ function Payment () {
             <div className={cx('payment')}>
                 <p className={cx('title')}>Phụ Kiện Hay</p>
                 <div className={cx('nav')}>
-                    <div>Giỏ hàng</div>
+                    <Link to={'/cart'}>Giỏ hàng</Link>
                     <div><RightOutlined style={{fontSize: '12px', color: 'gray', verticalAlign: 'middle'}}/></div>
                     <div className={params == 2 ? cx('vanChuyen-active') : cx('vanChuyen')} onClick={()=>setSearchParams({step : 1})}>Thông tin vận chuyển</div>
                     <div><RightOutlined style={{fontSize: '12px', color: 'gray', verticalAlign: 'middle'}}/></div>
@@ -91,7 +92,7 @@ function Payment () {
                         </div>
                     </div>
                     <div className={cx('inputAddress')}>
-                        <input name='address' type="text" placeholder='Địa chỉ' className={cx('name')} {...register('address', rules.address)}
+                        <input name='address' type="text" placeholder='Địa chỉ' className={cx('name')} {...register('address', rules.nationality)}
                         />
                         <div className={cx('inputErrors')}>{errors.address?.message}</div>
                     </div>
