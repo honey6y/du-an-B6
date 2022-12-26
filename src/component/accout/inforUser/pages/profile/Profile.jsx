@@ -27,7 +27,7 @@ export default function Profile() {
       phone: '',
       avatar: '',
       dateOfBirth: new Date(1990, 0, 1),
-      address: [],
+      nationality: '',
       id: '',
     }
   })
@@ -37,7 +37,7 @@ export default function Profile() {
       setValue('username', profile.username)
       setValue('phone', profile.phone)
       setValue('avatar', profile.avatar)
-      setValue('address', profile.address[6])
+      setValue('nationality', profile.nationality)
       setValue('dateOfBirth', profile.dateOfBirth ? new Date(profile.dateOfBirth) : new Date(1990,0,1))
       setValue('id', profile._id) //lấy id để cập nhật
     }
@@ -54,7 +54,7 @@ export default function Profile() {
         avatarName = uploadRes.data.newUser.avatar
         setValue('avatar', avatarName)
       }
-      const res = await updateProfileMution.mutateAsync({...data, dateOfBirth: data.dateOfBirth?.toISOString(), avatar: avatarName})
+      await updateProfileMution.mutateAsync({...data, dateOfBirth: data.dateOfBirth?.toISOString(), avatar: avatarName})
       refetch()
       toast.success('cập nhật thành công')
     } catch (error) {
@@ -65,7 +65,6 @@ export default function Profile() {
   const maxSizeUploadImg = 5 * 1048576
   const onFileChange = (event) => {
     const fileFromLocal = event.target.files?.[0]
-    console.log(fileFromLocal);
     if( fileFromLocal && (fileFromLocal?.size >= maxSizeUploadImg || !fileFromLocal.type.includes('image'))) {
       toast.warning(`Dung lượng file tối đa 5MB, Định dạng:.JPEG, .PNG`)
     }else {
@@ -106,8 +105,8 @@ export default function Profile() {
             <div className={style.input_change_infor}>
               <div className={style.title_profile}>Địa chỉ:</div>
               <div className={style.box_input}>
-                <input className={style.input_profile} type="text" name='address' {...register("address", rules.address)}/>
-                <div className={style.error_profile}>{errors.address?.message}</div>
+                <input className={style.input_profile} type="text" name='nationality' {...register("nationality", rules.nationality)}/>
+                <div className={style.error_profile}>{errors.nationality?.message}</div>
               </div>
             </div>
             <Controller 
@@ -132,7 +131,7 @@ export default function Profile() {
             <input className={style.hiden} type="file" accept='.jpg, .jpeg,.png'ref={fileInput} onChange={onFileChange}
               onClick={(event) => {event.target.value = null}}
              />
-            <button className={style.button_file}  type='button' onClick={handleUpload}>Chọn ảnh</button>
+            <button className={style.button_file} type='button' onClick={handleUpload}>Chọn ảnh</button>
             <div>
               <div className={style.infor_img}>Dung lượng file tối đa 5MB</div>
               <div className={style.infor_img}>Định dạng:.JPEG, .PNG</div>

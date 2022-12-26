@@ -1,16 +1,17 @@
 import classNames from 'classnames/bind'
 import React from 'react'
-import {RiCloseLine} from 'react-icons/ri'
 import { useState,useEffect} from 'react'
 import styles from './Header.module.scss'
 import { ImSearch } from 'react-icons/im'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import debounce from 'lodash/debounce'
 import { useSelector, useDispatch } from 'react-redux'
 import { useRef } from 'react'
 import { Badge, Space } from 'antd';
+import QuickViewCart from '../PreviewCart/QuickViewCart'
 export default function Header() {
+    const nav = useNavigate()
     const inputSearch = useRef()
     const totalCart = useSelector(state =>state.cart.cartNumber)
     const cx = classNames.bind(styles)
@@ -18,11 +19,8 @@ export default function Header() {
     const [active,setActive] = useState([])
 
     const [activePopUp , setActivePopUp] = useState(false)
-    const handleShow = () => setActivePopUp(!activePopUp);
-    const handleClose = () => {
-        console.log('click')
-        setActivePopUp(false)
-    }
+    const handleShow = () => setActivePopUp(true);
+    
     const [listData,setListData] = useState([])
     const debounceOnChange = debounce(SearchByName,2000)
     function SearchByName(e){
@@ -42,6 +40,18 @@ export default function Header() {
                 console.log(error)
             })
     }
+    function handleSubmit(e) {
+        nav(`/category?productName=${inputSearch.current.value}`)
+        inputSearch.current.value = ''
+        setActive(false)
+    }
+    function handleEnter(e) {
+        if (e.key === 'Enter') {
+            nav(`/category?productName=${inputSearch.current.value}`)
+            inputSearch.current.value = ''
+            setActive(false)
+        }
+    }
     return (
         <>
             <div className={cx("header-desktop")}>
@@ -60,7 +70,7 @@ export default function Header() {
                             <div className={cx("grid__item-1 large--three-twelfths pd-left15")}>
                                 <div className={cx("header-search")}>
                                     <div className={cx("search-form-wrapper")}>
-                                        <form action="/seach" id={cx("seachauto")}>
+                                        <div id={cx("seachauto")} >
                                             <div className={cx("wpo-search")}>
                                                 <div className={cx("wpo-search-inner")}>
                                                     <select name="" id="" className={cx("select-collection")}>
@@ -73,9 +83,13 @@ export default function Header() {
                                                     </select>
                                                     <div className={cx("input-group")}>
                                                         <input type="hidden" name="type" value="product" id="" />
-                                                        <input ref={inputSearch} id={cx("searchtext")} onChange={debounceOnChange} name="q" className={cx("form-control input-search")} type="text" size="20" placeholder="Tìm kiếm sản phẩm..." autoComplete="off" maxLength="40" />
+                                                        <input ref={inputSearch} id={cx("searchtext")}
+                                                            onChange={debounceOnChange} name="q" className={cx("form-control input-search")}
+                                                            type="text" size="20" placeholder="Tìm kiếm sản phẩm..." autoComplete="off" maxLength="40"
+                                                            onKeyDown={handleEnter}
+                                                        />
                                                         <span className={cx("input-group-btn")} >
-                                                            <button id={cx("searchsubmit")} type="submit">
+                                                            <button id={cx("searchsubmit")} type="submit" onClick={handleSubmit}>
                                                                 <svg style={{marginTop:"10px", marginLeft:"10px", height: "15px"}} className={cx('svg-inline--fa fa-search fa-w-16')}>
                                                                     <ImSearch/>
                                                                 </svg>
@@ -107,7 +121,7 @@ export default function Header() {
                                                 {/* <input type="hidden" value="all" className={cx("collection_handle")} /> */}
                                                 {/* <input type="hidden" value="all" className={cx("collection_name")} /> */}
                                             </div>
-                                        </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -143,11 +157,11 @@ export default function Header() {
                                             </ul>
                                         </li>
                                         <li className={cx("dropdown")}>
-                                            <Link to={"/collections/tai-nghe"} className={cx("text-center")}>
+                                            <Link to={`/category?productName=samsung`} className={cx("text-center")}>
                                                 <div className={cx("hd-link-icon")}>
                                                     <img src="https://theme.hstatic.net/1000205427/1000509844/14/hd_mainmenu_icon3.png?v=56" alt="TAI NGHE" />
                                                 </div>
-                                                <div className={cx("hd-link-title")}>TAI NGHE</div>
+                                                <div className={cx("hd-link-title")}>SAM SUNG</div>
                                             </Link>
                                             <ul className={cx("dropdown-menu")}>
                                                 <li><Link to={"/collections/tai-nghe"}>TAI NGHE CÓ DÂY</Link></li>
@@ -183,8 +197,8 @@ export default function Header() {
                                                 <li><Link to={"/register"}>Đăng kí</Link></li>
                                             </ul>
                                         </li>
-                                        <li className={cx("dropdown")} onClick={handleShow} >
-                                            <div className={cx("text-center")}>
+                                        <li className={cx("dropdown")} >
+                                            <div className={cx("text-center")} onClick={handleShow}>
                                             <Badge color='black' size='small' count={totalCart}>
                                                 <div className={cx("hd-link-icon")}>
                                                     <img src="https://theme.hstatic.net/1000205427/1000509844/14/hd_mainmenu_icon_cart.png?v=56" alt="giỏ hàng" />
@@ -193,14 +207,7 @@ export default function Header() {
                                             </Badge>
                                                 <div className={cx("hd-link-title")}>GIỎ HÀNG</div>
                                             </div>
-                                            <div className={cx("quickview-cart")}>
-                                                <h3>
-                                                    <span className={cx("btnCloseQVCart")}></span>
-                                                </h3>
-                                                {/* <ul className={cx("no-bullets">
-                                                    <li>Bạn chưa có sản phẩm nào trong giỏ hàng!</li>
-                                                </ul> */}
-                                            </div>
+                                            <QuickViewCart activePopUp={activePopUp} setActivePopUp={setActivePopUp}/>
                                         </li>
                                     </ul>
                                 </div>
