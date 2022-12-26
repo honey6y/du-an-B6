@@ -4,10 +4,21 @@ import { RightOutlined } from '@ant-design/icons';
 import {useEffect, useState} from 'react'
 import axios from 'axios';
 import PreviewCart from '../PreviewCart/PreviewCart';
+import {useForm} from 'react-hook-form'
+import { rules } from '../../../Others/Rules';
+import {useSearchParams ,Link} from 'react-router-dom'
+
 
 function Payment () {
     const [listProvince, setListProvince] = useState([])
     const [province, setProvince] = useState(null)
+    const [searchParams, setSearchParams] = useSearchParams()
+    const [displayPayment , setDisplayPayment] = useState(1)
+
+    const cx = classNames.bind(styles)
+
+    const params = searchParams.get('step')
+    
     useEffect(() => {
         axios({
             method: 'get',
@@ -20,7 +31,19 @@ function Payment () {
         .catch((err) => {
             console.log(err);
         })
-    },[])
+       setDisplayPayment(params ? params : 1)
+       console.log(displayPayment)
+       console.log('setlaiparam')
+       console.log(params)
+    },[params])
+
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        watch,
+        formState: { errors },
+      } = useForm();
 
     const handleChange = (e) => {
         const result = listProvince.filter((item) => {
@@ -28,84 +51,50 @@ function Payment () {
         })
         setProvince(result)
     }
-    const [hoTenDisplay, setHoTenDisplay] = useState(false)
-    const [emailDisplay, setEmailDisplay] = useState(false)
-    const [numberDisplay, setNumberDisplay] = useState(false)
-    const [addressDisplay, setAddressDisplay] = useState(false)
-    const [displayPayment , setDisplayPayment] = useState(true)
-
-    const cx = classNames.bind(styles)
+   
+    const onSubmit100 = handleSubmit((data) => {
+        console.log(data.email)
+        setSearchParams({step : 2})
+    })
     return (
         <>
         <div className={cx('page')}>
             <div className={cx('payment')}>
                 <p className={cx('title')}>Phụ Kiện Hay</p>
                 <div className={cx('nav')}>
-                    <div>Giỏ hàng</div>
+                    <Link to={'/cart'}>Giỏ hàng</Link>
                     <div><RightOutlined style={{fontSize: '12px', color: 'gray', verticalAlign: 'middle'}}/></div>
-                    <div>Thông tin vận chuyển</div>
+                    <div className={params == 2 ? cx('vanChuyen-active') : cx('vanChuyen')} onClick={()=>setSearchParams({step : 1})}>Thông tin vận chuyển</div>
                     <div><RightOutlined style={{fontSize: '12px', color: 'gray', verticalAlign: 'middle'}}/></div>
                     <div>Phương thức thanh toán</div>
                 </div>
 
-              {displayPayment ? <>
+              {displayPayment == 1 ? <>
                 <p className={cx('infor')}>Thông tin thanh toán</p>
-                <span>Bạn đã có tài khoản?</span> <span className={cx('login')}>Đăng nhập</span>
-                <div className={cx('menu')}>
+                <span>Bạn đã có tài khoản?</span>
+                <span className={cx('login')}>Đăng nhập</span>
+                <form className={cx('menu')} onSubmit={onSubmit100}>
                     <div className={cx('inputHoTen')}>
-                        <input type="text" placeholder='Họ tên' className={cx('name')}  
-                            onChange={(e)=>{
-                                if(e.target.value){
-                                    setHoTenDisplay(true)
-                                }else{
-                                    setHoTenDisplay(false)
-                                }
-                                
-                        }}/>
-                        <div className={cx('hoTen')}>
-                            <span className={hoTenDisplay ? cx('show') : cx('hide')}>Họ tên</span>
-                        </div>
+                        <input type="text" placeholder='Họ tên' className={cx('name')} name='name' {...register('name', rules.name ) }
+                        />
+                        <div className={cx('inputErrors')}>{errors.name?.message}</div>
                     </div>
                     <div className={cx('inputChild')}>
                         <div className={cx('inputEmail')}>
-                            <input type="email" name="" id="" placeholder='Email' className={cx('email')}
-                                onChange={(e) => {
-                                    if(e.target.value) {
-                                        setEmailDisplay(true)
-                                    } else {
-                                        setEmailDisplay(false)
-                                    }
-                                }}/>
-                            <div className={cx('Email')}>
-                                <span className={emailDisplay ? cx('show') : cx('hide')}>Email</span>
-                            </div>
+                            <input type="email" name="email" id="" placeholder='Email' className={cx('email')} {...register('email' , rules.email )}
+                                />
+                            <div className={cx('inputErrors')}>{errors.email?.message}</div>
                         </div>
                         <div className={cx('inputNumber')}>
-                            <input type="text" name="" id="" placeholder='Số điện thoại' className={cx('number')}
-                                onChange={(e) => {
-                                    if(e.target.value) {
-                                        setNumberDisplay(true)
-                                    } else{
-                                        setNumberDisplay(false)
-                                    }
-                                }}/>
-                            <div className={cx('Number')}>
-                                <span className={numberDisplay ? cx('show') : cx('hide')}>Số điện thoại</span>
-                            </div>
+                            <input type="text" name="phone" id="" placeholder='Số điện thoại' className={cx('number')} {...register('phone' , rules.phone )}
+                            />
+                            <div className={cx('inputErrors')}>{errors.phone?.message}</div>
                         </div>
                     </div>
                     <div className={cx('inputAddress')}>
-                        <input type="text" placeholder='Địa chỉ' className={cx('name')}
-                            onChange={(e) => {
-                                if(e.target.value) {
-                                    setAddressDisplay(true)
-                                } else{
-                                    setAddressDisplay(false)
-                                }
-                            }}/>
-                        <div className={cx('diaChi')}>
-                            <span className={addressDisplay ? cx('show') : cx('hide')}>Địa chỉ</span>
-                        </div>
+                        <input name='address' type="text" placeholder='Địa chỉ' className={cx('name')} {...register('address', rules.nationality)}
+                        />
+                        <div className={cx('inputErrors')}>{errors.address?.message}</div>
                     </div>
                     <div>
                         <select name="" id="" placeholder='Tỉnh' onChange={handleChange}>
@@ -129,13 +118,15 @@ function Payment () {
                             }) : null}
                         </select>
                     </div>
-                </div>
-                <div className={cx('footer')}>
-                    <div className={cx('login')}>Giỏ hàng</div>
-                    <div>
-                        <button className={cx('phuongThuc')} onClick={()=>setDisplayPayment(false)}>Phương thức thanh toán</button>
-                    </div>
-                </div>
+                    <div className={cx('footer')}>
+                        <div className={cx('login')}>Giỏ hàng</div>
+                        <div>
+                            <button type='submit' className={cx('phuongThuc')} onClick={onSubmit100}>Phương thức thanh toán</button>
+                        </div>
+                        
+                     </div>
+                </form>
+              
                 </> : <div className={cx('methods')}>
                 <div className={cx('infor')}>
                     Phương thức vận chuyển
@@ -164,6 +155,7 @@ function Payment () {
             </div>}
             </div>
            <PreviewCart />
+            
         </div>
             
             </>

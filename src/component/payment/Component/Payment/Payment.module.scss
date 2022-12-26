@@ -42,7 +42,6 @@
 .name{
     width: 94%;
     height: 45px;
-    margin: 2% 0;
     border: 1.5px solid rgb(214, 211, 211, 0.7);
     border-radius: 4px;
     padding: 2%;
@@ -50,6 +49,12 @@
 }
 .inputHoTen{
     position: relative;
+    margin-top: 2%;
+}
+.inputErrors{
+    color: red;
+    height: 25px;
+    margin-left: 5px;
 }
 .hoTen{
     font-size: 14px;
@@ -188,4 +193,8 @@ select{
     color: white;
     font-size: 15px;
     border-radius: 4px;
+}
+.vanChuyen-active{
+    color: #338dbc;
+    cursor: pointer;
 }
