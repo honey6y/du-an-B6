@@ -20,9 +20,9 @@ const cx = classNames.bind(styles);
 function SelectProduct() {
     const dispatch = useDispatch()
     const nav = useNavigate()
-    let idCart = useSelector(state => state.cart.cartId)
-    console.log('selected 24',idCart)
+    // let idCart = useSelector(state => state.cart.cartId)
     let token = localStorage.getItem("token")
+    let idCart = localStorage.getItem('idcart')
     let { idProduct } = useParams();
     const [productDetail, setProductDetail] = useState({});
     const [currentItem, setCurrentItem] = useState({});
@@ -318,6 +318,7 @@ function SelectProduct() {
                 console.log(res)
                 toast.success("Thêm giỏ hàng thành công");
                 dispatch(addToCart(buyQuantity));
+                window.location.assign('http://localhost:3000')
             })
             .catch(err => {
                 console.log(err)
@@ -340,6 +341,7 @@ function SelectProduct() {
                 console.log(res)
                 toast.success("Thêm giỏ hàng thành công");
                 dispatch(addToCart(buyQuantity));
+                window.location.assign('http://localhost:3000')
             })
             .catch(err => {
                 console.log(err)
