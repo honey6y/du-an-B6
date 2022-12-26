@@ -36,8 +36,12 @@ function Cart() {
       let totalListProduct = listProduct.reduce((total, data) => {
         return total + data?.productDetailId.price * data?.quantity;
       }, 0);
+      let totalProduct = product.reduce((total, data) => {
+        return total + data?.productId.price * data?.quantity;
+      }, 0);
+      console.log(totalProduct)
       dispatch(getCartId(res.data.cart._id))
-      setTotal(totalListProduct);
+      setTotal(totalListProduct + totalProduct);
       dispatch(getListProduct(listProduct));
       dispatch(getProduct(product));
     } catch (err) {
