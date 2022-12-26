@@ -7,7 +7,7 @@ import styles from "./Cart.module.scss";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getListProduct, getProduct, getCartNumber, getCartId } from "../../features/counter/cartSlice";
+import { getListProduct, getProduct, getCartId } from "../../features/counter/cartSlice";
 function Cart() {
   const listProduct = useSelector((state) => state.cart.listProduct);
   const product = useSelector((state) => state.cart.product);
@@ -36,12 +36,8 @@ function Cart() {
       let totalListProduct = listProduct.reduce((total, data) => {
         return total + data?.productDetailId.price * data?.quantity;
       }, 0);
-      let cartNumber = listProduct.reduce((total, product) => {
-        return total + product.quantity;
-      }, 0);
       dispatch(getCartId(res.data.cart._id))
       setTotal(totalListProduct);
-      dispatch(getCartNumber(cartNumber));
       dispatch(getListProduct(listProduct));
       dispatch(getProduct(product));
     } catch (err) {
@@ -223,7 +219,7 @@ function Cart() {
         </div>
         <div className={styles.container}>
           <h2>GIỎ HÀNG</h2>
-          {listProduct !== [] ? <Table pagination={false} columns={columns} dataSource={tableData} /> : <Empty
+          {tableData.length !== 0 ? <Table pagination={false} columns={columns} dataSource={tableData} /> : <Empty
             image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
             imageStyle={{
               height: 60,
@@ -236,6 +232,7 @@ function Cart() {
           >
             <Button type="primary" style={{ backgroundColor: "#cd1818" }}>Shop Now</Button>
           </Empty>}
+
           <div className={styles.description}>
             <div className={styles.description_left}>
               <label htmlFor="CartSpecialInstructions">
