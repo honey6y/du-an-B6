@@ -8,6 +8,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
+import {addToCart} from '../../../../features/counter/cartSlice'
 
 function ModalPopUp() {
     const dispatch = useDispatch()
@@ -82,6 +83,7 @@ function ModalPopUp() {
     findCurrentOption(currentColor, item)
    };
    const handleAddToCart = () => {
+    dispatch(addToCart(control))
     if(currentOption){
       axios({
         method: 'patch',
