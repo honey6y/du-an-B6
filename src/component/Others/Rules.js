@@ -112,6 +112,7 @@ export const rules = {
             message: 'Độ dài không quá 15 ký tự'
         }
     },
+    
     nationality: {
         required: {
             value: true,
