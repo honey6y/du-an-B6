@@ -39,7 +39,6 @@ function Cart() {
       let totalProduct = product.reduce((total, data) => {
         return total + data?.productId.price * data?.quantity;
       }, 0);
-      console.log(totalProduct)
       dispatch(getCartId(res.data.cart._id))
       setTotal(totalListProduct + totalProduct);
       dispatch(getListProduct(listProduct));
@@ -215,9 +214,11 @@ function Cart() {
       <div style={{ maxWidth: "1260px", margin: "auto", backgroundColor: "white" }}>
         <div style={{ backgroundColor: "#fafafa" }}>
           <Breadcrumb>
-            <Breadcrumb.Item style={{ color: "red" }}>Home</Breadcrumb.Item>
+            <Breadcrumb.Item >
+              <a href="/" style={{ color: "red", textDecoration: "none" }}>Home</a>
+            </Breadcrumb.Item>
             <Breadcrumb.Item>
-              <a href="/cart">Cart</a>
+              <a href="/cart" style={{ textDecoration: "none" }}>Cart</a>
             </Breadcrumb.Item>
           </Breadcrumb>
         </div>
@@ -234,7 +235,7 @@ function Cart() {
               </span>
             }
           >
-            <Button type="primary" style={{ backgroundColor: "#cd1818" }}>Shop Now</Button>
+            <Button type="primary" style={{ backgroundColor: "#cd1818" }} onClick={()=>{navigate(`/`)}}>Shop Now</Button>
           </Empty>}
 
           <div className={styles.description}>
