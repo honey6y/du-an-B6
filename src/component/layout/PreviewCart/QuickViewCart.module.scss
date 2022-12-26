@@ -79,6 +79,8 @@
 .quickview-cart-item {
     width: 100%;
     position: relative;
+    border-bottom: 1px dotted #f0f0f0;
+    margin-bottom: 5px;
 }
 
 .quickview-cart-item-delete {
@@ -89,4 +91,43 @@
     color: var(--red-primary);
     font-size: 20px;
     z-index: 1;
+}
+
+.quickview-cart-item-name {
+    font-weight: bold;
+    font-size: 10px;
+}
+
+.quickview-cart-item-option, .quickview-cart-item-quantity, .quickview-cart-item-price {
+    margin: 0;
+    font-weight: 300;
+    font-size: 10px;
+}
+
+.quickview-cart-total-provisional {
+    background-color: #f0f0f0;
+    padding: 5px;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.quickview-cart-total-provisional-number {
+    color: var(--red-primary);
+    font-weight: bold;
+}
+
+.quickview-cart-actions {
+    display: flex;
+    gap: 16px;
+}
+
+.quickview-cart-actions-button {
+    border: none;
+    outline: none;
+    background-color: var(--red-primary);
+    border-radius: 5px;
+    width: 50%;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
 }

@@ -5,7 +5,7 @@ function DetailProductHeader({category, nameProduct}) {
         <div>
             <div>
                 <Link to={'/'}>Trang chủ</Link>
-                {category ? <span>/<Link>{category}</Link></span> : null}
+                {category ? <span>/<Link to={`/category?productName=${category}`}>{category}</Link></span> : null}
                 <span>/</span>
                 {nameProduct}
             </div>
