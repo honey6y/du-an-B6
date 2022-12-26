@@ -10,8 +10,11 @@ import { isAxiosUnprocessableEntityError } from "../../Others/StatusApi"
 import style from "./Login.module.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Spinner from 'react-bootstrap/Spinner';
+import { useDispatch } from "react-redux"
+import { getCartId, getCartNumber } from "../../../features/counter/cartSlice"
 
 function Login () {
+    const dispatch = useDispatch()
     const [spamSubmit, setSpamSubmit] = useState(false)
     const {setCheckPrivate} = useContext(AppContext)
     const nav = useNavigate()
@@ -50,9 +53,9 @@ function Login () {
                 }
             }
         })
-        const idCart = await getIdCartMutation.mutateAsync()
-        console.log('idCard',idCart.data.cart._id)
-        const dataCart = idCart.data.cart
+        const dataLogedCart = await getIdCartMutation.mutateAsync()
+        dispatch(getCartId(dataLogedCart.data.cart._id))
+        const dataCart = dataLogedCart.data.cart
         console.log( 57,dataCart);
         const listProductQuantity = []
         const productQuantity = []
@@ -66,15 +69,12 @@ function Login () {
         const tongListProduct = listProductQuantity.reduce((total, value) => {
             return total += value
         },0)
-        console.log(70,tongListProduct);
         // tính toontg product
-
         const tongProduct = productQuantity.reduce((total, value) => {
             return total += value
         },0)
-        console.log(76,tongProduct);
         const  tongAll = tongListProduct + tongProduct
-        console.log(78, tongAll);
+        dispatch(getCartNumber(tongAll))
     })
     return (
         <div className={style.login_bg}>
