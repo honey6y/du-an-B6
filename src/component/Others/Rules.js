@@ -103,7 +103,7 @@ export const rules = {
         },
     },
     phone: {
-        require: {
+        required: {
             value: true,
             message: 'Hãy nhập dữ liệu'
         },
@@ -113,7 +113,7 @@ export const rules = {
         }
     },
     address: {
-        require: {
+        required: {
             value: true,
             message: 'Hãy nhập dữ liệu'
         },
