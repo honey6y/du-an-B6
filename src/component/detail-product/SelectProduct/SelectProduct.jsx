@@ -1,5 +1,4 @@
 import DetailProductHeader from "../DetailProductHeader/DetailProductHeader";
-import { LikeOutlined } from "@ant-design/icons";
 import { Breadcrumb } from 'antd';
 import {
     DownOutlined,
@@ -13,13 +12,16 @@ import { useEffect, useRef, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import styles from "./SelectProduct.module.scss";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../features/counter/cartSlice";
 
 const cx = classNames.bind(styles);
 
 function SelectProduct() {
+    const dispatch = useDispatch()
     const nav = useNavigate()
     let idCart = '63a1d0366d8b52f0ce429cc2';
-    let token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTFkMDM1NmQ4YjUyZjBjZTQyOWNjMCIsImF2YXRhciI6Imh0dHBzOi8vc3QzLmRlcG9zaXRwaG90b3MuY29tLzE3Njc2ODcvMTY2MDcvdi80NTAvZGVwb3NpdHBob3Rvc18xNjYwNzQ0MjItc3RvY2staWxsdXN0cmF0aW9uLWRlZmF1bHQtYXZhdGFyLXByb2ZpbGUtaWNvbi1ncmV5LmpwZyIsImVtYWlsIjoiZGVtby10aGFpQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiY2FydCI6eyJfaWQiOiI2M2ExZDAzNjZkOGI1MmYwY2U0MjljYzIiLCJ1c2VySWQiOiI2M2ExZDAzNTZkOGI1MmYwY2U0MjljYzAiLCJsaXN0UHJvZHVjdCI6W10sInByb2R1Y3QiOlt7InByb2R1Y3RJZCI6IjYyZmRlZjk5OTU0OWI4YjcwODc3M2IzYyIsInF1YW50aXR5IjozLCJzZWxlY3RlZCI6ZmFsc2UsIl9pZCI6IjYzYTMzZGRmMDNjZTVhM2VlNWZkZDNiYiJ9XSwiY3JlYXRlZEF0IjoiMjAyMi0xMi0yMFQxNTowOTo0Mi4wMDVaIiwidXBkYXRlZEF0IjoiMjAyMi0xMi0yMVQxNzowOTo1MS41NThaIiwiX192IjowfSwibmF0aW9uYWxpdHkiOiJWaWV0IE5hbSIsImlhdCI6MTY3MTY0MjkyNCwiZXhwIjoxNjcxNzI5MzI0fQ.aWBmCFRdO01zXWWy54oZGVqbWqhK3G7bsN4Ji35RYiQ`;
+    let token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTFkMDM1NmQ4YjUyZjBjZTQyOWNjMCIsImF2YXRhciI6Imh0dHBzOi8vc3QzLmRlcG9zaXRwaG90b3MuY29tLzE3Njc2ODcvMTY2MDcvdi80NTAvZGVwb3NpdHBob3Rvc18xNjYwNzQ0MjItc3RvY2staWxsdXN0cmF0aW9uLWRlZmF1bHQtYXZhdGFyLXByb2ZpbGUtaWNvbi1ncmV5LmpwZyIsImVtYWlsIjoiZGVtby10aGFpQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiY2FydCI6eyJfaWQiOiI2M2ExZDAzNjZkOGI1MmYwY2U0MjljYzIiLCJ1c2VySWQiOiI2M2ExZDAzNTZkOGI1MmYwY2U0MjljYzAiLCJsaXN0UHJvZHVjdCI6W3sicHJvZHVjdERldGFpbElkIjoiNjMxNjI0NjZkMTYzZGQ5ZGM3MmQ0ZjM5IiwicXVhbnRpdHkiOjIsInNlbGVjdGVkIjpmYWxzZSwiX2lkIjoiNjNhMzQ4NWYwM2NlNWEzZWU1ZmRkNzM2In0seyJwcm9kdWN0RGV0YWlsSWQiOiI2MmVjY2E3MzJkNjhkMWE2MGQzNDE2ZTEiLCJxdWFudGl0eSI6Mywic2VsZWN0ZWQiOmZhbHNlLCJfaWQiOiI2M2E1YzBjMTAzY2U1YTNlZTVmZTFjODIifV0sInByb2R1Y3QiOlt7InByb2R1Y3RJZCI6IjYyZmRlZjk5OTU0OWI4YjcwODc3M2IzYyIsInF1YW50aXR5Ijo2LCJzZWxlY3RlZCI6ZmFsc2UsIl9pZCI6IjYzYTU1NDdmMDNjZTVhM2VlNWZkZmM0YyJ9LHsicHJvZHVjdElkIjoiNjJlZTIzOTk5NzYxOGNmODQwM2Q0NjRmIiwicXVhbnRpdHkiOjMsInNlbGVjdGVkIjpmYWxzZSwiX2lkIjoiNjNhNWMwZWYwM2NlNWEzZWU1ZmUxYzg4In1dLCJjcmVhdGVkQXQiOiIyMDIyLTEyLTIwVDE1OjA5OjQyLjAwNVoiLCJ1cGRhdGVkQXQiOiIyMDIyLTEyLTIzVDE0OjU3OjQyLjQ3MVoiLCJfX3YiOjB9LCJuYXRpb25hbGl0eSI6IlZpZXQgTmFtIiwiaWF0IjoxNjcxOTYxNjg2LCJleHAiOjE2NzIwNDgwODZ9.Ggzr_9ZuXsTyhIQGwC7HwTfrobIBQzJsgUz_cBIp9WA`;
     let { idProduct } = useParams();
     const [productDetail, setProductDetail] = useState({});
     const [currentItem, setCurrentItem] = useState({});
@@ -48,7 +50,16 @@ function SelectProduct() {
             },
         })
         .then((res) => {
-            // console.log(res);
+            console.log(res);
+            if(res.data.product.productDetailId) {
+                res.data.product.productDetailId.forEach(element => {
+                    for(let i = 0; i < element.listImg.length; i++) {
+                        if (!element.listImg[i].includes('http')) {
+                            element.listImg[i] = `${process.env.REACT_APP_SRC_IMG}${element.listImg[i]}`
+                        }
+                    }
+                });
+            }
             let totalProduct = res.data.product;
             let totalSimple = []
             totalProduct.productDetailId.forEach(element => {
@@ -289,7 +300,6 @@ function SelectProduct() {
     }
 
     function handleAddProductToCart() {
-        console.log(currentItem.id)
         if(productSimple.length) {
             console.log('run if')
             axios({
@@ -306,6 +316,7 @@ function SelectProduct() {
             .then(res => {
                 console.log(res)
                 toast.success("Thêm giỏ hàng thành công");
+                dispatch(addToCart(buyQuantity));
             })
             .catch(err => {
                 console.log(err)
@@ -327,6 +338,7 @@ function SelectProduct() {
             .then(res => {
                 console.log(res)
                 toast.success("Thêm giỏ hàng thành công");
+                dispatch(addToCart(buyQuantity));
             })
             .catch(err => {
                 console.log(err)
@@ -352,6 +364,7 @@ function SelectProduct() {
             .then(res => {
                 console.log(res)
                 toast.success("Thêm giỏ hàng thành công");
+                dispatch(addToCart(buyQuantity));
             })
             .catch(err => {
                 console.log(err)
@@ -372,6 +385,7 @@ function SelectProduct() {
             .then(res => {
                 console.log(res)
                 toast.success("Thêm giỏ hàng thành công");
+                dispatch(addToCart(buyQuantity));
             })
             .catch(err => {
                 console.log(err)

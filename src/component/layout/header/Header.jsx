@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind'
-import React from 'react'
+import React, { useContext } from 'react'
 import {RiCloseLine} from 'react-icons/ri'
 import { useState,useEffect} from 'react'
 import styles from './Header.module.scss'
@@ -10,20 +10,26 @@ import debounce from 'lodash/debounce'
 import { useSelector, useDispatch } from 'react-redux'
 import { useRef } from 'react'
 import { Badge, Space } from 'antd';
+import { AppContext } from '../../../privateRouter/PrivateRouter'
+import { useQuery } from '@tanstack/react-query'
+import { getAvatarUrl, userApi } from '../../Others/QueryApi'
+import QuickViewCart from '../PreviewCart/QuickViewCart'
 export default function Header() {
+    const {checkPrivate} = useContext(AppContext)
     const nav = useNavigate()
     const inputSearch = useRef()
     const totalCart = useSelector(state =>state.cart.cartNumber)
     const cx = classNames.bind(styles)
     const [searchValue,setSearchValue] = useState([])
     const [active,setActive] = useState([])
-
+    const {data: dataUser} = useQuery({
+        queryKey: ['/auth/me'],
+        queryFn: userApi.getProfile
+    })
+    const profile = dataUser?.data
     const [activePopUp , setActivePopUp] = useState(false)
-    const handleShow = () => setActivePopUp(!activePopUp);
-    const handleClose = () => {
-        console.log('click')
-        setActivePopUp(false)
-    }
+    const handleShow = () => setActivePopUp(true);
+    
     const [listData,setListData] = useState([])
     const debounceOnChange = debounce(SearchByName,2000)
     function SearchByName(e){
@@ -173,35 +179,56 @@ export default function Header() {
                                             </ul>
                                         </li>
                                         <li className={cx("dropdown")}>
-                                            <Link to={"/collections/loa-di-dong"} className={cx("text-center")}>
+                                            <Link to={`/category?productName=dolce`} className={cx("text-center")}>
                                                 <div className={cx("hd-link-icon")}>
                                                     <img src="https://theme.hstatic.net/1000205427/1000509844/14/hd_mainmenu_icon4.png?v=56" alt="LOA" />
                                                 </div>
-                                                <div className={cx("hd-link-title")}>LOA</div>
+                                                <div className={cx("hd-link-title")}>D&G</div>
                                             </Link>
                                         </li>
                                         <li className={cx("dropdown")}>
-                                            <Link to={"/collections/khuyen-mai"} className={cx("text-center")}>
+                                            <Link to={`/category?productName=gubag`} className={cx("text-center")}>
                                                 <div className={cx("hd-link-icon")}>
                                                     <img src="https://theme.hstatic.net/1000205427/1000509844/14/hd_mainmenu_icon5.png?v=56" alt="KHUYẾN MẠI" />
                                                 </div>
-                                                <div className={cx("hd-link-title")}>KHUYẾN MẠI</div>
+                                                <div className={cx("hd-link-title")}>GU BAG</div>
                                             </Link>
                                         </li>
+                                        
                                         <li className={cx("dropdown")}>
-                                            <Link to={"#"} className={cx("text-center")}>
-                                                <div className={cx("hd-link-icon")}>
-                                                    <img src="https://theme.hstatic.net/1000205427/1000509844/14/hd_mainmenu_icon_user.png?v=56" alt="TÀI KHOẢN" />
-                                                </div>
-                                                <div className={cx("hd-link-title")}>TÀI KHOẢN</div>
-                                            </Link>
+                                            { checkPrivate ? (
+                                                <Link to={"user/profile"} className={cx("text-center")}>
+                                                    <div className={cx("box-img")}>
+                                                        <img src={getAvatarUrl(profile?.avatar)} alt="TÀI KHOẢN" className={cx('img-user')}/>
+                                                    </div>
+                                                </Link>
+                                            ) : (
+                                                <Link to={"/login"} className={cx("text-center")}>
+                                                    <div className={cx("hd-link-icon")}>
+                                                        <img src="https://theme.hstatic.net/1000205427/1000509844/14/hd_mainmenu_icon_user.png?v=56" alt="TÀI KHOẢN" />
+                                                    </div>
+                                                    <div className={cx("hd-link-title")}>TÀI KHOẢN</div>
+                                                </Link>
+                                            )}
                                             <ul className={cx("dropdown-menu")}>
-                                                <li><Link to={"/login"}>Đăng nhập</Link></li>
-                                                <li><Link to={"/register"}>Đăng kí</Link></li>
+                                                <li>
+                                                    {checkPrivate ? (
+                                                        <li><Link to={"/user/profile"}>Xin chào, {profile?.username}</Link></li>
+                                                    ) : (
+                                                        <li><Link to={"/login"}>Đăng nhập</Link></li>
+                                                    )}
+                                                </li>
+                                                <li>
+                                                    {!checkPrivate ? (
+                                                        <li><Link to={"/register"}>Đăng ký</Link></li>
+                                                    ) : (
+                                                        <Link to={"/register"}>Đăng xuất</Link>
+                                                    )}
+                                                </li>
                                             </ul>
                                         </li>
-                                        <li className={cx("dropdown")} onClick={handleShow} >
-                                            <div className={cx("text-center")}>
+                                        <li className={cx("dropdown")} >
+                                            <div className={cx("text-center")} onClick={handleShow}>
                                             <Badge color='black' size='small' count={totalCart}>
                                                 <div className={cx("hd-link-icon")}>
                                                     <img src="https://theme.hstatic.net/1000205427/1000509844/14/hd_mainmenu_icon_cart.png?v=56" alt="giỏ hàng" />
@@ -210,14 +237,7 @@ export default function Header() {
                                             </Badge>
                                                 <div className={cx("hd-link-title")}>GIỎ HÀNG</div>
                                             </div>
-                                            <div className={cx("quickview-cart")}>
-                                                <h3>
-                                                    <span className={cx("btnCloseQVCart")}></span>
-                                                </h3>
-                                                {/* <ul className={cx("no-bullets">
-                                                    <li>Bạn chưa có sản phẩm nào trong giỏ hàng!</li>
-                                                </ul> */}
-                                            </div>
+                                            <QuickViewCart activePopUp={activePopUp} setActivePopUp={setActivePopUp}/>
                                         </li>
                                     </ul>
                                 </div>
