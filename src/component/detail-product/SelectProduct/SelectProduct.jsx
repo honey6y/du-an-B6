@@ -318,7 +318,6 @@ function SelectProduct() {
                 console.log(res)
                 toast.success("Thêm giỏ hàng thành công");
                 dispatch(addToCart(buyQuantity));
-                window.location.assign('http://localhost:3000')
             })
             .catch(err => {
                 console.log(err)
@@ -341,7 +340,6 @@ function SelectProduct() {
                 console.log(res)
                 toast.success("Thêm giỏ hàng thành công");
                 dispatch(addToCart(buyQuantity));
-                window.location.assign('http://localhost:3000')
             })
             .catch(err => {
                 console.log(err)
@@ -574,6 +572,7 @@ function SelectProduct() {
                                     </div>
                                 </div> : null}
                                 <div className={cx("product-site-connect")}>
+                                    <div>
                                     <div className={cx("product-site-hotline")}>
                                         {"Hotline hỗ trợ bán hàng 24/7: "}
                                         <Link
@@ -583,8 +582,9 @@ function SelectProduct() {
                                         >
                                             0888.136.633
                                         </Link>
+                                        <span>|</span>
                                     </div>
-                                    <span>|</span>
+                                    </div>
                                     <div
                                         className="fb-like"
                                         data-href="https://phukienhay.vn/products/op-lung-anker-karapax-breeze-cho-iphone-7-plus-8-plus-a9015"
