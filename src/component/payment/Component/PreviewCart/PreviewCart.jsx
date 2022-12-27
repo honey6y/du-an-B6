@@ -16,14 +16,12 @@ function PreviewCart() {
                 'Authorization': token
             }
         }).then((res)=>{
-            console.log(res, 19)
             setListProductDetailId(res.data.cart.listProduct)
             let total = []
             res.data.cart.listProduct.forEach((item,index)=>{
                     total.push( (item.quantity * item.productDetailId.price)) 
             })
             res.data.cart.product.forEach((item,index)=>{
-                console.log(26,item)
                 total.push((item.quantity * item.productId.price) )
             })
             const totalPrice =total.reduce((tong, value , index)=>{

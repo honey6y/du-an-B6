@@ -127,3 +127,11 @@
 //   position: relative;
 //   top: -100px;
 // }
+
+@media (max-width : 900px){
+  .banner-des-content{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
