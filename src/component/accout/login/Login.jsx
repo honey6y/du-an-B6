@@ -1,4 +1,4 @@
-import { useMutation} from "@tanstack/react-query"
+import { useMutation, useQuery} from "@tanstack/react-query"
 import { useContext, useState } from "react"
 import { useForm } from "react-hook-form"
 import { Link, useNavigate } from "react-router-dom"
@@ -11,13 +11,14 @@ import style from "./Login.module.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Spinner from 'react-bootstrap/Spinner';
 import { useDispatch } from "react-redux"
-import { getCartId, getCartNumber } from "../../../features/counter/cartSlice"
-import { saveIdCart } from "../../../actionLocal/ActionLocal"
+import { getCartNumber, getUserInfor, setLoged } from "../../../features/counter/cartSlice"
+import { saveIdCart, setProfileToLS } from "../../../actionLocal/ActionLocal"
+import { pick } from "lodash"
 
 function Login () {
     const dispatch = useDispatch()
     const [spamSubmit, setSpamSubmit] = useState(false)
-    const {setCheckPrivate} = useContext(AppContext)
+    const {setCheckPrivate, setProfile} = useContext(AppContext)
     const nav = useNavigate()
     const { register, handleSubmit, setError, formState: { errors }} = useForm()
     const loginAccountMutation = useMutation({
@@ -27,7 +28,8 @@ function Login () {
     const onSubmit = handleSubmit ( async (data) => {
         setSpamSubmit(true)
         await loginAccountMutation.mutateAsync(data, {
-            onSuccess: () => {
+            onSuccess: (data) => {
+                dispatch(setLoged(true))
                 setCheckPrivate(true)
                 toast.success('Đăng nhập thành công')
                 setTimeout(() => {
@@ -44,21 +46,21 @@ function Login () {
                             type: 'Sever'
                         })
                         setSpamSubmit(false)
-                    } else
-                        (
-                            setError('email', {
-                                message: 'Email chưa được đăng ký',
-                                type: 'Sever'
-                            })
-                        )
+                    } else (
+                        setError('email', {
+                            message: 'Email chưa được đăng ký',
+                            type: 'Sever'
+                        })
+                    )
                 }
             }
         })
         const dataLogedCart = await getIdCartMutation.mutateAsync()
+        setProfile(pick(dataLogedCart.data?.cart.userId, ['avatar', 'username','email']))
+        setProfileToLS(pick(dataLogedCart.data?.cart.userId, ['avatar', 'username','email']))
+        dispatch(getUserInfor(pick(dataLogedCart.data?.cart.userId, ['avatar', 'username','email'])))
         saveIdCart(dataLogedCart.data.cart._id)
-        dispatch(getCartId(dataLogedCart.data.cart._id))
         const dataCart = dataLogedCart.data.cart
-        console.log( 57,dataCart);
         const listProductQuantity = []
         const productQuantity = []
         for(let i=0; i < dataCart.listProduct.length; i++){

@@ -20,11 +20,13 @@ import Userlayout from "./component/accout/inforUser/layouts/Userlayout/Userlayo
 import ChangePassword from "./component/accout/inforUser/pages/changePassword/ChangePassword";
 import OrderHistory from "./component/accout/inforUser/pages/orderHistory/OrderHistory";
 import PaymentPage from "./component/payment/PaymentPage";
+import { useSelector } from "react-redux";
 
 
 function ProtectRoute() {
-  const {checkPrivate} = useContext(AppContext)
-  return checkPrivate ? <Outlet /> : <Navigate to = "/login" />
+  const isLoged = useSelector(state => state.cart.isLoged)
+  const checkSecurityToLS = Boolean(localStorage.getItem('profile'))
+  return (isLoged || checkSecurityToLS) ? <Outlet /> : <Navigate to = "/login" />
 }  
 function RejectedRoute() {
   const {checkPrivate} = useContext(AppContext)
