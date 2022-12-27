@@ -228,7 +228,7 @@ export default function Header() {
                                                     {check ? (
                                                         <div>
                                                             <li><Link to={"/user/profile"}>Xin chào, {user?.username || user?.email || profile?.username || profile?.email}</Link></li>
-                                                            <div onClick={logout} >Đăng xuất</div>
+                                                            <div className={cx('log-out')} onClick={logout} >Đăng xuất</div>
                                                         </div>
                                                     ) : (
                                                         <div>
