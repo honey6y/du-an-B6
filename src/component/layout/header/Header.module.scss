@@ -326,7 +326,17 @@
     list-style: none;
     padding-left: 0;
 }
-
+.log-out{
+    color: black;
+    border-bottom: 1px dashed #f0f0f0;
+    padding: 15px 0px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+    &:hover {
+    color: #cd1818;
+    }
+}
 @media (max-width:1040px){
     
   }
