@@ -101,12 +101,16 @@ function ModalPopUp() {
         dispatch(addToCart(control))
         toast.success("Thêm vào giỏ hàng thành công !!!", {
           icon: "🚀",
-          autoClose: 5000,
+          autoClose: 3000,
         });
        
       }).catch((error)=>{
         console.log(error)
-        toast.error('them gio hang that bai')
+        handleCancel()
+        toast.error("Thêm giỏ hàng thất bại ", {
+          icon: "🚀",
+          autoClose: 3000,
+        });
       })
     }else{
       axios({
@@ -125,11 +129,15 @@ function ModalPopUp() {
         dispatch(addToCart(control))
         toast.success("Thêm vào giỏ hàng thành công ", {
           icon: "🚀",
-          autoClose: 5000,
+          autoClose: 3000,
         });
       }).catch((error)=>{
         console.log(error)
-        toast.error('them gio hang that bai')
+        handleCancel()
+        toast.error("Thêm giỏ hàng thất bại ", {
+          icon: "🚀",
+          autoClose: 3000,
+        });
       })
     }
     
