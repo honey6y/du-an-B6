@@ -83,7 +83,7 @@ function ModalPopUp() {
     findCurrentOption(currentColor, item)
    };
    const handleAddToCart = () => {
-    dispatch(addToCart(control))
+  
     if(currentOption){
       axios({
         method: 'patch',
@@ -98,6 +98,7 @@ function ModalPopUp() {
         }
       }).then((res)=>{
         handleCancel()
+        dispatch(addToCart(control))
         toast.success("Thêm vào giỏ hàng thành công !!!", {
           icon: "🚀",
           autoClose: 5000,
@@ -105,6 +106,7 @@ function ModalPopUp() {
        
       }).catch((error)=>{
         console.log(error)
+        toast.error('them gio hang that bai')
       })
     }else{
       axios({
@@ -120,12 +122,14 @@ function ModalPopUp() {
         }
       }).then((res)=>{
         handleCancel()
+        dispatch(addToCart(control))
         toast.success("Thêm vào giỏ hàng thành công ", {
           icon: "🚀",
           autoClose: 5000,
         });
       }).catch((error)=>{
         console.log(error)
+        toast.error('them gio hang that bai')
       })
     }
     
