@@ -13,6 +13,7 @@ import {addToCart} from '../../../../features/counter/cartSlice'
 function ModalPopUp() {
     const dispatch = useDispatch()
     const modalState = useSelector((state)=>state.modal)
+    const idCardState = localStorage.getItem('idcart')
     const cx = classNames.bind(style)
     const [control, setControl] = useState(1)
     const [viewPopupImgSrc , setViewPopupImgSrc] = useState('')
@@ -24,7 +25,7 @@ function ModalPopUp() {
     const [detailImg, setDetailImg]= useState([])
     const [listKeyOption , setListKeyOption] = useState([])
     const token = localStorage.getItem('token')
-   
+    console.log(28,idCardState)
     useEffect(()=>{
       let newData = modalState.productItem.productDetailId?.map(item => {
         let newDataItem = {};
@@ -87,7 +88,7 @@ function ModalPopUp() {
     if(currentOption){
       axios({
         method: 'patch',
-        url: 'https://ecommerce.nodemy.vn/api/v1/cart/add-to-cart/639c3ae746ca22ec84c64953',
+        url: `https://ecommerce.nodemy.vn/api/v1/cart/add-to-cart/${idCardState}`,
         headers: { 
           'Authorization': token, 
           'Content-Type': 'application/json'
@@ -111,7 +112,7 @@ function ModalPopUp() {
     }else{
       axios({
         method: 'patch',
-        url: 'https://ecommerce.nodemy.vn/api/v1/cart/add-to-cart/639c3ae746ca22ec84c64953',
+        url: `https://ecommerce.nodemy.vn/api/v1/cart/add-to-cart/${idCardState}`,
         headers: { 
           'Authorization': token, 
           'Content-Type': 'application/json'

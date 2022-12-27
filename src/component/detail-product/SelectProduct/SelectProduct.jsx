@@ -20,8 +20,9 @@ const cx = classNames.bind(styles);
 function SelectProduct() {
     const dispatch = useDispatch()
     const nav = useNavigate()
-    let idCart = useSelector(state => state.cart.cartId)
+    // let idCart = useSelector(state => state.cart.cartId)
     let token = localStorage.getItem("token")
+    let idCart = localStorage.getItem('idcart')
     let { idProduct } = useParams();
     const [productDetail, setProductDetail] = useState({});
     const [currentItem, setCurrentItem] = useState({});
@@ -571,6 +572,7 @@ function SelectProduct() {
                                     </div>
                                 </div> : null}
                                 <div className={cx("product-site-connect")}>
+                                    <div>
                                     <div className={cx("product-site-hotline")}>
                                         {"Hotline hỗ trợ bán hàng 24/7: "}
                                         <Link
@@ -580,8 +582,9 @@ function SelectProduct() {
                                         >
                                             0888.136.633
                                         </Link>
+                                        <span>|</span>
                                     </div>
-                                    <span>|</span>
+                                    </div>
                                     <div
                                         className="fb-like"
                                         data-href="https://phukienhay.vn/products/op-lung-anker-karapax-breeze-cho-iphone-7-plus-8-plus-a9015"
