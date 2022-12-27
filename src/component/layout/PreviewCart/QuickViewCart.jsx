@@ -10,9 +10,9 @@ import { CloseOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 const cx = classNames.bind(styles);
 function QuickViewCart({activePopUp, setActivePopUp}) {
-    const cartID = useSelector(state => state.cart.cartId)
+    const cartID = localStorage.getItem("idcart")
+    let token = localStorage.getItem("token")
     const nav = useNavigate()
-    let cartIdDemo = '63a1d0366d8b52f0ce429cc2'
     const [product,setProduct] = useState([])
     const [listProduct,setListProduct] = useState([])
     const [provisional, setProvisional] = useState(0)
@@ -23,7 +23,7 @@ function QuickViewCart({activePopUp, setActivePopUp}) {
             url: `${process.env.REACT_APP_PORT_API}cart/get-loged-in-cart`,
             method: "GET",
             headers: {
-                Authorization: `${localStorage.getItem("token")}`,
+                Authorization: `${token}`,
             },
         })
         .then((res)=>{
@@ -68,13 +68,13 @@ function QuickViewCart({activePopUp, setActivePopUp}) {
     
     function removeFromListProduct(idProduct) {
         axios({
-            url: `${process.env.REACT_APP_PORT_API}/cart/remove-from-cart/${cartIdDemo}`,
+            url: `${process.env.REACT_APP_PORT_API}/cart/remove-from-cart/${cartID}`,
             method: 'PATCH',
             data: {
                 "productDetailId": `${idProduct}`
             },
             headers: {
-                Authorization: `${localStorage.getItem("token")}`,
+                Authorization: `${token}`,
             }
         })
         .then(res => {
@@ -97,13 +97,13 @@ function QuickViewCart({activePopUp, setActivePopUp}) {
 
     function removeFromProduct(idProduct) {
         axios({
-            url: `${process.env.REACT_APP_PORT_API}/cart/remove-from-cart/${cartIdDemo}`,
+            url: `${process.env.REACT_APP_PORT_API}/cart/remove-from-cart/${cartID}`,
             method: 'PATCH',
             data: {
                 "productId": `${idProduct}`
             },
             headers: {
-                Authorization: `${localStorage.getItem("token")}`,
+                Authorization: `${token}`,
             }
         })
         .then(res => {

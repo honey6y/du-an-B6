@@ -12,7 +12,7 @@ import { useEffect, useRef, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import styles from "./SelectProduct.module.scss";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../../features/counter/cartSlice";
 
 const cx = classNames.bind(styles);
@@ -20,8 +20,9 @@ const cx = classNames.bind(styles);
 function SelectProduct() {
     const dispatch = useDispatch()
     const nav = useNavigate()
-    let idCart = '63a1d0366d8b52f0ce429cc2';
-    let token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTFkMDM1NmQ4YjUyZjBjZTQyOWNjMCIsImF2YXRhciI6Imh0dHBzOi8vc3QzLmRlcG9zaXRwaG90b3MuY29tLzE3Njc2ODcvMTY2MDcvdi80NTAvZGVwb3NpdHBob3Rvc18xNjYwNzQ0MjItc3RvY2staWxsdXN0cmF0aW9uLWRlZmF1bHQtYXZhdGFyLXByb2ZpbGUtaWNvbi1ncmV5LmpwZyIsImVtYWlsIjoiZGVtby10aGFpQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiY2FydCI6eyJfaWQiOiI2M2ExZDAzNjZkOGI1MmYwY2U0MjljYzIiLCJ1c2VySWQiOiI2M2ExZDAzNTZkOGI1MmYwY2U0MjljYzAiLCJsaXN0UHJvZHVjdCI6W3sicHJvZHVjdERldGFpbElkIjoiNjMxNjI0NjZkMTYzZGQ5ZGM3MmQ0ZjM5IiwicXVhbnRpdHkiOjIsInNlbGVjdGVkIjpmYWxzZSwiX2lkIjoiNjNhMzQ4NWYwM2NlNWEzZWU1ZmRkNzM2In0seyJwcm9kdWN0RGV0YWlsSWQiOiI2MmVjY2E3MzJkNjhkMWE2MGQzNDE2ZTEiLCJxdWFudGl0eSI6Mywic2VsZWN0ZWQiOmZhbHNlLCJfaWQiOiI2M2E1YzBjMTAzY2U1YTNlZTVmZTFjODIifV0sInByb2R1Y3QiOlt7InByb2R1Y3RJZCI6IjYyZmRlZjk5OTU0OWI4YjcwODc3M2IzYyIsInF1YW50aXR5Ijo2LCJzZWxlY3RlZCI6ZmFsc2UsIl9pZCI6IjYzYTU1NDdmMDNjZTVhM2VlNWZkZmM0YyJ9LHsicHJvZHVjdElkIjoiNjJlZTIzOTk5NzYxOGNmODQwM2Q0NjRmIiwicXVhbnRpdHkiOjMsInNlbGVjdGVkIjpmYWxzZSwiX2lkIjoiNjNhNWMwZWYwM2NlNWEzZWU1ZmUxYzg4In1dLCJjcmVhdGVkQXQiOiIyMDIyLTEyLTIwVDE1OjA5OjQyLjAwNVoiLCJ1cGRhdGVkQXQiOiIyMDIyLTEyLTIzVDE0OjU3OjQyLjQ3MVoiLCJfX3YiOjB9LCJuYXRpb25hbGl0eSI6IlZpZXQgTmFtIiwiaWF0IjoxNjcxOTYxNjg2LCJleHAiOjE2NzIwNDgwODZ9.Ggzr_9ZuXsTyhIQGwC7HwTfrobIBQzJsgUz_cBIp9WA`;
+    // let idCart = useSelector(state => state.cart.cartId)
+    let token = localStorage.getItem("token")
+    let idCart = localStorage.getItem('idcart')
     let { idProduct } = useParams();
     const [productDetail, setProductDetail] = useState({});
     const [currentItem, setCurrentItem] = useState({});
@@ -571,6 +572,7 @@ function SelectProduct() {
                                     </div>
                                 </div> : null}
                                 <div className={cx("product-site-connect")}>
+                                    <div>
                                     <div className={cx("product-site-hotline")}>
                                         {"Hotline hỗ trợ bán hàng 24/7: "}
                                         <Link
@@ -580,8 +582,9 @@ function SelectProduct() {
                                         >
                                             0888.136.633
                                         </Link>
+                                        <span>|</span>
                                     </div>
-                                    <span>|</span>
+                                    </div>
                                     <div
                                         className="fb-like"
                                         data-href="https://phukienhay.vn/products/op-lung-anker-karapax-breeze-cho-iphone-7-plus-8-plus-a9015"

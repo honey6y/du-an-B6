@@ -6,17 +6,17 @@ import axios from 'axios';
 import PreviewCart from '../PreviewCart/PreviewCart';
 import {useForm} from 'react-hook-form'
 import { rules } from '../../../Others/Rules';
-import {useSearchParams ,Link} from 'react-router-dom'
+import {useSearchParams ,Link, useNavigate} from 'react-router-dom'
+import { toast } from 'react-toastify';
 
 
 function Payment () {
+    const nav = useNavigate()
     const [listProvince, setListProvince] = useState([])
     const [province, setProvince] = useState(null)
     const [searchParams, setSearchParams] = useSearchParams()
     const [displayPayment , setDisplayPayment] = useState(1)
-
     const cx = classNames.bind(styles)
-
     const params = searchParams.get('step')
     
     useEffect(() => {
@@ -55,14 +55,20 @@ function Payment () {
     const onSubmit100 = handleSubmit((data) => {
         console.log(data.email)
         setSearchParams({step : 2})
-    })
+    });
+    const handleOrder = () => {
+        toast('dat hang thanh cong')
+        setTimeout(()=>{
+            nav('/')
+        }, 2000)
+    }
     return (
         <>
         <div className={cx('page')}>
             <div className={cx('payment')}>
                 <p className={cx('title')}>Phụ Kiện Hay</p>
                 <div className={cx('nav')}>
-                    <Link to={'/cart'}>Giỏ hàng</Link>
+                    <Link to={'/cart'} style={{textDecoration : 'none'}}>Giỏ hàng</Link>
                     <div><RightOutlined style={{fontSize: '12px', color: 'gray', verticalAlign: 'middle'}}/></div>
                     <div className={params == 2 ? cx('vanChuyen-active') : cx('vanChuyen')} onClick={()=>setSearchParams({step : 1})}>Thông tin vận chuyển</div>
                     <div><RightOutlined style={{fontSize: '12px', color: 'gray', verticalAlign: 'middle'}}/></div>
@@ -149,7 +155,7 @@ function Payment () {
                 <div className={cx('footer2')}>
                     <div className={cx('login')}>Giỏ hàng</div>
                     <div>
-                        <button className={cx('datHang')}>Đặt hàng</button>
+                        <button className={cx('datHang')} onClick={handleOrder}>Đặt hàng</button>
                     </div>
                 </div>
             </div>}
