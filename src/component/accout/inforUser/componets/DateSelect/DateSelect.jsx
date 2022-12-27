@@ -1,6 +1,6 @@
 import { range } from 'lodash'
 import React, { useEffect, useState } from 'react'
-import style from './Profile.module.css'
+import style from './DateSelect.module.css'
 
 export default function DateSelect({value, onChange, errorMessage}) {
     const [date, setDate] = useState({

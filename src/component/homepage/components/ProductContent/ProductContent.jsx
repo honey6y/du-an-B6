@@ -25,7 +25,6 @@ function ProductContent() {
         
       })
         .then((res) => {
-          console.log(res)
           const listProductRender = res.data.listPageProduct
           listProductRender.forEach((item)=>{
             if(!item.thump[0]?.includes('http')){
@@ -48,7 +47,7 @@ function ProductContent() {
             <Row gutter={[10, 10]}>
               {list.map((item, index) => {
                 return (
-                  <Col span={4} key={item._id}>
+                  <Col xs={24} sm={12} md={8} lg={6} xl={4} key={item._id}>
                     <div className={cx("product")} >
                       <LazyLoadImage 
                       className={cx("product-img")}

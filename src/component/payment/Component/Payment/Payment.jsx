@@ -32,9 +32,6 @@ function Payment () {
             console.log(err);
         })
        setDisplayPayment(params ? params : 1)
-       console.log(displayPayment)
-       console.log('setlaiparam')
-       console.log(params)
     },[params])
 
     const {

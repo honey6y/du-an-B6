@@ -9,23 +9,14 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
-import { useRef } from "react";
 
 function Banner() {
   const cx = classNames.bind(styles);
-  let carouselRef = useRef(null);
-  const handlePrevSlider = () => {
-    carouselRef.prev();
-  };
-
-  const handleNextSlider = () => {
-    carouselRef.next();
-  };
   return (
     <div className={cx("main-slider")}>
       <div className={cx("wrapper")}>
         <Row gutter={5}>
-          <Col span={16}>
+          <Col md={24} lg={16} xl={16}>
             <div className={cx("banner")}>
               <Carousel 
                   defaultControlsConfig={{
@@ -100,7 +91,7 @@ function Banner() {
                     </div>
             </div>
           </Col>
-          <Col span={8}>
+          <Col md={24} lg={8} xl={8}>
             <div className={cx("aside-banner")}>
               <div className={cx("news-title-box")}>
                 <h3 className={cx("news-title")}>Tin công nghệ</h3>

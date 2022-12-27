@@ -25,7 +25,6 @@ function ModalPopUp() {
     const [detailImg, setDetailImg]= useState([])
     const [listKeyOption , setListKeyOption] = useState([])
     const token = localStorage.getItem('token')
-    console.log(28,idCardState)
     useEffect(()=>{
       let newData = modalState.productItem.productDetailId?.map(item => {
         let newDataItem = {};
@@ -84,7 +83,7 @@ function ModalPopUp() {
     findCurrentOption(currentColor, item)
    };
    const handleAddToCart = () => {
-    dispatch(addToCart(control))
+  
     if(currentOption){
       axios({
         method: 'patch',
@@ -98,16 +97,20 @@ function ModalPopUp() {
           "quantity": control
         }
       }).then((res)=>{
-        console.log(res)
         handleCancel()
+        dispatch(addToCart(control))
         toast.success("Thêm vào giỏ hàng thành công !!!", {
           icon: "🚀",
-          autoClose: 5000,
+          autoClose: 3000,
         });
-        console.log('dat hang thanh cong ')
        
       }).catch((error)=>{
         console.log(error)
+        handleCancel()
+        toast.error("Thêm giỏ hàng thất bại ", {
+          icon: "🚀",
+          autoClose: 3000,
+        });
       })
     }else{
       axios({
@@ -122,16 +125,19 @@ function ModalPopUp() {
           "quantity": control
         }
       }).then((res)=>{
-        console.log(res)
         handleCancel()
+        dispatch(addToCart(control))
         toast.success("Thêm vào giỏ hàng thành công ", {
           icon: "🚀",
-          autoClose: 5000,
+          autoClose: 3000,
         });
-        console.log('dat hang thanh cong')
-       
       }).catch((error)=>{
         console.log(error)
+        handleCancel()
+        toast.error("Thêm giỏ hàng thất bại ", {
+          icon: "🚀",
+          autoClose: 3000,
+        });
       })
     }
     
@@ -163,7 +169,8 @@ function ModalPopUp() {
                 <img
                   src={viewPopupImgSrc || (modalState.productItem.thump ? modalState.productItem.thump[0] : null)}
                   alt=""
-                  width="100%"
+                  width='100%'
+                  className={cx('img-modal-big-popup')}
                 />
               </div>
               <div className={cx('product-smallimg-popup')}>
