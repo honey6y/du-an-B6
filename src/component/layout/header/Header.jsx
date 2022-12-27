@@ -50,7 +50,7 @@ export default function Header() {
             method:'get',
             url: `https://ecommerce.nodemy.vn/api/v1/product/find-product-by-name?productName=${e.target.value}`,
             headers: { 
-                'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTMxZThhMDNjZTVhM2VlNWZkYzUzZiIsImF2YXRhciI6Imh0dHBzOi8vc3QzLmRlcG9zaXRwaG90b3MuY29tLzE3Njc2ODcvMTY2MDcvdi80NTAvZGVwb3NpdHBob3Rvc18xNjYwNzQ0MjItc3RvY2staWxsdXN0cmF0aW9uLWRlZmF1bHQtYXZhdGFyLXByb2ZpbGUtaWNvbi1ncmV5LmpwZyIsImVtYWlsIjoiZGF0MTk5OUBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImNhcnQiOnsiX2lkIjoiNjNhMzFlOGEwM2NlNWEzZWU1ZmRjNTQxIiwidXNlcklkIjoiNjNhMzFlOGEwM2NlNWEzZWU1ZmRjNTNmIiwibGlzdFByb2R1Y3QiOltdLCJwcm9kdWN0IjpbXSwiY3JlYXRlZEF0IjoiMjAyMi0xMi0yMVQxNDo1NjoxMC45NDNaIiwidXBkYXRlZEF0IjoiMjAyMi0xMi0yMVQxNDo1NjoxMC45NDNaIiwiX192IjowfSwibmF0aW9uYWxpdHkiOiJWaWV0IE5hbSIsImlhdCI6MTY3MTYzNDYxOCwiZXhwIjoxNjcxNzIxMDE4fQ.fmVWjkiuadt4faGyDW2XuDWyNo8fiTzmMglc0ryhh30'
+                'Authorization': `${localStorage.getItem("token")}`
             }
         })
         .then((res)=>{
