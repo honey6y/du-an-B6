@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   //id cart
+  isLoged: '',
+  userInfor: {},
   cartNumber: 0,
   cartId:'',
   listProduct: [],
@@ -29,10 +31,16 @@ const cartSlice = createSlice({
     },
     getCartId: (state, actions)=>{
       state.cartId = actions.payload;
+    },
+    getUserInfor: (state, actions) => {
+      state.userInfor = actions.payload
+    },
+    setLoged: (state, actions) => {
+      state.isLoged= actions.payload
     }
   },
 });
 
-export const { getListProduct, getProduct, getCartNumber, getCartId,addToCart } = cartSlice.actions;
+export const { getListProduct, getProduct, getCartNumber, getCartId,addToCart, getUserInfor, setLoged } = cartSlice.actions;
 
 export default cartSlice.reducer;

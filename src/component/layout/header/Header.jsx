@@ -4,6 +4,7 @@ import {RiCloseLine} from 'react-icons/ri'
 import { useState,useEffect} from 'react'
 import styles from './Header.module.scss'
 import { ImSearch } from 'react-icons/im'
+import {AiOutlineMenu} from 'react-icons/ai'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import debounce from 'lodash/debounce'
@@ -15,29 +16,41 @@ import { useQuery } from '@tanstack/react-query'
 import { getAvatarUrl, userApi } from '../../Others/QueryApi'
 import QuickViewCart from '../PreviewCart/QuickViewCart'
 export default function Header() {
-    const {checkPrivate} = useContext(AppContext)
+    const {profile} = useContext(AppContext)
     const nav = useNavigate()
     const inputSearch = useRef()
     const totalCart = useSelector(state =>state.cart.cartNumber)
     const cx = classNames.bind(styles)
     const [searchValue,setSearchValue] = useState([])
     const [active,setActive] = useState([])
-    const {data: dataUser} = useQuery({
-        queryKey: ['/auth/me'],
-        queryFn: userApi.getProfile
-    })
-    const profile = dataUser?.data
+
     const [activePopUp , setActivePopUp] = useState(false)
     const handleShow = () => setActivePopUp(true);
     
     const [listData,setListData] = useState([])
     const debounceOnChange = debounce(SearchByName,2000)
+    const user = useSelector(state => state.cart.userInfor)
+    const [check, setCheck] = useState(false)
+    useEffect( () => {
+        if(user.username){
+            setCheck(true)
+        }
+        if(profile.username){
+            setCheck(true)
+        }
+      
+    },[user.username, profile.username])
+    const [openMenuMobile,setOpenMenuMobile] = useState(false)
+    function logout() {
+        localStorage.clear('token');
+        window.location.assign("http://localhost:3000/");
+    }
     function SearchByName(e){
         axios({
             method:'get',
             url: `https://ecommerce.nodemy.vn/api/v1/product/find-product-by-name?productName=${e.target.value}`,
             headers: { 
-                'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTMxZThhMDNjZTVhM2VlNWZkYzUzZiIsImF2YXRhciI6Imh0dHBzOi8vc3QzLmRlcG9zaXRwaG90b3MuY29tLzE3Njc2ODcvMTY2MDcvdi80NTAvZGVwb3NpdHBob3Rvc18xNjYwNzQ0MjItc3RvY2staWxsdXN0cmF0aW9uLWRlZmF1bHQtYXZhdGFyLXByb2ZpbGUtaWNvbi1ncmV5LmpwZyIsImVtYWlsIjoiZGF0MTk5OUBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImNhcnQiOnsiX2lkIjoiNjNhMzFlOGEwM2NlNWEzZWU1ZmRjNTQxIiwidXNlcklkIjoiNjNhMzFlOGEwM2NlNWEzZWU1ZmRjNTNmIiwibGlzdFByb2R1Y3QiOltdLCJwcm9kdWN0IjpbXSwiY3JlYXRlZEF0IjoiMjAyMi0xMi0yMVQxNDo1NjoxMC45NDNaIiwidXBkYXRlZEF0IjoiMjAyMi0xMi0yMVQxNDo1NjoxMC45NDNaIiwiX192IjowfSwibmF0aW9uYWxpdHkiOiJWaWV0IE5hbSIsImlhdCI6MTY3MTYzNDYxOCwiZXhwIjoxNjcxNzIxMDE4fQ.fmVWjkiuadt4faGyDW2XuDWyNo8fiTzmMglc0ryhh30'
+                'Authorization': `${localStorage.getItem("token")}`
             }
         })
         .then((res)=>{
@@ -67,7 +80,7 @@ export default function Header() {
                 <div className={cx("wrapper")}>
                     <div className={cx("inner")}>
                         <div className={cx("grid")}>
-                            <div className={cx("grid__item-1 large--two-twelfths pd-left15 ")}>
+                            <div className={cx("grid__item-1 large--two-twelfths pd-left15 nav__pc")}>
                                 <div className={cx("header-logo")}>
                                     <h1>
                                         <Link to={""}>
@@ -99,7 +112,7 @@ export default function Header() {
                                                         />
                                                         <span className={cx("input-group-btn")} >
                                                             <button id={cx("searchsubmit")} type="submit" onClick={handleSubmit}>
-                                                                <svg style={{marginTop:"10px", marginLeft:"10px", height: "15px"}} className={cx('svg-inline--fa fa-search fa-w-16')}>
+                                                                <svg style={{marginTop:"10px", marginLeft:"10px", width:"15px", height: "15px"}} className={cx('svg-inline--fa fa-search fa-w-16')}>
                                                                     <ImSearch/>
                                                                 </svg>
                                                             </button>
@@ -196,10 +209,10 @@ export default function Header() {
                                         </li>
                                         
                                         <li className={cx("dropdown")}>
-                                            { checkPrivate ? (
+                                            { check ? (
                                                 <Link to={"user/profile"} className={cx("text-center")}>
                                                     <div className={cx("box-img")}>
-                                                        <img src={getAvatarUrl(profile?.avatar)} alt="TÀI KHOẢN" className={cx('img-user')}/>
+                                                        <img src={getAvatarUrl(user?.avatar || profile?.avatar)} alt="TÀI KHOẢN" className={cx('img-user')}/>
                                                     </div>
                                                 </Link>
                                             ) : (
@@ -212,22 +225,21 @@ export default function Header() {
                                             )}
                                             <ul className={cx("dropdown-menu")}>
                                                 <li>
-                                                    {checkPrivate ? (
-                                                        <li><Link to={"/user/profile"}>Xin chào, {profile?.username}</Link></li>
+                                                    {check ? (
+                                                        <div>
+                                                            <li><Link to={"/user/profile"}>Xin chào, {user?.username || user?.email || profile?.username || profile?.email}</Link></li>
+                                                            <div className={cx('log-out')} onClick={logout} >Đăng xuất</div>
+                                                        </div>
                                                     ) : (
-                                                        <li><Link to={"/login"}>Đăng nhập</Link></li>
-                                                    )}
-                                                </li>
-                                                <li>
-                                                    {!checkPrivate ? (
-                                                        <li><Link to={"/register"}>Đăng ký</Link></li>
-                                                    ) : (
-                                                        <Link to={"/register"}>Đăng xuất</Link>
+                                                        <div>
+                                                           <li><Link to={"/login"}>Đăng nhập</Link></li> 
+                                                           <li><Link to={"/register"}>Đăng ký</Link></li> 
+                                                        </div>
                                                     )}
                                                 </li>
                                             </ul>
                                         </li>
-                                        <li className={cx("dropdown")} >
+                                        <li className={cx("cart-mobile")} >
                                             <div className={cx("text-center")} onClick={handleShow}>
                                             <Badge color='black' size='small' count={totalCart}>
                                                 <div className={cx("hd-link-icon")}>
@@ -238,6 +250,20 @@ export default function Header() {
                                                 <div className={cx("hd-link-title")}>GIỎ HÀNG</div>
                                             </div>
                                             <QuickViewCart activePopUp={activePopUp} setActivePopUp={setActivePopUp}/>
+                                        </li>
+                                        <li className={cx("menu-mobile")} onClick={()=>{setOpenMenuMobile(true)}}>
+                                                <div>
+                                                    <AiOutlineMenu className={cx("menu-mobile")}/>
+                                                    {openMenuMobile ? <ul>
+                                                        <li>1</li>
+                                                        <li>2</li>
+                                                        <li>3</li>
+                                                        <li>4</li>
+                                                        <li>5</li>
+                                                        <button onClick={()=>setOpenMenuMobile(false)}>X</button>
+                                                    </ul>
+                                                    :null}
+                                                </div>
                                         </li>
                                     </ul>
                                 </div>
