@@ -97,13 +97,11 @@ function ModalPopUp() {
           "quantity": control
         }
       }).then((res)=>{
-        console.log(res)
         handleCancel()
         toast.success("Thêm vào giỏ hàng thành công !!!", {
           icon: "🚀",
           autoClose: 5000,
         });
-        console.log('dat hang thanh cong ')
        
       }).catch((error)=>{
         console.log(error)
@@ -121,14 +119,11 @@ function ModalPopUp() {
           "quantity": control
         }
       }).then((res)=>{
-        console.log(res)
         handleCancel()
         toast.success("Thêm vào giỏ hàng thành công ", {
           icon: "🚀",
           autoClose: 5000,
         });
-        console.log('dat hang thanh cong')
-       
       }).catch((error)=>{
         console.log(error)
       })
@@ -157,12 +152,12 @@ function ModalPopUp() {
         >
         <div>
           <Row gutter={[10, 10]}>
-            <Col sm={24} lg={12}>
+            <Col span={12}>
               <div className={cx("product-bigimg-popup")}>
                 <img
                   src={viewPopupImgSrc || (modalState.productItem.thump ? modalState.productItem.thump[0] : null)}
                   alt=""
-                  width="100%"
+                  width='100%'
                   className={cx('img-modal-big-popup')}
                 />
               </div>
@@ -172,7 +167,7 @@ function ModalPopUp() {
                 })}
               </div>
             </Col>
-            <Col lg={12}>
+            <Col span={12}>
               <div className={cx('product-info-popup')}>
                 <h2 className={cx('product-name-popup')}>Tên sản phẩm :{modalState.productItem.productName}</h2>
                 <p className={cx('product-brand-popup')}>Hãng : { modalState.productItem.brandId ? modalState.productItem.brandId.brandName : null} </p>

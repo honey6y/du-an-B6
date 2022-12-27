@@ -9,18 +9,9 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
-import { useRef } from "react";
 
 function Banner() {
   const cx = classNames.bind(styles);
-  let carouselRef = useRef(null);
-  const handlePrevSlider = () => {
-    carouselRef.prev();
-  };
-
-  const handleNextSlider = () => {
-    carouselRef.next();
-  };
   return (
     <div className={cx("main-slider")}>
       <div className={cx("wrapper")}>

@@ -25,7 +25,6 @@ function ProductContent() {
         
       })
         .then((res) => {
-          console.log(res)
           const listProductRender = res.data.listPageProduct
           listProductRender.forEach((item)=>{
             if(!item.thump[0]?.includes('http')){
