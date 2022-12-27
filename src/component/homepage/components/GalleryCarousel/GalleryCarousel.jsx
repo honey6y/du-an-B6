@@ -22,8 +22,10 @@ function GalleryCarousel({dataProps , title, isSale}) {
       setSlideToShow(5)
     } else if (window.innerWidth > 992) {
       setSlideToShow(4)
-    } else if (window.innerWidth > 768) {
+    } else if (window.innerWidth > 600) {
       setSlideToShow(3)
+    } else if (window.innerWidth < 600) {
+      setSlideToShow(2)
     }
   }, [])
   window.onresize = reportWindowSize;
@@ -32,8 +34,10 @@ function GalleryCarousel({dataProps , title, isSale}) {
       setSlideToShow(5)
     } else if (window.innerWidth > 992) {
       setSlideToShow(4)
-    } else if (window.innerWidth > 768) {
+    } else if (window.innerWidth > 600) {
       setSlideToShow(3)
+    } else if (window.innerWidth < 600) {
+      setSlideToShow(2)
     }
   }
   return ( 
