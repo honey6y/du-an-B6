@@ -25,7 +25,6 @@ function ModalPopUp() {
     const [detailImg, setDetailImg]= useState([])
     const [listKeyOption , setListKeyOption] = useState([])
     const token = localStorage.getItem('token')
-    console.log(28,idCardState)
     useEffect(()=>{
       let newData = modalState.productItem.productDetailId?.map(item => {
         let newDataItem = {};
@@ -158,12 +157,13 @@ function ModalPopUp() {
         >
         <div>
           <Row gutter={[10, 10]}>
-            <Col span={12}>
+            <Col sm={24} lg={12}>
               <div className={cx("product-bigimg-popup")}>
                 <img
                   src={viewPopupImgSrc || (modalState.productItem.thump ? modalState.productItem.thump[0] : null)}
                   alt=""
                   width="100%"
+                  className={cx('img-modal-big-popup')}
                 />
               </div>
               <div className={cx('product-smallimg-popup')}>
@@ -172,7 +172,7 @@ function ModalPopUp() {
                 })}
               </div>
             </Col>
-            <Col span={12}>
+            <Col lg={12}>
               <div className={cx('product-info-popup')}>
                 <h2 className={cx('product-name-popup')}>Tên sản phẩm :{modalState.productItem.productName}</h2>
                 <p className={cx('product-brand-popup')}>Hãng : { modalState.productItem.brandId ? modalState.productItem.brandId.brandName : null} </p>
