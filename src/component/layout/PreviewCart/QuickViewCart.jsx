@@ -10,7 +10,7 @@ import { CloseOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 const cx = classNames.bind(styles);
 function QuickViewCart({activePopUp, setActivePopUp}) {
-    const cartID = useSelector(state => state.cart.cartId)
+    const cartID = localStorage.getItem("idcart")
     let token = localStorage.getItem("token")
     const nav = useNavigate()
     const [product,setProduct] = useState([])
