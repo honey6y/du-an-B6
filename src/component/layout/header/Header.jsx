@@ -226,7 +226,7 @@ export default function Header() {
                                             </Link>
                                         </li>
                                         
-                                        <li className={cx("dropdown")}>
+                                        <li className={cx("cart-mobile")}>
                                             { check ? (
                                                 <Link to={"user/profile"} className={cx("text-center")}>
                                                     <div className={cx("box-img")}>
@@ -344,7 +344,6 @@ export default function Header() {
                                                                     :""
                                                                 }
                                                             </div>
-                                                            
                                                         </li>
                                                         <li className={cx("mobile-content")}>
                                                             <div className={cx("nav-mobile-right")}>
@@ -360,20 +359,41 @@ export default function Header() {
                                                                 </Link>
                                                             </div>
                                                         </li>
-                                                        <li className={cx("mobile-content")}>
-                                                            <div className={cx("nav-mobile-right")}>
-                                                                <Link style={{color:'white',textDecoration:'none'}} to={"/login"} onClick={()=>handleClose()}>
-                                                                    <p>ĐĂNG NHẬP</p>
-                                                                </Link>
+                                                        { check ?  (
+                                                            <div>
+                                                                <li className={cx("mobile-content")}>
+                                                                    <div className={cx("nav-mobile-right")}>
+                                                                        <Link style={{color:'white',textDecoration:'none'}} to={"user/change-password"} onClick={()=>handleClose()}>
+                                                                            <p>ĐỔI MẬT KHẨU</p>
+                                                                        </Link>
+                                                                    </div>
+                                                                </li>
+                                                                <li className={cx("mobile-content")}>
+                                                                    <div className={cx("nav-mobile-right")}>
+                                                                        <Link style={{color:'white',textDecoration:'none'}} to={"cart"} onClick={()=>handleClose()}    >
+                                                                            <p>ĐƠN HÀNG</p>
+                                                                        </Link>
+                                                                    </div>
+                                                                </li>
                                                             </div>
-                                                        </li>
-                                                        <li className={cx("mobile-content")}>
-                                                            <div className={cx("nav-mobile-right")}>
-                                                                <Link style={{color:'white',textDecoration:'none'}} to={"/register"} onClick={()=>handleClose()}    >
-                                                                    <p>ĐĂNG KÍ</p>
-                                                                </Link>
+                                                        ) : (
+                                                            <div>
+                                                                <li className={cx("mobile-content")}>
+                                                                    <div className={cx("nav-mobile-right")}>
+                                                                        <Link style={{color:'white',textDecoration:'none'}} to={"/login"} onClick={()=>handleClose()}>
+                                                                            <p>ĐĂNG NHẬP</p>
+                                                                        </Link>
+                                                                    </div>
+                                                                </li>
+                                                                <li className={cx("mobile-content")}>
+                                                                    <div className={cx("nav-mobile-right")}>
+                                                                        <Link style={{color:'white',textDecoration:'none'}} to={"/register"} onClick={()=>handleClose()}    >
+                                                                            <p>ĐĂNG KÍ</p>
+                                                                        </Link>
+                                                                        </div>
+                                                                </li>
                                                             </div>
-                                                        </li>
+                                                        )}
                                                     </ul>
                                                 </Offcanvas.Body>
                                             </Offcanvas>
