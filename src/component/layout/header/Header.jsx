@@ -39,7 +39,7 @@ export default function Header() {
     const [openIphoneMobile,setOpenIphoneMobile] = useState(false)
     const [openXiaomiMobile,setOpenXiaomiMobile] = useState(false)
     const [openSamsungMobile,setOpenSamsungMobile] = useState(false)
-    useEffect( () => {
+    useEffect(() => {
         if(user.avatar){
             setCheck(true)
         }
@@ -226,7 +226,7 @@ export default function Header() {
                                             </Link>
                                         </li>
                                         
-                                        <li className={cx("dropdown", "cart-mobile")}>
+                                        <li className={cx("cart-mobile")}>
                                             { check ? (
                                                 <Link to={"user/profile"} className={cx("text-center")}>
                                                     <div className={cx("box-img")}>

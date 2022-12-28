@@ -142,7 +142,9 @@
     display: block;
     /* text-align: center; */
 }
-
+.cart-mobile:hover .dropdown-menu{
+    display: block;
+}
 .grid {
     display: flex;
 }
@@ -423,3 +425,13 @@
 .btn-close{
     color: white;
 }
+// indexHightlint = 2
+
+// [div1, div2, div3].forEach((item, index)=>{
+//     if(indexHightlint==index){
+//         item.classList.add(".active")
+//     }else{
+//         item.classList.remove(".active")
+//     }
+    
+// })
