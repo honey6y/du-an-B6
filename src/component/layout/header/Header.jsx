@@ -226,7 +226,7 @@ export default function Header() {
                                             </Link>
                                         </li>
                                         
-                                        <li className={cx("dropdown")}>
+                                        <li className={cx("dropdown", "cart-mobile")}>
                                             { check ? (
                                                 <Link to={"user/profile"} className={cx("text-center")}>
                                                     <div className={cx("box-img")}>
