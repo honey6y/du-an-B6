@@ -15,6 +15,11 @@ import { AppContext } from '../../../privateRouter/PrivateRouter'
 import { useQuery } from '@tanstack/react-query'
 import { getAvatarUrl, userApi } from '../../Others/QueryApi'
 import QuickViewCart from '../PreviewCart/QuickViewCart'
+import Button from 'react-bootstrap/Button';
+import Offcanvas from 'react-bootstrap/Offcanvas';
+import {IoMdAdd} from 'react-icons/io'
+import {RiSubtractFill} from 'react-icons/ri'
+
 export default function Header() {
     const {profile} = useContext(AppContext)
     const nav = useNavigate()
@@ -25,26 +30,39 @@ export default function Header() {
     const [active,setActive] = useState([])
 
     const [activePopUp , setActivePopUp] = useState(false)
-    const handleShow = () => setActivePopUp(true);
+    const handleShowPopUp = () => setActivePopUp(true);
     
     const [listData,setListData] = useState([])
     const debounceOnChange = debounce(SearchByName,2000)
     const user = useSelector(state => state.cart.userInfor)
     const [check, setCheck] = useState(false)
+    const [openIphoneMobile,setOpenIphoneMobile] = useState(false)
+    const [openXiaomiMobile,setOpenXiaomiMobile] = useState(false)
+    const [openSamsungMobile,setOpenSamsungMobile] = useState(false)
     useEffect( () => {
-        if(user.username){
+        if(user.avatar){
             setCheck(true)
         }
-        if(profile.username){
+        if(profile.avatar){
             setCheck(true)
         }
       
-    },[user.username, profile.username])
+    },[user.avatar, profile.avatar])
     const [openMenuMobile,setOpenMenuMobile] = useState(false)
     function logout() {
         localStorage.clear('token');
         window.location.assign("http://localhost:3000/");
     }
+        const [show, setShow] = useState(false);
+      
+        const handleClose = () => setShow(false);
+        const handleShow = () => setShow(true);
+        const style = {
+            backgroundColor : '#cd1818',
+            border : 'none',
+            display :'flex',
+            alignItems : 'center'
+        }
     function SearchByName(e){
         axios({
             method:'get',
@@ -212,16 +230,16 @@ export default function Header() {
                                             { check ? (
                                                 <Link to={"user/profile"} className={cx("text-center")}>
                                                     <div className={cx("box-img")}>
-                                                        <img src={getAvatarUrl(user?.avatar || profile?.avatar)} alt="TÀI KHOẢN" className={cx('img-user')}/>
+                                                        <img src={getAvatarUrl(user.avatar || profile.avatar)} alt="TÀI KHOẢN" className={cx('img-user')}/>
                                                     </div>
                                                 </Link>
                                             ) : (
-                                                <Link to={"/login"} className={cx("text-center")}>
+                                                <div className={cx("text-center")}>
                                                     <div className={cx("hd-link-icon")}>
                                                         <img src="https://theme.hstatic.net/1000205427/1000509844/14/hd_mainmenu_icon_user.png?v=56" alt="TÀI KHOẢN" />
                                                     </div>
                                                     <div className={cx("hd-link-title")}>TÀI KHOẢN</div>
-                                                </Link>
+                                                </div>
                                             )}
                                             <ul className={cx("dropdown-menu")}>
                                                 <li>
@@ -240,7 +258,7 @@ export default function Header() {
                                             </ul>
                                         </li>
                                         <li className={cx("cart-mobile")} >
-                                            <div className={cx("text-center")} onClick={handleShow}>
+                                            <div className={cx("text-center")} onClick={handleShowPopUp}>
                                             <Badge color='black' size='small' count={totalCart}>
                                                 <div className={cx("hd-link-icon")}>
                                                     <img src="https://theme.hstatic.net/1000205427/1000509844/14/hd_mainmenu_icon_cart.png?v=56" alt="giỏ hàng" />
@@ -253,16 +271,112 @@ export default function Header() {
                                         </li>
                                         <li className={cx("menu-mobile")} onClick={()=>{setOpenMenuMobile(true)}}>
                                                 <div>
+                                                <Button style={style} onClick={handleShow} className="me-2 ">
                                                     <AiOutlineMenu className={cx("menu-mobile")}/>
-                                                    {openMenuMobile ? <ul>
-                                                        <li>1</li>
-                                                        <li>2</li>
-                                                        <li>3</li>
-                                                        <li>4</li>
-                                                        <li>5</li>
-                                                        <button onClick={()=>setOpenMenuMobile(false)}>X</button>
+                                                </Button>
+                                                <Offcanvas style={{width:'300px',background:'white', color:'black'}} show={show} onHide={handleClose} placement={'end'}>
+                                                <Offcanvas.Header closeButton style={{color:'white', borderBottom:'1px solid rgba(255, 255, 255, 0.3)'}}>
+                                                    <Offcanvas.Title style={{color:'black',margin:'0',fontSize:'22px'}}><b>MENU</b></Offcanvas.Title>
+                                                </Offcanvas.Header>
+                                                <Offcanvas.Body style={{padding:'0',background:'black'}}>
+                                                    <ul className={cx("")}>
+                                                        <li className={cx("mobile-content")}>
+                                                            <div className={cx("nav-mobile-right")}>
+                                                                <Link onClick={()=>handleClose()} to={`/category?productName=iphone`} className={cx("mobile-content")}>
+                                                                    <p>IPHONE</p>
+                                                                </Link>
+                                                                <div>
+                                                                    {!openIphoneMobile ?<span><IoMdAdd onClick={()=>setOpenIphoneMobile(true)}/></span>:<span><RiSubtractFill onClick={()=>setOpenIphoneMobile(false)}/></span>}
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                {openIphoneMobile ?
+                                                                <ul className={cx('dropdown-Iphone')}>
+                                                                    <li className={cx('padding-dropdown')}><Link className={cx("dropdownMobile-Iphone")} to={"/collections/cap-lightning"}>CÁP LIGHTNING</Link></li>
+                                                                    <li className={cx('padding-dropdown')}><Link className={cx("dropdownMobile-Iphone")} to={"/collections/cap-micro-usb"}>CÁP MICRO USB </Link></li>
+                                                                    <li className={cx('padding-dropdown')}><Link className={cx("dropdownMobile-Iphone")} to={"/collections/cap-type-c"}>CÁP TYPE C </Link></li>
+                                                                    <li className={cx('padding-dropdown')}><Link className={cx("dropdownMobile-Iphone")} to={"/collections/cap-PD"}>CÁP PD </Link></li>
+                                                                    <li className={cx('padding-dropdown')}><Link className={cx("dropdownMobile-Iphone")} to={"/collections/cap-audio"}>CÁP AUDIO </Link></li>
+                                                                </ul>
+                                                                :""
+                                                            }
+                                                            </div>
+                                                        </li>
+                                                        <li className={cx("mobile-content")}>
+                                                            <div className={cx("nav-mobile-right")}>
+                                                                <Link onClick={()=>handleClose()} to={`/category?productName=xiaomi`} className={cx("mobile-content")}>
+                                                                    <p>XIAOMI</p>
+                                                                </Link>
+                                                                <div>
+                                                                    {!openXiaomiMobile ?<span><IoMdAdd onClick={()=>setOpenXiaomiMobile(true)}/></span>:<span><RiSubtractFill onClick={()=>setOpenXiaomiMobile(false)}/></span>}
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                {
+                                                                    openXiaomiMobile ?
+                                                                    <ul className={cx("dropdown-Iphone")}>
+                                                                        <li className={cx('padding-dropdown')}><Link className={cx("dropdownMobile-Iphone")} to={"/collections/cu-sac"}>CỦ SẠC</Link></li>
+                                                                        <li className={cx('padding-dropdown')}><Link className={cx("dropdownMobile-Iphone")} to={"/collections/sac-khong-day"}>SẠC KHÔNG DÂY </Link></li>
+                                                                        <li className={cx('padding-dropdown')}><Link className={cx("dropdownMobile-Iphone")} to={"/collections/pin-du-phong"}>PIN DỰ PHÒNG </Link></li>
+                                                                    </ul>
+                                                                    :""
+                                                                }
+                                                            </div>
+                                                            
+                                                        </li>
+                                                        <li className={cx("mobile-content")}>
+                                                            <div className={cx("nav-mobile-right")}>
+                                                                <Link onClick={()=>handleClose()} to={`/category?productName=samsung`} className={cx("mobile-content")}>
+                                                                    <p>SAMSUNG</p>
+                                                                </Link>
+                                                                <div>
+                                                                    {!openSamsungMobile ?<span><IoMdAdd onClick={()=>setOpenSamsungMobile(true)}/></span>:<span><RiSubtractFill onClick={()=>setOpenSamsungMobile(false)}/></span>}
+                                                                </div>
+                                                            </div>
+                                                            <div>
+                                                                {
+                                                                    openSamsungMobile ?
+                                                                    <ul className={cx("dropdown-Iphone")}>
+                                                                        <li className={cx('padding-dropdown')}><Link Link className={cx("dropdownMobile-Iphone")} to={"/collections/tai-nghe"}>TAI NGHE CÓ DÂY</Link></li>
+                                                                        <li className={cx('padding-dropdown')}><Link Link className={cx("dropdownMobile-Iphone")} to={"/collections/tai-nghe-bluetooth"}>BLUETOOTH</Link></li>
+                                                                        <li className={cx('padding-dropdown')}><Link Link className={cx("dropdownMobile-Iphone")} to={"/collections/tai-nghe-true-wireless"}>TRUE WIRELESS </Link></li>
+                                                                    </ul>
+                                                                    :""
+                                                                }
+                                                            </div>
+                                                            
+                                                        </li>
+                                                        <li className={cx("mobile-content")}>
+                                                            <div className={cx("nav-mobile-right")}>
+                                                                <Link onClick={()=>handleClose()} to={`/category?productName=dolce`} className={cx("mobile-content")}>
+                                                                    <p>D&G</p>
+                                                                </Link>
+                                                            </div>
+                                                        </li>
+                                                        <li className={cx("mobile-content")}>
+                                                            <div className={cx("nav-mobile-right")}>
+                                                                <Link onClick={()=>handleClose()} to={`/category?productName=gubag`} className={cx("mobile-content")}>
+                                                                    <p>GU BAG</p>
+                                                                </Link>
+                                                            </div>
+                                                        </li>
+                                                        <li className={cx("mobile-content")}>
+                                                            <div className={cx("nav-mobile-right")}>
+                                                                <Link style={{color:'white',textDecoration:'none'}} to={"/login"} onClick={()=>handleClose()}>
+                                                                    <p>ĐĂNG NHẬP</p>
+                                                                </Link>
+                                                            </div>
+                                                        </li>
+                                                        <li className={cx("mobile-content")}>
+                                                            <div className={cx("nav-mobile-right")}>
+                                                                <Link style={{color:'white',textDecoration:'none'}} to={"/register"} onClick={()=>handleClose()}    >
+                                                                    <p>ĐĂNG KÍ</p>
+                                                                </Link>
+                                                            </div>
+                                                        </li>
                                                     </ul>
-                                                    :null}
+                                                </Offcanvas.Body>
+                                            </Offcanvas>
                                                 </div>
                                         </li>
                                     </ul>
