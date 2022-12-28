@@ -130,8 +130,6 @@ function QuickViewCart({activePopUp, setActivePopUp}) {
                 {totalCart ? <span>GIỎ HÀNG CỦA TÔI ({totalCart} SẢN PHẨM)</span> : <span>GIỎ HÀNG TRỐNG</span>}
                 <span  className={cx('btnCloseQVCart')} >
                     <RiCloseLine className={cx('btn-close-quickview-cart')} onClick={() => {
-                        console.log("123456")
-                        console.log(activePopUp)
                         setActivePopUp(false)}}/>
                 </span>
             </h3>
