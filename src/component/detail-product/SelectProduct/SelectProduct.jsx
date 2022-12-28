@@ -1,5 +1,5 @@
 import DetailProductHeader from "../DetailProductHeader/DetailProductHeader";
-import { Breadcrumb } from 'antd';
+import { Breadcrumb, Col, Row } from 'antd';
 import {
     DownOutlined,
     MinusOutlined,
@@ -42,7 +42,6 @@ function SelectProduct() {
     const [listOption, setListOption] = useState([])
     useEffect(() => {
         window.scrollTo(0, 0)
-        console.log('useEffect')
         axios({
             url: `${process.env.REACT_APP_PORT_API}product/get-one-product/${idProduct}`,
             method: "GET",
@@ -71,7 +70,6 @@ function SelectProduct() {
                 simpleItem.size = element.option[1]?.value
                 totalSimple.push(simpleItem)
             })
-            // console.log(totalSimple)
             if (totalSimple.length) {
                 setCurrentItem(totalSimple[0])
             } else {
@@ -94,7 +92,6 @@ function SelectProduct() {
             let listColorSize = Object.entries(listColorSizeStat)
             setCurrentColor(listColorSize[0] ? listColorSize[0][0] : null)
             setListProductCurrentSize(listColorSize[0] ? listColorSize[0][1].listSize : null)
-            console.log(listColorSize)
             setListColorSize(listColorSize)
 
             if(totalProduct.productDetailId[0]) {
@@ -102,7 +99,6 @@ function SelectProduct() {
                 totalProduct.productDetailId[0].option.forEach(item => {
                     optionKey.push(item.optionName)
                 })
-                console.log(optionKey)
                 setListOption(optionKey)
             } else {
                 setListOption([])
@@ -302,7 +298,6 @@ function SelectProduct() {
 
     function handleAddProductToCart() {
         if(productSimple.length) {
-            console.log('run if')
             axios({
                 url: `${process.env.REACT_APP_PORT_API}cart/add-to-cart/${idCart}`,
                 method: "PATCH",
@@ -324,7 +319,6 @@ function SelectProduct() {
                 toast.error("Thêm vào giỏ hàng thất bại")
             })
         } else {
-            console.log('run else')
             axios({
                 url: `${process.env.REACT_APP_PORT_API}cart/add-to-cart/${idCart}`,
                 method: "PATCH",
@@ -407,254 +401,260 @@ function SelectProduct() {
                 nameProduct={productDetail.productName}
             ></DetailProductHeader>
             <div className={cx("product-detail-inner")}>
-                <div className={cx("product-preview")}>
-                    <div className={cx("list-img-thumbnail")}>
-                        <ul
-                            ref={imgThumbUl}
-                            className={cx("list-img-thumb-ul")}
-                        >
-                            <li
-                                className={imgCurrent === imgThump?
-                                     cx("list-img-thumb-item","img-active") : cx("list-img-thumb-item")}
-                                onClick={() => {
-                                    setImgCurrent(productDetail.thump[0])
-                                }}
-                            >
-                                <img
-                                    src={imgThump}
-                                    alt=""
-                                    width="100%"
-                                />
-                            </li>
+                <Row>
+                    <Col md={12} sm={24} xs={24}>
+                        <div className={cx("product-preview")}>
+                            <div className={cx("list-img-thumbnail")}>
+                                <ul
+                                    ref={imgThumbUl}
+                                    className={cx("list-img-thumb-ul")}
+                                >
+                                    <li
+                                        className={imgCurrent === imgThump?
+                                            cx("list-img-thumb-item","img-active") : cx("list-img-thumb-item")}
+                                        onClick={() => {
+                                            setImgCurrent(productDetail.thump[0])
+                                        }}
+                                    >
+                                        <img
+                                            src={imgThump}
+                                            alt=""
+                                            width="100%"
+                                        />
+                                    </li>
 
-                            {listColorSize.length ? listColorSize.map(([key, value], index) => {
-                                    return value.listImg.map(
-                                        (imgItem, indexImg) => (
-                                            <li
-                                                key={`${index}-${indexImg}`}
-                                                className={imgCurrent ===imgItem ?
-                                                    cx("list-img-thumb-item","img-active") : cx("list-img-thumb-item")}
-                                                onClick={() => {setImgCurrent(imgItem)}}
-                                            >
-                                                <img
-                                                    src={imgItem}
-                                                    alt=""
-                                                    width="100%"
-                                                />
-                                            </li>
-                                        )
-                                    );
-                                })
-                                : null}
-                        </ul>
-                        <div
-                            ref={thumbControlBtn}
-                            className={cx(
-                                "list-img-thumb-control",
-                                "display-none"
-                            )}
-                        >
-                            <UpOutlined
-                                className={cx("list-img-thumb-control-up")}
-                                onClick={upListImgThumb}
-                            />
-                            <DownOutlined
-                                className={cx("list-img-thumb-control-down")}
-                                onClick={downListImgThumb}
-                            />
+                                    {listColorSize.length ? listColorSize.map(([key, value], index) => {
+                                            return value.listImg.map(
+                                                (imgItem, indexImg) => (
+                                                    <li
+                                                        key={`${index}-${indexImg}`}
+                                                        className={imgCurrent ===imgItem ?
+                                                            cx("list-img-thumb-item","img-active") : cx("list-img-thumb-item")}
+                                                        onClick={() => {setImgCurrent(imgItem)}}
+                                                    >
+                                                        <img
+                                                            src={imgItem}
+                                                            alt=""
+                                                            width="100%"
+                                                        />
+                                                    </li>
+                                                )
+                                            );
+                                        })
+                                        : null}
+                                </ul>
+                                <div
+                                    ref={thumbControlBtn}
+                                    className={cx(
+                                        "list-img-thumb-control",
+                                        "display-none"
+                                    )}
+                                >
+                                    <UpOutlined
+                                        className={cx("list-img-thumb-control-up")}
+                                        onClick={upListImgThumb}
+                                    />
+                                    <DownOutlined
+                                        className={cx("list-img-thumb-control-down")}
+                                        onClick={downListImgThumb}
+                                    />
+                                </div>
+                            </div>
+                            <div className={cx("img-current-view-container")}>
+                                <div
+                                    onMouseMove={scaleLens}
+                                    onMouseLeave={hideThumbZoomAndLens}
+                                    className={cx(
+                                        "img-current-view-lens-zoom",
+                                        "display-none"
+                                    )}
+                                    ref={imgCurrentViewLensZoom}
+                                ></div>
+                                <img
+                                    onMouseMove={scaleLens}
+                                    ref={imgCurrentView}
+                                    className={cx("img-current-view")}
+                                    src={imgCurrent}
+                                    alt=""
+                                />
+                            </div>
                         </div>
-                    </div>
-                    <div className={cx("img-current-view-container")}>
-                        <div
-                            onMouseMove={scaleLens}
-                            onMouseLeave={hideThumbZoomAndLens}
-                            className={cx(
-                                "img-current-view-lens-zoom",
-                                "display-none"
-                            )}
-                            ref={imgCurrentViewLensZoom}
-                        ></div>
-                        <img
-                            onMouseMove={scaleLens}
-                            ref={imgCurrentView}
-                            className={cx("img-current-view")}
-                            src={imgCurrent}
-                            alt=""
-                        />
-                    </div>
-                </div>
+                    </Col>
+                    <Col md={12} sm={24} xs={24}>
+                        <div className={cx("product-info")}>
+                            <div className={cx("product-info-header")}>
+                                <h1 className={cx("product-name")}>
+                                    {productDetail.productName}
+                                </h1>
+                                <div className={cx("product-brand")}>
+                                    <span className={cx("product-brand-span")}>Thương hiệu: </span>
+                                    <Link className={cx("product-brand-link")}>
+                                        {productDetail.brandId ? productDetail.brandId.brandName : null}
+                                    </Link>
+                                </div>
+                                <span className={cx("product-brand-span")}>|</span>
+                            </div>
+                            <div className={cx("product-info-price")}>
+                                <span>{currentItem.price ? currentItem.price.toLocaleString() : null}&#8363;</span>
+                            </div>
+                            <strong>
+                                <form action="">
+                                    <div
+                                        className={cx("product-info-variants-wrapper")}
+                                    >
+                                        {listOption[0] ? <div className={cx("product-select-color-watch")}>
+                                            <div
+                                                className={cx(
+                                                    "product-select-color-watch-header"
+                                                )}
+                                            >
+                                                {listOption[0]}
+                                            </div>
+                                            <div
+                                                className={cx(
+                                                    "product-select-color-watch-wrapper"
+                                                )}
+                                            >
+                                                {listColorSize.map((item, index) => {
+                                                    return (
+                                                    <div
+                                                        key={index}
+                                                        className={currentItem.color === item[0] ? cx("product-select-color-watch-item", "product-select-watch-item-active") : cx("product-select-color-watch-item")}
+                                                        onClick={() => {
+                                                            setListProductCurrentSize(item[1].listSize)
+                                                            setCurrentColor(item[0])
+                                                            filterCurrentItem(item[0], item[1].listSize[0])
+                                                            setImgCurrent(item[1].listImg[0] || imgThump)
+                                                        }}
+                                                        >
+                                                        <img src="https://theme.hstatic.net/1000205427/1000509844/14/select-pro.png?v=56" alt="" className={currentItem.color === item[0] ? cx('img-check', 'img-check-active') : cx('img-check')}/>
+                                                        <img src={item[1].listImg[0]} alt="" height="100%"/>
+                                                        <span>{item[0]}</span>
+                                                    </div>
+                                                    )
+                                                })}
+                                            </div>
+                                        </div> : null}
+
+                                        {listOption[1] ? <div className={cx("product-select-size-watch")}>
+                                            <div
+                                                className={cx(
+                                                    "product-select-size-watch-header"
+                                                )}
+                                            >
+                                                {listOption[1]}
+                                            </div>
+                                            <div
+                                                className={cx(
+                                                    "product-select-size-watch-wrapper"
+                                                )}
+                                            >
+                                                {listProductCurrentSize?.map((item, index) => {
+                                                    return (
+                                                    <div
+                                                        key={index}
+                                                        className={currentItem.size === item ? cx("product-select-color-watch-item", "product-select-watch-item-active") : cx("product-select-color-watch-item")}
+                                                        onClick={() => {
+                                                            filterCurrentItem(currentColor, item)
+                                                        }}
+                                                        >
+                                                        <img src="https://theme.hstatic.net/1000205427/1000509844/14/select-pro.png?v=56" alt="" className={currentItem.size === item ? cx('img-check', 'img-check-active') : cx('img-check')}/>
+                                                        <span>{item}</span>
+                                                    </div>
+                                                    )
+                                                })}
+                                            </div>
+                                        </div> : null}
+                                        <div className={cx("product-site-connect")}>
+                                            <div className={cx("product-site-hotline")}>
+                                                {"Hotline hỗ trợ bán hàng 24/7: "}
+                                                <Link
+                                                    className={cx(
+                                                        "product-site-hotline-link"
+                                                    )}
+                                                >
+                                                    0888.136.633
+                                                </Link>
+                                            </div>
+                                            <span>|</span>
+                                            <div className={cx("product-site-socialnetwork")}>
+                                                <div
+                                                    className="fb-like"
+                                                    data-href="https://phukienhay.vn/products/op-lung-anker-karapax-breeze-cho-iphone-7-plus-8-plus-a9015"
+                                                    data-width=""
+                                                    data-layout="button_count"
+                                                    data-action="like"
+                                                    data-size="small"
+                                                    data-share="true"
+                                                ></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className={cx("product-buy-action")}>
+                                        <div className={cx("product-quantity")}>
+                                            <span>Số lượng</span>
+                                            <div
+                                                className={cx(
+                                                    "product-quantity-adjustment"
+                                                )}
+                                            >
+                                                <button
+                                                    type="button"
+                                                    className={cx(
+                                                        "product-quantity-minusbtn"
+                                                    )}
+                                                    onClick={() => {
+                                                        if (buyQuantity > 1) {
+                                                            setBuyQuantity(old => old - 1)
+                                                        }
+                                                    }}
+                                                >
+                                                    <MinusOutlined />
+                                                </button>
+                                                <input type="text" value={buyQuantity} min={1} />
+                                                <button
+                                                    type="button"
+                                                    className={cx(
+                                                        "product-quantity-plusbtn"
+                                                    )}
+                                                    onClick={() => {
+                                                        setBuyQuantity(old => old + 1)
+                                                    }}
+                                                >
+                                                    <PlusOutlined />
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div
+                                            className={cx("product-buy-button-action")}
+                                        >
+                                            <button
+                                                className={cx(
+                                                    "product-button-add-to-cart"
+                                                )}
+                                                type={"button"}
+                                                onClick={handleAddProductToCart}
+                                            >
+                                                THÊM VÀO GIỎ
+                                            </button>
+                                            <button
+                                                className={cx("product-button-buy-now")}
+                                                type={"button"}
+                                                onClick={handleBuynowBtn}
+                                            >
+                                                MUA NGAY
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </strong>
+                        </div>
+                    </Col>
+                </Row>
                 <div
                     className={cx("product-thumb-zoom", "display-none")}
                     ref={productThumbZoom}
                 ></div>
-                <div className={cx("product-info")}>
-                    <div className={cx("product-info-header")}>
-                        <h1 className={cx("product-name")}>
-                            {productDetail.productName}
-                        </h1>
-                        <div className={cx("product-brand")}>
-                            <span className={cx("product-brand-span")}>Thương hiệu: </span>
-                            <Link className={cx("product-brand-link")}>
-                                {productDetail.brandId ? productDetail.brandId.brandName : null}
-                            </Link>
-                        </div>
-                        <span className={cx("product-brand-span")}>|</span>
-                    </div>
-                    <div className={cx("product-info-price")}>
-                        <span>{currentItem.price ? currentItem.price.toLocaleString() : null}&#8363;</span>
-                    </div>
-                    <strong>
-                        <form action="">
-                            <div
-                                className={cx("product-info-variants-wrapper")}
-                            >
-                                {listOption[0] ? <div className={cx("product-select-color-watch")}>
-                                    <div
-                                        className={cx(
-                                            "product-select-color-watch-header"
-                                        )}
-                                    >
-                                        {listOption[0]}
-                                    </div>
-                                    <div
-                                        className={cx(
-                                            "product-select-color-watch-wrapper"
-                                        )}
-                                    >
-                                        {listColorSize.map((item, index) => {
-                                            return (
-                                            <div
-                                                key={index}
-                                                className={currentItem.color === item[0] ? cx("product-select-color-watch-item", "product-select-watch-item-active") : cx("product-select-color-watch-item")}
-                                                onClick={() => {
-                                                    setListProductCurrentSize(item[1].listSize)
-                                                    setCurrentColor(item[0])
-                                                    filterCurrentItem(item[0], item[1].listSize[0])
-                                                    setImgCurrent(item[1].listImg[0] || imgThump)
-                                                }}
-                                                >
-                                                <img src="https://theme.hstatic.net/1000205427/1000509844/14/select-pro.png?v=56" alt="" className={currentItem.color === item[0] ? cx('img-check', 'img-check-active') : cx('img-check')}/>
-                                                <img src={item[1].listImg[0]} alt="" height="100%"/>
-                                                <span>{item[0]}</span>
-                                            </div>
-                                            )
-                                        })}
-                                    </div>
-                                </div> : null}
-
-                                {listOption[1] ? <div className={cx("product-select-size-watch")}>
-                                    <div
-                                        className={cx(
-                                            "product-select-size-watch-header"
-                                        )}
-                                    >
-                                        {listOption[1]}
-                                    </div>
-                                    <div
-                                        className={cx(
-                                            "product-select-size-watch-wrapper"
-                                        )}
-                                    >
-                                        {listProductCurrentSize?.map((item, index) => {
-                                            return (
-                                            <div
-                                                key={index}
-                                                className={currentItem.size === item ? cx("product-select-color-watch-item", "product-select-watch-item-active") : cx("product-select-color-watch-item")}
-                                                onClick={() => {
-                                                    filterCurrentItem(currentColor, item)
-                                                }}
-                                                >
-                                                <img src="https://theme.hstatic.net/1000205427/1000509844/14/select-pro.png?v=56" alt="" className={currentItem.size === item ? cx('img-check', 'img-check-active') : cx('img-check')}/>
-                                                <span>{item}</span>
-                                            </div>
-                                            )
-                                        })}
-                                    </div>
-                                </div> : null}
-                                <div className={cx("product-site-connect")}>
-                                    <div>
-                                    <div className={cx("product-site-hotline")}>
-                                        {"Hotline hỗ trợ bán hàng 24/7: "}
-                                        <Link
-                                            className={cx(
-                                                "product-site-hotline-link"
-                                            )}
-                                        >
-                                            0888.136.633
-                                        </Link>
-                                        <span>|</span>
-                                    </div>
-                                    </div>
-                                    <div
-                                        className="fb-like"
-                                        data-href="https://phukienhay.vn/products/op-lung-anker-karapax-breeze-cho-iphone-7-plus-8-plus-a9015"
-                                        data-width=""
-                                        data-layout="button_count"
-                                        data-action="like"
-                                        data-size="small"
-                                        data-share="true"
-                                    ></div>
-                                </div>
-                            </div>
-                            <div className={cx("product-buy-action")}>
-                                <div className={cx("product-quantity")}>
-                                    <span>Số lượng</span>
-                                    <div
-                                        className={cx(
-                                            "product-quantity-adjustment"
-                                        )}
-                                    >
-                                        <button
-                                            type="button"
-                                            className={cx(
-                                                "product-quantity-minusbtn"
-                                            )}
-                                            onClick={() => {
-                                                if (buyQuantity > 1) {
-                                                    setBuyQuantity(old => old - 1)
-                                                }
-                                            }}
-                                        >
-                                            <MinusOutlined />
-                                        </button>
-                                        <input type="text" value={buyQuantity} min={1} />
-                                        <button
-                                            type="button"
-                                            className={cx(
-                                                "product-quantity-plusbtn"
-                                            )}
-                                            onClick={() => {
-                                                setBuyQuantity(old => old + 1)
-                                            }}
-                                        >
-                                            <PlusOutlined />
-                                        </button>
-                                    </div>
-                                </div>
-                                <div
-                                    className={cx("product-buy-button-action")}
-                                >
-                                    <button
-                                        className={cx(
-                                            "product-button-add-to-cart"
-                                        )}
-                                        type={"button"}
-                                        onClick={handleAddProductToCart}
-                                    >
-                                        THÊM VÀO GIỎ
-                                    </button>
-                                    <button
-                                        className={cx("product-button-buy-now")}
-                                        type={"button"}
-                                        onClick={handleBuynowBtn}
-                                    >
-                                        MUA NGAY
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </strong>
-                </div>
             </div>
         </div>
     );
