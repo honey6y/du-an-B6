@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  Breadcrumb, Space, Table, Button, Input, Empty
+  Breadcrumb, Space, Table, Button, Input, Empty, Row, Col
 } from "antd";
 import { useEffect, createRef, useState } from "react";
 import styles from "./OrderHistory.module.css";
@@ -13,6 +13,7 @@ export default function OrderHistory() {
   const listProduct = useSelector((state) => state.cart.listProduct);
   const product = useSelector((state) => state.cart.product);
   const cartId = useSelector((state) => state.cart.cartId);
+  const totalCart = useSelector((state) => state.cart.cartNumber);
   let [total, setTotal] = useState(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ export default function OrderHistory() {
   useEffect(() => {
     init();
     return () => { };
-  }, []);
+  }, [totalCart]);
 
 
   async function init() {
@@ -38,12 +39,18 @@ export default function OrderHistory() {
       let totalListProduct = listProduct.reduce((total, data) => {
         return total + data?.productDetailId.price * data?.quantity;
       }, 0);
-      let cartNumber = listProduct.reduce((total, product) => {
-        return total + product.quantity;
+      let totalProduct = product.reduce((total, data) => {
+        return total + data?.productId.price * data?.quantity;
       }, 0);
-      dispatch(getCartId(res.data.cart._id));
-      setTotal(totalListProduct);
-      dispatch(getCartNumber(cartNumber));
+      let productNumber = product.reduce((total, data) => {
+        return total + data?.quantity;
+      }, 0);
+      let listProductNumber = listProduct.reduce((total, data) => {
+        return total + data?.quantity;
+      }, 0);
+      dispatch(getCartId(res.data.cart._id))
+      dispatch(getCartNumber(productNumber + listProductNumber))
+      setTotal(totalListProduct + totalProduct);
       dispatch(getListProduct(listProduct));
       dispatch(getProduct(product));
     } catch (err) {
@@ -52,6 +59,47 @@ export default function OrderHistory() {
   }
 
   const columns = [
+    {
+      dataIndex: "responsiveData",
+      key: "responsiveData",
+      render: (_, { key, name, price, quantity, image, color }) =>
+        <Row span={24}>
+          <Col span={4}>
+            <img
+              style={{ width: "100%", padding: "10px", marginTop: "50%" }}
+              src={`${image}`}
+              alt="#"
+            ></img>
+          </Col>
+          <Col span={20}>
+            <h3>{name}</h3>
+            {color && <p>Phiên bản: {color}</p>}
+            <Input
+              ref={quantityInput}
+              style={{ width: "50px" }}
+              type="number"
+              defaultValue={
+                quantity
+              }
+              min={1}
+              onChange={(e) => {
+                color ?
+                  updateCartListProduct(key, e.target.value)
+                  : updateCartProduct(key, e.target.value)
+              }}
+            ></Input>
+            <p style={{ color: "red", fontSize: "13px", paddingLeft: "3px", margin: "0px", cursor: "pointer" }} onClick={e => {
+              color ?
+                deleteFromListProduct(key)
+                : deleteFromProduct(key)
+            }}>Xóa</p>
+            <h4 className={styles.currency}>
+              {price.toLocaleString()}đ
+            </h4>
+          </Col>
+        </Row>,
+      responsive: ['xs'],
+    },
     {
       title: "Thông tin chi tiết sản phẩm ",
       dataIndex: "image",
@@ -64,6 +112,7 @@ export default function OrderHistory() {
           alt="#"
         ></img>
       ),
+      responsive: ['sm'],
     },
     {
       title: "name",
@@ -71,7 +120,7 @@ export default function OrderHistory() {
       dataIndex: "name",
       render: (_, { name, color, key }) => (
         <>
-          <h3>{name}</h3>
+          <h3 style={{ fontSize: "" }}>{name}</h3>
           {color && <p>Phiên bản: {color}</p>}
           <Button style={{ color: "red" }} onClick={e => {
             color ?
@@ -80,12 +129,14 @@ export default function OrderHistory() {
           }}>Xóa</Button>
         </>
       ),
+      responsive: ['sm'],
     },
     {
       title: "Đơn giá",
-      dataIndex: "address",
-      key: "address",
+      dataIndex: "price",
+      key: "price",
       render: (_, { price }) => <h4 className={styles.currency}>{price.toLocaleString()}đ</h4>,
+      responsive: ['sm'],
     },
     {
       title: "Số lượng",
@@ -109,11 +160,13 @@ export default function OrderHistory() {
           ></Input>
         </>
       ),
+      responsive: ['sm'],
     },
     {
       title: "Tổng giá",
       key: "total",
       render: (_, { total }) => <h4 size="middle" className={styles.currency}>{total.toLocaleString()}đ</h4>,
+      responsive: ['md'],
     },
   ];
 
@@ -214,9 +267,9 @@ export default function OrderHistory() {
   return (
     <div style={{ backgroundColor: "#fafafa" }}>
       <div style={{ maxWidth: "1260px", margin: "auto", backgroundColor: "white" }}>
-        <div className={styles.container}>
+      <div className={styles.container}>
           <h2>GIỎ HÀNG</h2>
-          {listProduct !== [] ? <Table pagination={false} columns={columns} dataSource={tableData} /> : <Empty
+          {tableData.length !== 0 ? <Table pagination={false} columns={columns} dataSource={tableData} /> : <Empty
             image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
             imageStyle={{
               height: 60,
@@ -227,8 +280,9 @@ export default function OrderHistory() {
               </span>
             }
           >
-            <Button type="primary" style={{ backgroundColor: "#cd1818" }}>Shop Now</Button>
+            <Button type="primary" style={{ backgroundColor: "#cd1818" }} onClick={() => { navigate(`/`) }}>Shop Now</Button>
           </Empty>}
+
           <div className={styles.description}>
             <div className={styles.description_left}>
               <label htmlFor="CartSpecialInstructions">
