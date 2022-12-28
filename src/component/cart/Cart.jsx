@@ -1,17 +1,18 @@
 import React from "react";
 import {
-  Breadcrumb, Space, Table, Button, Input, Empty
+  Breadcrumb, Space, Table, Button, Input, Empty, Row, Col
 } from "antd";
 import { useEffect, createRef, useState } from "react";
 import styles from "./Cart.module.scss";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getListProduct, getProduct, getCartId } from "../../features/counter/cartSlice";
+import { getListProduct, getProduct, getCartId, getCartNumber } from "../../features/counter/cartSlice";
 function Cart() {
   const listProduct = useSelector((state) => state.cart.listProduct);
   const product = useSelector((state) => state.cart.product);
   const cartId = useSelector((state) => state.cart.cartId);
+  const totalCart = useSelector((state) => state.cart.cartNumber);
   let [total, setTotal] = useState(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ function Cart() {
   useEffect(() => {
     init();
     return () => { };
-  }, []);
+  }, [totalCart]);
 
   async function init() {
     try {
@@ -39,7 +40,14 @@ function Cart() {
       let totalProduct = product.reduce((total, data) => {
         return total + data?.productId.price * data?.quantity;
       }, 0);
+      let productNumber = product.reduce((total, data) => {
+        return total + data?.quantity;
+      }, 0);
+      let listProductNumber = listProduct.reduce((total, data) => {
+        return total + data?.quantity;
+      }, 0);
       dispatch(getCartId(res.data.cart._id))
+      dispatch(getCartNumber(productNumber + listProductNumber))
       setTotal(totalListProduct + totalProduct);
       dispatch(getListProduct(listProduct));
       dispatch(getProduct(product));
@@ -49,6 +57,47 @@ function Cart() {
   }
 
   const columns = [
+    {
+      dataIndex: "responsiveData",
+      key: "responsiveData",
+      render: (_, { key, name, price, quantity, image, color }) =>
+        <Row span={24}>
+          <Col span={4}>
+            <img
+              style={{ width: "100%", padding: "10px", marginTop: "50%" }}
+              src={`${image}`}
+              alt="#"
+            ></img>
+          </Col>
+          <Col span={20}>
+            <h3>{name}</h3>
+            {color && <p>Phiên bản: {color}</p>}
+            <Input
+              ref={quantityInput}
+              style={{ width: "50px" }}
+              type="number"
+              defaultValue={
+                quantity
+              }
+              min={1}
+              onChange={(e) => {
+                color ?
+                  updateCartListProduct(key, e.target.value)
+                  : updateCartProduct(key, e.target.value)
+              }}
+            ></Input>
+            <p style={{ color: "red", fontSize: "13px", paddingLeft: "3px", margin: "0px", cursor: "pointer" }} onClick={e => {
+              color ?
+                deleteFromListProduct(key)
+                : deleteFromProduct(key)
+            }}>Xóa</p>
+            <h4 className={styles.currency}>
+              {price.toLocaleString()}đ
+            </h4>
+          </Col>
+        </Row>,
+      responsive: ['xs'],
+    },
     {
       title: "Thông tin chi tiết sản phẩm ",
       dataIndex: "image",
@@ -61,6 +110,7 @@ function Cart() {
           alt="#"
         ></img>
       ),
+      responsive: ['sm'],
     },
     {
       title: "name",
@@ -68,7 +118,7 @@ function Cart() {
       dataIndex: "name",
       render: (_, { name, color, key }) => (
         <>
-          <h3>{name}</h3>
+          <h3 style={{ fontSize: "" }}>{name}</h3>
           {color && <p>Phiên bản: {color}</p>}
           <Button style={{ color: "red" }} onClick={e => {
             color ?
@@ -77,12 +127,14 @@ function Cart() {
           }}>Xóa</Button>
         </>
       ),
+      responsive: ['sm'],
     },
     {
       title: "Đơn giá",
-      dataIndex: "address",
-      key: "address",
+      dataIndex: "price",
+      key: "price",
       render: (_, { price }) => <h4 className={styles.currency}>{price.toLocaleString()}đ</h4>,
+      responsive: ['sm'],
     },
     {
       title: "Số lượng",
@@ -106,11 +158,13 @@ function Cart() {
           ></Input>
         </>
       ),
+      responsive: ['sm'],
     },
     {
       title: "Tổng giá",
       key: "total",
       render: (_, { total }) => <h4 size="middle" className={styles.currency}>{total.toLocaleString()}đ</h4>,
+      responsive: ['md'],
     },
   ];
 
@@ -235,7 +289,7 @@ function Cart() {
               </span>
             }
           >
-            <Button type="primary" style={{ backgroundColor: "#cd1818" }} onClick={()=>{navigate(`/`)}}>Shop Now</Button>
+            <Button type="primary" style={{ backgroundColor: "#cd1818" }} onClick={() => { navigate(`/`) }}>Shop Now</Button>
           </Empty>}
 
           <div className={styles.description}>
