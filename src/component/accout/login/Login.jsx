@@ -45,13 +45,13 @@ function Login () {
                             message: 'Password không đúng',
                             type: 'Sever'
                         })
-                        setSpamSubmit(false)
                     } else (
                         setError('email', {
                             message: 'Email chưa được đăng ký',
                             type: 'Sever'
                         })
                     )
+                    setSpamSubmit(false)
                 }
             }
         })
@@ -109,7 +109,7 @@ function Login () {
                                 <div className={style.infor_error}>{errors.password?.message}</div>
                             </div >
                             <div className={style.input_container}>
-                                <button type="submit" className={style.button_login} disabled={spamSubmit} >
+                                <button type="submit" className={style.button_login}  disabled={spamSubmit} >
                                     <Spinner className={spamSubmit ? style.spinner_block : style.spinner_none} animation="border" />
                                     <span className={style.button_name}>Đăng nhập</span>
                                 </button>
