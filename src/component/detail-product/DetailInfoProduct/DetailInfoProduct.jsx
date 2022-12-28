@@ -29,8 +29,8 @@ function DetailInfoProduct() {
     
     return (
     <div className={cx('wrapper')}>
-        <Row>
-            <Col md={12} sm={24} xs={24}>
+        <Row gutter={10}>
+            <Col md={16} sm={24} xs={24}>
                 <div className={cx('product-detail-info-container')}>
                     <div className={cx('product-detail-info')}>
                         <div className={cx('select-product-info')}>
@@ -206,7 +206,7 @@ function DetailInfoProduct() {
                     </div>
                 </div>
             </Col>
-            <Col md={12} sm={24} xs={24}>
+            <Col md={8} sm={24} xs={24}>
                 <div className={cx('related-information')}>
                     <div className={cx('same-product')}>
                         <h2 className={cx('same-product-heading')}>sản phẩm tương tự</h2>
