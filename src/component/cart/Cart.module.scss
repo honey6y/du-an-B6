@@ -2,6 +2,12 @@
   overflow: hidden;
   padding: 10px
 }
+
+// @media only screen and (max-width: 768px) {
+//   .container {
+//     display: none;
+//   }
+// }
 .container h2 {
   color: #000000;
   padding: 0px 0px 15px 0px;
@@ -40,3 +46,4 @@
   font-weight: bold;
   color: #cd1818;
 }
+
