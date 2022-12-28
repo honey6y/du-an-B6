@@ -234,7 +234,7 @@ export default function Header() {
                                                     </div>
                                                 </Link>
                                             ) : (
-                                                <div className={cx("text-center")}>
+                                                <div to={""} className={cx("text-center")}>
                                                     <div className={cx("hd-link-icon")}>
                                                         <img src="https://theme.hstatic.net/1000205427/1000509844/14/hd_mainmenu_icon_user.png?v=56" alt="TÀI KHOẢN" />
                                                     </div>
