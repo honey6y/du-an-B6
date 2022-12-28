@@ -119,3 +119,12 @@
   padding: 3px;
   margin-right: 8px;
 }
+@media (max-width:768px) {
+  .grid__item {
+    box-sizing: border-box;
+    min-height: 1px;
+    padding-left: 30px;
+    vertical-align: top;
+    width: 50%;
+  }
+}
