@@ -130,3 +130,45 @@
 .sort_select_option{
     padding-left: 5px;
 }
+@media (max-width:1024px){
+    .layout_body{
+        flex-wrap: wrap-reverse;
+    }
+    .layout_filter{
+        margin-top: 20px;
+    }
+    .layout_product{
+        width: 100%;
+    }
+    .layout_filter{
+        width: 100%;
+    }
+    .filter_box_product_others{
+        width: 100%;
+    }
+    .trademark_check{
+        max-width: 100%;
+    }
+    .filter_price_name,
+    .filter_product_trademark,
+    .filter_product_others{
+        text-align: center;
+    }
+    .check_price_child{
+        justify-content: center;
+    }
+    .price_filter_check{
+        width: 100%;
+    }
+}
+@media (max-width:768px){
+    .layout_product_header{
+        justify-content: space-between;
+    }
+}
+@media (max-width:550px) {
+    .layout_product_header{
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
