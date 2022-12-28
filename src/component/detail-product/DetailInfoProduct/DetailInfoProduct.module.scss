@@ -11,7 +11,7 @@
 }
 
 .product-detail-info-container {
-    width: 70%;
+    width: 100%;
     // background: #fff;
     overflow: hidden;
     height: fit-content;
@@ -138,7 +138,7 @@
 }
 
 .related-information {
-    width: 30%;
+    width: 100%;
     // background: #fff;
     height: fit-content;
 }
@@ -200,4 +200,24 @@
     background: #fff;
     padding-bottom: 10px;
     margin-bottom: 10px;
+}
+
+@media (max-width:768px) {
+    .product-feature-element {
+        flex-direction: column;
+    }
+
+    .product-feature-element-image-container {
+        width: 100%;
+    }
+
+    .product-feature-element-description {
+        width: 100%;
+    }
+}
+
+@media (max-width:500px) {
+    .product-info-btn-select {
+        width: 100%;
+    }
 }

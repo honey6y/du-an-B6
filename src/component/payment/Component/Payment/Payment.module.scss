@@ -198,3 +198,10 @@ select{
     color: #338dbc;
     cursor: pointer;
 }
+
+@media (max-width : 900px){
+    .page{
+        display: flex;
+        flex-direction: column;
+    }
+}

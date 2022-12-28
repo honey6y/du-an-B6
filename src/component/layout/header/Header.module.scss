@@ -1,8 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&family=Titillium+Web:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&display=swap');
-.header-desktop {
-    // margin-top: 5px;
-    height: 65px;
-}
 
 .wpo-search-inner {
     position: relative;
@@ -302,9 +298,7 @@
     background:black;
     font-size: 5px;
 }
-.products-Name{
 
-}
 .img-user{
     height: 100%;
     width: 100%;
@@ -315,3 +309,42 @@
     height: 40px;
     width: 40px;
 }
+.menu-mobile{
+    color: white;
+    font-size: 30px;
+    display: none;
+    margin-top: 3px;
+}
+.cart-mobile{
+    text-align: center;
+    background-color: #cd1818;
+    color: white;
+    margin: 0px 25px 0px 0px;
+    font-size: 16px;
+    border: none;
+    position: relative;
+    list-style: none;
+    padding-left: 0;
+}
+.log-out{
+    color: black;
+    border-bottom: 1px dashed #f0f0f0;
+    padding: 15px 0px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+    &:hover {
+    color: #cd1818;
+    }
+}
+@media (max-width:1040px){
+    
+  }
+  @media (max-width:768px) {
+    .dropdown{
+        display: none;
+    }
+    .menu-mobile{
+        display: block;
+    }
+  }

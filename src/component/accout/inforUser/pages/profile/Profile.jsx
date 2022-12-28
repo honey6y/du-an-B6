@@ -1,8 +1,12 @@
 
 import { useMutation, useQuery } from '@tanstack/react-query'
+import { pick } from 'lodash'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
+import { setProfileToLS } from '../../../../../actionLocal/ActionLocal'
+import { getUserInfor } from '../../../../../features/counter/cartSlice'
 import { getAvatarUrl, userApi } from '../../../../Others/QueryApi'
 import { rules } from '../../../../Others/Rules'
 import DateSelect from '../../componets/DateSelect/DateSelect'
@@ -11,6 +15,7 @@ import style from './Profile.module.css'
 
 
 export default function Profile() {
+  const dispatch = useDispatch()
   const fileInput = useRef(null)
   const [file, setFile] = useState()
   const previewImg = useMemo(() => {
@@ -54,7 +59,10 @@ export default function Profile() {
         avatarName = uploadRes.data.newUser.avatar
         setValue('avatar', avatarName)
       }
-      await updateProfileMution.mutateAsync({...data, dateOfBirth: data.dateOfBirth?.toISOString(), avatar: avatarName})
+      const res = await updateProfileMution.mutateAsync({...data, dateOfBirth: data.dateOfBirth?.toISOString(), avatar: avatarName})
+      dispatch(getUserInfor(pick(res.data.user, ['avatar', 'username','email'])))
+      setProfileToLS(pick(res.data.user, ['avatar', 'username','email']))
+      setProfileToLS(pick(res.data.user, ['avatar', 'username','email']))
       refetch()
       toast.success('cập nhật thành công')
     } catch (error) {

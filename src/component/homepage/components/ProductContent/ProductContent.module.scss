@@ -91,4 +91,10 @@
     }
 }
 
-
+@media (max-width : 900px){
+  .product{
+    &:hover .btn-buy{
+      display: none;
+    }
+  }
+}

@@ -5,6 +5,7 @@ import {Link, useNavigate} from 'react-router-dom'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 import { useDispatch } from 'react-redux'
 import { openModal } from '../../../../features/counter/ModalSlice';
+import { useEffect, useRef, useState } from 'react';
 
 function GalleryCarousel({dataProps , title, isSale}) {
   const nav = useNavigate()
@@ -15,16 +16,40 @@ function GalleryCarousel({dataProps , title, isSale}) {
       item.thump[0] = `${process.env.REACT_APP_SRC_IMG}${item.thump[0]}`
     }
   })
+  const [slidesToShow, setSlideToShow] = useState(0)
+  useEffect (() => {
+    if(window.innerWidth > 1268) {
+      setSlideToShow(5)
+    } else if (window.innerWidth > 992) {
+      setSlideToShow(4)
+    } else if (window.innerWidth > 600) {
+      setSlideToShow(3)
+    } else if (window.innerWidth < 600) {
+      setSlideToShow(2)
+    }
+  }, [])
+  window.onresize = reportWindowSize;
+  function reportWindowSize() {
+    if(window.innerWidth > 1268) {
+      setSlideToShow(5)
+    } else if (window.innerWidth > 992) {
+      setSlideToShow(4)
+    } else if (window.innerWidth > 600) {
+      setSlideToShow(3)
+    } else if (window.innerWidth < 600) {
+      setSlideToShow(2)
+    }
+  }
   return ( 
       <>
-        <div className={cx('wrapper')}>
+        <div className={cx('wrapper')} >
           <div className={cx('title')}>
               <h3 className={cx('flash-sale-title')}>{title}</h3>
               <Link to={'/category'} className={cx('more')}>More ...</Link>
           </div>
           <Carousel 
-            wrapAround={true} 
-            slidesToShow={5} 
+            wrapAround={true}
+            slidesToShow={slidesToShow} 
             dragThreshold={0.1} 
             renderBottomCenterControls={null}
             autoplay={true}
