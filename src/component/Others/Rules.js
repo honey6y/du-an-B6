@@ -15,9 +15,6 @@ export const rules = {
         minLength: {
             value: 5,
             message: 'Độ dài từ 5 - 160 ký tự'
-        },
-        thongbao: {
-            message: 'aaaaaa'
         }
     },
     password: {
@@ -108,8 +105,8 @@ export const rules = {
             message: 'Vui lòng nhập số điện thoại'
         },
         maxLength: {
-            value: 15,
-            message: 'Độ dài không quá 15 ký tự'
+            value: 12,
+            message: 'Độ dài không quá 12 ký tự'
         }
     },
     
