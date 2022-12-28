@@ -202,7 +202,7 @@
     border-radius: 5px;
 }
 .search-by-name-active{
-    max-width: 305px;
+    width: 305px;
     background-color: #ffffff;
     z-index: 1000;
     color: #000000;
@@ -213,7 +213,6 @@
     border-bottom-left-radius:8px ;
 }
 .flex-productName{
-    width: 305px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -242,7 +241,6 @@
 .list-search{
     text-decoration: none;
     color: #000000;
-  
 }
 .quickview-cart-product{
     width: 280px;
@@ -257,6 +255,9 @@
     padding: 5px;
     color: #000000;
     display: none;
+    
+
+
 }
 .view-product-cart{
     background-color: #cd1818;
@@ -280,6 +281,7 @@
     border-radius: 10px;
     padding: 5px;
     color: #000000;
+    
     display: block;
 }
 .btn-close-viewProduct{
@@ -335,79 +337,14 @@
     color: #cd1818;
     }
 }
-.btn-primary{
-    --bs-btn-bg: #cd1818;
-    --bs-btn-border-color: #cd1818;
-    background: #cd1818;
-}
-.nav-mobile-right{
-    width: 250px;
-    padding: 0px;
-    display: block;
-    padding: 10px 15px;
-    background: transparent;
-    border-left: 3px solid transparent;
-    border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
-    padding-left: 0;
-    color: white;
-    list-style: none;
-    text-decoration: none;
-    display: flex;
-    justify-content: space-between;
-}
-.mobile-content{
-    list-style: none;
-    text-decoration: none;
-    font-weight: bold;
-    color: white;
-}
-.mobile-login{
-    list-style: none;
-}
-.text-mobile{
-    text-decoration: none;
-}
-.dropdownMobile-Iphone{
-    list-style: none;
-    text-decoration: none;
-    color: #fff;
-}
-.dropdown-Iphone{
-    list-style: none;
-}
-.padding-dropdown{
-    padding: 10px 0px;
-}
-@media (max-width:1024px){
-    .img-logo{
-        width: 135px;
-    }
-    .select-collection{
-        width:80px;
-    }
+@media (max-width:1040px){
+    
   }
   @media (max-width:768px) {
     .dropdown{
         display: none;
     }
-    .select-collection{
-        width:90px;
-    }
     .menu-mobile{
         display: block;
     }
-    .grid {
-        justify-content: space-between;            
-    }
-    @media (max-width:550px) {
-        .grid {
-            justify-content: space-between;            
-        }
-        .header-search{
-            display: none;
-        }
-    }
-  }
-  .btn-close{
-    color: white;
   }
