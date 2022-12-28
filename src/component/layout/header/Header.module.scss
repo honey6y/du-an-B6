@@ -282,6 +282,17 @@
     
     display: block;
 }
+.dropdown-avatar{
+    text-align: center;
+    background-color: #cd1818;
+    color: white;
+    margin: 0px 25px 0px 0px;
+    font-size: 16px;
+    border: none;
+    position: relative;
+    list-style: none;
+    padding-left: 0;
+}
 .btn-close-viewProduct{
     position: absolute;
     top: -10px;
@@ -344,5 +355,14 @@
     }
     .menu-mobile{
         display: block;
+    }
+    @media (max-width:550px) {
+        .wpo-search{
+            display: none;
+        
+        }
+        .grid{
+            justify-content: space-between;
+        }
     }
   }
