@@ -45,7 +45,6 @@ function GalleryCarousel({dataProps , title, isSale}) {
         <div className={cx('wrapper')} >
           <div className={cx('title')}>
               <h3 className={cx('flash-sale-title')}>{title}</h3>
-              <Link to={'/category'} className={cx('more')}>More ...</Link>
           </div>
           <Carousel 
             wrapAround={true}

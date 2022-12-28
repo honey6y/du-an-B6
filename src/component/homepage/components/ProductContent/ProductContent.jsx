@@ -38,7 +38,6 @@ function ProductContent() {
           console.log(error);
         });
     }, [loadMoreData]);
-    
   return (
     <>
       <GalleryCarousel dataProps={dataSlider} title={'Flash Sale'} isSale={true} />
