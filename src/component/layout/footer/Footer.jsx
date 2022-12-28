@@ -16,7 +16,7 @@ export default function Footer() {
                 <div className={cx("wrapper")}>
                     <div className={cx("inner")}>
                         <div className={cx("grid-uniform")}>
-                            <div className={cx("grid__item large--one-quarter medium--one-half small--one-whole")} style={{width:"25%", padding:"0 0 0 30px"}}>
+                            <div className={cx("grid__item")} >
                                 <div className={cx("ft-contact")}>
                                     <h3 className={cx('ft-title')}>THÔNG TIN LIÊN HỆ</h3>
                                     <div className={cx('ft-contact-desc')}>Công ty TNHH Thương mại và dịch vụ Tech Power MST: 0108089652</div>
@@ -47,13 +47,13 @@ export default function Footer() {
                                     </div>
                                 </div>
                             </div>
-                            <div className={cx("grid__item large--one-quarter")} style={{width:"25%", padding:"0 0 0 30px"}}>
+                            <div className={cx("grid__item")}>
                                 <div className={cx("ft-nav")}>
                                     <h3 className={cx('ft-title')}>LIÊN KẾT NHANH WEBSITE</h3>
                                     <ul className={cx('no-bullets')}></ul>
                                 </div>
                             </div>
-                            <div className={cx("grid__item large--one-quarter")} style={{width:"25%", padding:"0 0 0 30px"}}>
+                            <div className={cx("grid__item")} >
                                 <div className={cx("ft-nav")}>
                                     <h3>CHÍNH SÁCH MUA HÀNG</h3>
                                     <ul className={cx('no-bullet')}>
@@ -64,7 +64,7 @@ export default function Footer() {
                                     </ul>
                                 </div>
                             </div>
-                            <div className={cx("grid__item large--one-quarter")} style={{width:"25%", padding:"0 0 0 30px"}}>
+                            <div className={cx("grid__item")}>
                                 <div className={cx("ft-subscribe")}>
                                     <h3 className={cx('ft-title')}>ĐĂNG KÍ NHẬN TIN</h3>
                                     <div className={cx('ft-subscribe-desc')}>Mỗi tháng chúng tôi đều có những đợt giảm giá dịch vụ và sản phẩm nhằm chi ân khách hàng. Để có thể cập nhật kịp thời những đợt giảm giá này, vui lòng nhập địa chỉ email của bạn vào ô dưới đây.</div>
