@@ -139,6 +139,7 @@
     }
     .layout_product{
         width: 100%;
+        margin-left: 0;
     }
     .layout_filter{
         width: 100%;
@@ -160,6 +161,9 @@
     .price_filter_check{
         width: 100%;
     }
+    .layout_box{
+        width: 89%;
+    }
 }
 @media (max-width:768px){
     .layout_product_header{
@@ -169,6 +173,10 @@
 @media (max-width:550px) {
     .layout_product_header{
         flex-wrap: wrap;
-        justify-content: center;
+        justify-content: space-evenly;
+    }
+    .layout_product_name{
+        margin-left: 0;
+        padding-left: 18px;
     }
 }

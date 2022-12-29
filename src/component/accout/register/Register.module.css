@@ -122,3 +122,11 @@
   width: 14px !important;
   display: none !important;
 }
+@media (max-width:1150px){
+  .login_body_container{
+    padding: 0 0 10px 0;
+  }
+  .login_container{
+    width: 90%;
+  }
+}
