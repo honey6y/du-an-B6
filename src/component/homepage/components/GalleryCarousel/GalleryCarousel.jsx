@@ -17,7 +17,6 @@ function GalleryCarousel({dataProps , title, isSale}) {
       item.thump[0] = `${process.env.REACT_APP_SRC_IMG}${item.thump[0]}`
     }
   })
-  console.log (dataRender)
   const [slidesToShow, setSlideToShow] = useState(0)
   useEffect (() => {
     if(window.innerWidth > 1268) {
@@ -50,20 +49,24 @@ function GalleryCarousel({dataProps , title, isSale}) {
                 <h3 className={cx('flash-sale-title')}>{title}</h3>
             </div>
             <Carousel 
-              wrapAround={true}
-              slidesToShow={dataRender.length > slidesToShow ? slidesToShow : dataRender.length}
+              wrapAround={false}
+              slidesToShow={slidesToShow}
               dragThreshold={0.1} 
               renderBottomCenterControls={null}
-              autoplay={true}
+              autoplay={dataRender.length > slidesToShow}
               renderCenterLeftControls={({ previousDisabled, previousSlide }) => (
+                dataRender.length > slidesToShow ? 
                 <button className={cx('btn-control-arrow')} onClick={previousSlide} disabled={previousDisabled}>
                     <LeftOutlined />
-                </button>
+                </button> :
+                null
               )}
               renderCenterRightControls={({ nextDisabled, nextSlide }) => (
+                dataRender.length > slidesToShow ? 
                 <button className={cx('btn-control-arrow')} onClick={nextSlide} disabled={nextDisabled}>
                     <RightOutlined />
-                </button>
+                </button> :
+                null
               )}
             >
                 {dataRender.map((item,index)=>{
