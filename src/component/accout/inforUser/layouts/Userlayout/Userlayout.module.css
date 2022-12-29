@@ -19,7 +19,7 @@
     justify-content: space-between;
 }
 .user_side_nav{
-    width: 16% ;
+    width: 18% ;
 }
 .infor_layout{
     width: calc(82% - 5%);
@@ -36,4 +36,39 @@
 }
 .nameLogin{
     margin-left: 10px;
+}
+@media (max-width:1024px){
+    .user_side_nav{
+        display: none;
+    }
+    .userLayout_body{
+        display: flex;
+        justify-content: center;
+    }
+    .infor_layout{
+        width: 100%;
+    }
+    .box_userLayout{
+        width: 100%;
+    }
+    .container_userLayout{
+        padding-top: 0;
+    }
+}
+@media (max-width:768px){
+    .user_side_nav{
+        display: none;
+    }
+    .userLayout_body{
+        display: flex;
+        justify-content: center;
+    }
+}
+@media (max-width:550px){
+    .user_side_nav{
+        display: none;
+    }
+    .container_userLayout{
+        display: block;
+    }
 }

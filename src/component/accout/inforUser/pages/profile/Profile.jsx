@@ -140,7 +140,7 @@ export default function Profile() {
               onClick={(event) => {event.target.value = null}}
              />
             <button className={style.button_file} type='button' onClick={handleUpload}>Chọn ảnh</button>
-            <div>
+            <div className={style.img_warning}>
               <div className={style.infor_img}>Dung lượng file tối đa 5MB</div>
               <div className={style.infor_img}>Định dạng:.JPEG, .PNG</div>
             </div>

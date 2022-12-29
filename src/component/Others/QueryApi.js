@@ -37,4 +37,22 @@ export const userApi = {
     }
 }
 
-export const getAvatarUrl = (avatarName) => (avatarName ? `https://ecommerce.nodemy.vn/${avatarName}` : `https://phongreviews.com/wp-content/uploads/2022/11/avatar-facebook-mac-dinh-1-1.jpg`)
+export const getAvatarUrl = (avatarName) => {
+    console.log(avatarName);
+    if(avatarName) {
+        if(avatarName.includes('https://st3.depositphotos.com/')) {
+            return avatarName
+        }else {
+            return `https://ecommerce.nodemy.vn/${avatarName}`
+        }
+
+    } else {
+        return `https://ecommerce.nodemy.vn/${avatarName}`
+    }
+    // if(avatarName.includes('https://st3.depositphotos.com/')) {
+    //         return avatarName
+    // }
+    // else {
+    //     return `https://ecommerce.nodemy.vn/${avatarName}`
+    // }
+}

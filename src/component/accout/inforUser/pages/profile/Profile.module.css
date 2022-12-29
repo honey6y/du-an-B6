@@ -28,15 +28,10 @@
     padding:15px
 }
 .form_infor{
-    min-width: 480px;
     margin-top: 24px;
     flex-grow: 1; 
     padding-right: 50px;
     padding-left: 50px;
-    margin-right: 40px;
-}
-.form_input{
-    min-width: 430px
 }
 .form_email{
     overflow: hidden;
@@ -106,12 +101,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 .file_container{
-    width: 300px;
-    margin-right: 25px;
     border-left: 1px solid grey;
-    padding-left: 15px;
 }
 .button_file{
     background-color: transparent;
@@ -122,4 +116,42 @@
 }
 .infor_img{
     text-align: center;
+}
+@media (max-width:1150px){
+    .box_form{
+        flex-wrap: wrap-reverse;
+    }
+    .form_infor{
+        min-width: 0;
+        padding-right: 40px;
+        padding-left: 20px;
+        margin-right: 0;
+    }
+    .file_container{
+        width: 30%;
+        border-left: 1px solid gray;
+    }
+    .box_file{
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+@media (max-width:768px){
+    .form_infor{
+        min-width: 0;
+        padding-right: 0;
+        padding-left: 0;
+        margin-right: 0;
+    }
+    .box_form{
+        flex-wrap: wrap-reverse;
+    }
+    .file_container{
+        width: 100%;
+        border-bottom: 1px solid grey;
+        border-left: none;
+    }
+    .img_warning{
+        padding-bottom: 10px;
+    }
 }

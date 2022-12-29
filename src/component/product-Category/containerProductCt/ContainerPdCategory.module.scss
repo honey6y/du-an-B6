@@ -65,7 +65,36 @@
   display: none;
   transition: all 0.4s;
 }
-.Skeletion{
- background-color: #fff;
+.box-more{
+  text-align: center;
+  width: 200px;
+  margin: auto;
+}
+.btn-load-data{
+    border: 1px solid var(--red-primary);
+    border-radius: 4px;
+    color: var(--red-primary);
+    background-color: var(--white-primary);
+    cursor: pointer;
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    margin: 15px auto 30px;
+    padding: 8px 12px;
+    text-align: center;
+    transition: all .3s linear;
+    width: 240px;
+
+    &:hover{
+      color: var(--white-primary);
+      background-color: var(--red-primary);
+    }
 }
 
+@media (max-width : 900px){
+  .product{
+    &:hover .btn-buy{
+      display: none;
+    }
+  }
+}
