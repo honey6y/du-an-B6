@@ -123,12 +123,12 @@
     }
     .form_infor{
         min-width: 0;
-        padding-right: 10px;
+        padding-right: 40px;
         padding-left: 20px;
         margin-right: 0;
     }
     .file_container{
-        margin-left: 25px;
+        width: 30%;
         border-left: 1px solid gray;
     }
     .box_file{

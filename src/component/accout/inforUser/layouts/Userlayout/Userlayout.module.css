@@ -48,6 +48,12 @@
     .infor_layout{
         width: 100%;
     }
+    .box_userLayout{
+        width: 100%;
+    }
+    .container_userLayout{
+        padding-top: 0;
+    }
 }
 @media (max-width:768px){
     .user_side_nav{
