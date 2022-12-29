@@ -62,6 +62,18 @@ function SelectProduct() {
             }
             let totalProduct = res.data.product;
             let totalSimple = []
+            let seenProduct = JSON.parse(localStorage.getItem('seen') || "[]")
+            let checkDuplicate = false;
+            seenProduct.forEach(item => {
+                if(item._id === totalProduct._id) {
+                    checkDuplicate = true
+                }
+            })
+            if (!checkDuplicate) {
+                seenProduct.push(totalProduct)
+            }
+            localStorage.setItem('seen', JSON.stringify(seenProduct))
+
             totalProduct.productDetailId.forEach(element => {
                 let simpleItem = {}
                 simpleItem.id = element._id
