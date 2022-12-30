@@ -233,7 +233,7 @@ export default function LayoutProduct() {
                   className={style.check_price_child}>
                   <span
                     className={
-                      isActiveSortBy("APPLE")
+                      isActiveSortBy("apple")
                         ? style.price_change_range
                         : style.price_range
                     }>

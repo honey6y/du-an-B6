@@ -38,7 +38,6 @@ export const userApi = {
 }
 
 export const getAvatarUrl = (avatarName) => {
-    console.log(avatarName);
     if(avatarName) {
         if(avatarName.includes('https://st3.depositphotos.com/')) {
             return avatarName
