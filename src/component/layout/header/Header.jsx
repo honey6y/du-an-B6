@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind'
-import React, { useContext } from 'react'
+import React, { useCallback, useContext } from 'react'
 import {RiCloseLine} from 'react-icons/ri'
 import { useState,useEffect} from 'react'
 import styles from './Header.module.scss'
@@ -30,8 +30,20 @@ export default function Header() {
     const [active,setActive] = useState([])
 
     const [activePopUp , setActivePopUp] = useState(false)
-    const handleShowPopUp = () => setActivePopUp(true);
-    
+    const handleShowPopUp = useCallback((e) => {
+        setActivePopUp(true)
+    }, [])
+    const handleHidePopUp = useCallback((e) => {
+        setActivePopUp(false)
+    }, [])
+    function addEventShow(e) {
+        window.addEventListener('click', handleShowPopUp )
+        window.removeEventListener('click', handleHidePopUp )
+    }
+    function addEventHide(e) {
+        window.removeEventListener('click', handleShowPopUp )
+        window.addEventListener('click', handleHidePopUp )
+    }
     const [listData,setListData] = useState([])
     const debounceOnChange = debounce(SearchByName,2000)
     const user = useSelector(state => state.cart.userInfor)
@@ -258,7 +270,11 @@ export default function Header() {
                                             </ul>
                                         </li>
                                         <li className={cx("cart-mobile")} >
-                                            <div className={cx("text-center")} onClick={handleShowPopUp}>
+                                            <div className={cx("text-center")}
+                                                // onClick={handleShowPopUp}
+                                                onMouseEnter={addEventShow}
+                                                onMouseLeave={addEventHide}
+                                            >
                                             <Badge color='black' size='small' count={totalCart}>
                                                 <div className={cx("hd-link-icon")}>
                                                     <img src="https://theme.hstatic.net/1000205427/1000509844/14/hd_mainmenu_icon_cart.png?v=56" alt="giỏ hàng" />
@@ -267,7 +283,8 @@ export default function Header() {
                                             </Badge>
                                                 <div className={cx("hd-link-title")}>GIỎ HÀNG</div>
                                             </div>
-                                            <QuickViewCart activePopUp={activePopUp} setActivePopUp={setActivePopUp}/>
+                                            <QuickViewCart activePopUp={activePopUp} handleShowPopUp={handleShowPopUp} handleHidePopUp={handleHidePopUp}/>
+                                            {/* {activePopUp ? <QuickViewCart activePopUp={activePopUp} setActivePopUp={setActivePopUp}/> : null} */}
                                         </li>
                                         <li className={cx("menu-mobile")} onClick={()=>{setOpenMenuMobile(true)}}>
                                                 <div>

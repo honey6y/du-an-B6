@@ -623,7 +623,7 @@ function SelectProduct() {
                                                 >
                                                     <MinusOutlined />
                                                 </button>
-                                                <input type="text" value={buyQuantity} min={1} />
+                                                <input type="text" value={buyQuantity} min={1} readOnly/>
                                                 <button
                                                     type="button"
                                                     className={cx(
