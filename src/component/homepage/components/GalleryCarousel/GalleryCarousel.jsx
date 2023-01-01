@@ -29,18 +29,25 @@ function GalleryCarousel({dataProps , title, isSale}) {
       setSlideToShow(2)
     }
   }, [])
-  window.onresize = reportWindowSize;
-  function reportWindowSize() {
-    if(window.innerWidth > 1268) {
-      setSlideToShow(5)
-    } else if (window.innerWidth > 992) {
-      setSlideToShow(4)
-    } else if (window.innerWidth > 600) {
-      setSlideToShow(3)
-    } else if (window.innerWidth < 600) {
-      setSlideToShow(2)
+  useEffect (() => {
+    window.addEventListener('resize', reportWindowSize);
+    function reportWindowSize() {
+      console.log('memory leak')
+      if(window.innerWidth > 1268) {
+        setSlideToShow(5)
+      } else if (window.innerWidth > 992) {
+        setSlideToShow(4)
+      } else if (window.innerWidth > 600) {
+        setSlideToShow(3)
+      } else if (window.innerWidth < 600) {
+        setSlideToShow(2)
+      }
     }
-  }
+
+    return () => {
+      window.removeEventListener('resize', reportWindowSize)
+    }
+  })
   return ( 
       <>
         {dataRender.length? <div>

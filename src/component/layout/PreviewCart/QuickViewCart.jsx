@@ -1,6 +1,6 @@
 import axios from "axios";
 import classNames from "classnames/bind";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styles from './QuickViewCart.module.scss'
 import { useDispatch, useSelector } from "react-redux";
 import { getCartNumber } from "../../../features/counter/cartSlice";
@@ -9,7 +9,7 @@ import { Col, Row } from 'antd';
 import { CloseOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 const cx = classNames.bind(styles);
-function QuickViewCart({activePopUp, setActivePopUp}) {
+function QuickViewCart({activePopUp, handleShowPopUp, handleHidePopUp}) {
     const cartID = localStorage.getItem("idcart")
     let token = localStorage.getItem("token")
     const nav = useNavigate()
@@ -64,7 +64,21 @@ function QuickViewCart({activePopUp, setActivePopUp}) {
         .catch(err => {
             console.log(err)
         })
+
+        return () => {
+            window.removeEventListener('click', handleHidePopUp)
+        }
     },[totalCart])
+
+    function addEventShow(e) {
+        window.addEventListener('click', handleShowPopUp )
+        window.removeEventListener('click', handleHidePopUp )
+    }
+
+    function addEventHide(e) {
+        window.removeEventListener('click', handleShowPopUp )
+        window.addEventListener('click', handleHidePopUp )
+    }
     
     function removeFromListProduct(idProduct) {
         axios({
@@ -125,12 +139,14 @@ function QuickViewCart({activePopUp, setActivePopUp}) {
     }
 
     return (
-        <div className={activePopUp ? cx('quickview-cart-product-active') :cx('quickview-cart-product')}>
+        <div className={activePopUp ? cx('quickview-cart-product-active') :cx('quickview-cart-product')}
+            onMouseLeave={addEventHide}
+            onMouseEnter={addEventShow}
+        >
             <h3 className={cx('quickview-cart-total-product')}>
                 {totalCart ? <span>GIỎ HÀNG CỦA TÔI ({totalCart} SẢN PHẨM)</span> : <span>GIỎ HÀNG TRỐNG</span>}
                 <span  className={cx('btnCloseQVCart')} >
-                    <RiCloseLine className={cx('btn-close-quickview-cart')} onClick={() => {
-                        setActivePopUp(false)}}/>
+                    <RiCloseLine className={cx('btn-close-quickview-cart')} onClick={addEventHide}/>
                 </span>
             </h3>
             <ul className={cx('quickview-cart-total-item')}>
@@ -170,10 +186,16 @@ function QuickViewCart({activePopUp, setActivePopUp}) {
             {totalCart ? <div className={cx('quickview-cart-total-provisional')}>Tạm tính: <span className={cx('quickview-cart-total-provisional-number')}>{provisional.toLocaleString()}&#8363;</span></div> : null}
             {totalCart ? <div className={cx('quickview-cart-actions')}>
                 <button className={cx('quickview-cart-actions-button')}
-                    onClick={() => {nav('/cart')}}    
+                    onClick={() => {
+                        nav('/cart')
+                        addEventHide()
+                    }}    
                 >Xem giỏ hàng</button>
                 <button className={cx('quickview-cart-actions-button')}
-                    onClick={() => {nav('/payment')}}
+                    onClick={() => {
+                        nav('/payment')
+                        addEventHide()
+                    }}
                 >Thanh toán</button>
             </div> : null}
         </div>
