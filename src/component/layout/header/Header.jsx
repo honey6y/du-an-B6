@@ -284,7 +284,6 @@ export default function Header() {
                                                 <div className={cx("hd-link-title")}>GIỎ HÀNG</div>
                                             </div>
                                             <QuickViewCart activePopUp={activePopUp} handleShowPopUp={handleShowPopUp} handleHidePopUp={handleHidePopUp}/>
-                                            {/* {activePopUp ? <QuickViewCart activePopUp={activePopUp} setActivePopUp={setActivePopUp}/> : null} */}
                                         </li>
                                         <li className={cx("menu-mobile")} onClick={()=>{setOpenMenuMobile(true)}}>
                                                 <div>
